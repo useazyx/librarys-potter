@@ -40,7 +40,6 @@ export default function Login() {
     <AuthLayout
       title="Bem-vindo de volta"
       subtitle="Entre para acompanhar pedidos, avaliações e chamados."
-      image="/img/scenes/estantes.webp"
     >
       <form onSubmit={handleSubmit} noValidate>
         <Input

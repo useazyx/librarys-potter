@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
 import { ButtonLink } from '../components/ui/Button'
+import { Embers } from '../components/ui/Embers'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -66,15 +67,19 @@ export default function Saga() {
       )
 
       gsap.utils.toArray<HTMLElement>('.saga-entry').forEach((entry) => {
-        // `fromTo` com `immediateRender: false` em vez de `from`: assim o estado
-        // invisível só é aplicado quando o ScrollTrigger dispara. Um `from`
-        // esconde a entrada na hora e a deixa escondida para sempre se o gatilho
-        // não vier — a mesma armadilha da transição de página.
+        // A entrada desliza, mas **não** desaparece: nada de `opacity` neste
+        // tween. O GSAP roda no próprio ticker, e um ticker que trave no meio
+        // deixaria a entrada congelada em opacidade fracionária — medido: 0,12,
+        // ilegível. Animando só o deslocamento, o pior caso é um texto alguns
+        // pixels fora do lugar, nunca um texto invisível.
+        //
+        // `immediateRender: false` continua necessário para o outro caso: sem
+        // ele o estado inicial é aplicado já no carregamento, mesmo em entradas
+        // cujo gatilho ainda não chegou.
         gsap.fromTo(
           entry,
-          { opacity: 0, y: 60 },
+          { y: 60 },
           {
-            opacity: 1,
             y: 0,
             duration: 1,
             ease: 'power3.out',
@@ -90,38 +95,46 @@ export default function Saga() {
 
   return (
     <>
-      <header className="relative flex min-h-[70vh] items-end overflow-hidden">
-        <img
-          src="/img/scenes/coruja.webp"
-          alt=""
+      {/*
+        A saga abre com a coruja ao lado do título, e não como fotografia de
+        70vh atrás dele: mesma composição assimétrica do resto do site.
+      */}
+      <header className="relative overflow-hidden bg-house-deep pb-16 pt-32 lg:pt-36">
+        <div
+          className="absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage:
+              'repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 54px),repeating-linear-gradient(90deg,#fff 0 1px,transparent 1px 108px)',
+          }}
           aria-hidden
-          className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-stone-900/75 to-stone-900/45" aria-hidden />
+        <Embers count={18} />
 
-        <div className="relative mx-auto w-full max-w-7xl px-6 pb-20 lg:px-10">
-          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="eyebrow mb-4">
-            A saga
-          </motion.p>
+        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-[1.15fr_0.85fr] lg:px-10">
+          <div>
+            <p className="rise-in text-[0.66rem] uppercase tracking-[0.4em] text-house-accent">A saga</p>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.12, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-3xl text-balance font-display text-5xl text-chalk-50 drop-shadow-[0_4px_28px_rgba(3,3,6,0.9)] sm:text-6xl"
-          >
-            Sete livros, uma geração inteira
-          </motion.h1>
+            <h1
+              className="rise-in mt-5 max-w-2xl text-balance font-display text-5xl leading-[1.02] text-white sm:text-6xl"
+              style={{ animationDelay: '0.1s' }}
+            >
+              Sete livros, uma geração inteira
+            </h1>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.35, duration: 0.9 }}
-            className="mt-6 max-w-2xl font-serif text-xl italic text-chalk-200/85"
-          >
-            J. K. Rowling criou a aventura que se tornou o maior fenômeno editorial de todos os tempos — e que
-            ainda chega a cada leitor pela primeira vez.
-          </motion.p>
+            <p className="rise-in mt-6 max-w-xl text-white/70" style={{ animationDelay: '0.2s' }}>
+              J. K. Rowling criou a aventura que se tornou o maior fenômeno editorial de todos os tempos — e que ainda chega a cada leitor pela primeira vez.
+            </p>
+          </div>
+
+          <div className="rise-in relative" style={{ animationDelay: '0.28s' }}>
+            <div className="absolute -inset-5 rounded-full bg-house-accent/15 blur-3xl" aria-hidden />
+            <img
+              src="/img/scenes/coruja.webp"
+              alt=""
+              aria-hidden
+              className="relative h-64 w-full rounded-xl object-cover shadow-book lg:h-80"
+            />
+          </div>
         </div>
       </header>
 

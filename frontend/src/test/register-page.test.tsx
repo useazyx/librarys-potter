@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { AuthProvider } from '../context/AuthContext'
+import { HouseProvider } from '../context/HouseContext'
 import { ToastProvider } from '../context/ToastContext'
 import Register from '../pages/Register'
 
@@ -38,11 +39,13 @@ vi.mock('../lib/api', async () => {
 function renderRegister() {
   return render(
     <MemoryRouter initialEntries={['/cadastro']}>
-      <ToastProvider>
-        <AuthProvider>
-          <Register />
-        </AuthProvider>
-      </ToastProvider>
+      <HouseProvider>
+        <ToastProvider>
+          <AuthProvider>
+            <Register />
+          </AuthProvider>
+        </ToastProvider>
+      </HouseProvider>
     </MemoryRouter>,
   )
 }

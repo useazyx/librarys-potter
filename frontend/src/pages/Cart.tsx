@@ -5,6 +5,7 @@ import { Button, ButtonLink } from '../components/ui/Button'
 import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
 import { useToast } from '../context/ToastContext'
+import { PageHeader } from '../components/layout/PageHeader'
 import { formatPrice } from '../lib/format'
 
 export default function CartPage() {
@@ -46,25 +47,25 @@ export default function CartPage() {
   const progress = Math.min(100, (cart.subtotal / cart.freeShippingThreshold) * 100)
 
   return (
-    <section className="mx-auto max-w-7xl px-6 pb-24 pt-36 lg:px-10">
-      <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow mb-3">Sua sacola</p>
-          <h1 className="font-display text-4xl text-chalk-50 sm:text-5xl">Carrinho de compras</h1>
-        </div>
+    <>
+      <PageHeader
+        eyebrow="Sua sacola"
+        title="Carrinho de compras"
+        aside={
+          <button
+            type="button"
+            onClick={async () => {
+              await clear()
+              notify('Carrinho esvaziado.', 'info')
+            }}
+            className="text-[0.7rem] uppercase tracking-[0.18em] text-white/70 transition hover:text-house-accent"
+          >
+            Esvaziar carrinho
+          </button>
+        }
+      />
 
-        <button
-          type="button"
-          onClick={async () => {
-            await clear()
-            notify('Carrinho esvaziado.', 'info')
-          }}
-          className="text-[0.7rem] uppercase tracking-[0.18em] text-chalk-300/70 transition hover:text-house-accent"
-        >
-          Esvaziar carrinho
-        </button>
-      </div>
-
+      <section className="mx-auto max-w-7xl px-6 pb-24 pt-12 lg:px-10">
       <div className="grid gap-10 lg:grid-cols-[1.6fr_1fr]">
         <ul className="space-y-5">
           <AnimatePresence mode="popLayout">
@@ -192,7 +193,8 @@ export default function CartPage() {
           </div>
         </aside>
       </div>
-    </section>
+      </section>
+    </>
   )
 }
 

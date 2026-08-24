@@ -79,7 +79,6 @@ export default function Register() {
     <AuthLayout
       title="Crie a sua conta"
       subtitle="Escolha por qual porta você entra na livraria."
-      image="/img/scenes/arcos.webp"
     >
       <form onSubmit={handleSubmit} noValidate>
         <fieldset>

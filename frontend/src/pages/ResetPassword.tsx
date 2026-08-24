@@ -63,7 +63,6 @@ export default function ResetPassword() {
           ? 'Informe seu e-mail e enviaremos o link de redefinição.'
           : 'Cole o código recebido e escolha a nova senha.'
       }
-      image="/img/scenes/livros-antigos.webp"
     >
       {stage === 'request' ? (
         <form onSubmit={requestLink} noValidate>

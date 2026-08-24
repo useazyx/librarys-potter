@@ -3,6 +3,7 @@ import { ArrowLeft, BookOpen, Building2, Globe, Minus, Package, Plus, Star } fro
 import { useEffect, useState, type FormEvent } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { BookCard } from '../components/catalog/BookCard'
+import { Embers } from '../components/ui/Embers'
 import { Button } from '../components/ui/Button'
 import { BrandLoader } from '../components/ui/Loaders'
 import { Stars, StarPicker } from '../components/ui/Stars'
@@ -96,50 +97,52 @@ export default function BookDetail() {
 
   return (
     <>
-      <section className="relative overflow-hidden pb-16 pt-36">
-        <img
-          src="/img/scenes/arcos.webp"
-          alt=""
+      {/*
+        Faixa cheia na cor da casa, como nas outras páginas — não mais a
+        fotografia esmaecida atrás do título.
+      */}
+      <section className="relative overflow-hidden bg-house-deep pb-16 pt-32 lg:pt-36">
+        <div
+          className="absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage:
+              'repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 54px),repeating-linear-gradient(90deg,#fff 0 1px,transparent 1px 108px)',
+          }}
           aria-hidden
-          className="absolute inset-0 h-full w-full object-cover opacity-20"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-stone-900/90 to-stone-900" aria-hidden />
+        <Embers count={16} />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
           <Link
             to="/catalogo"
-            className="mb-10 inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.2em] text-chalk-200/70 transition hover:text-house-accent"
+            className="mb-10 inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.2em] text-white/65 transition hover:text-house-accent"
           >
             <ArrowLeft size={15} aria-hidden /> Voltar ao catálogo
           </Link>
 
           <div className="grid gap-12 lg:grid-cols-[minmax(0,22rem)_1fr]">
-            <motion.div
-              initial={{ opacity: 0, y: 30, rotateY: -12 }}
-              animate={{ opacity: 1, y: 0, rotateY: 0 }}
-              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-              className="mx-auto w-full max-w-xs lg:mx-0"
-            >
+            <div className="rise-in relative mx-auto w-full max-w-xs lg:mx-0">
+              <div className="absolute -inset-6 rounded-full bg-house-accent/20 blur-3xl" aria-hidden />
               <img
                 src={book.coverUrl}
                 alt={'Capa de ' + book.title}
-                className="w-full rounded-lg shadow-book"
+                className="relative w-full rounded-lg shadow-book"
                 fetchPriority="high"
               />
-            </motion.div>
+            </div>
 
             <div>
               <p className="eyebrow mb-3">{book.genre}</p>
 
-              <h1 className="font-display text-4xl text-chalk-50 sm:text-5xl">{book.title}</h1>
+              <h1 className="rise-in font-display text-4xl text-white sm:text-5xl">{book.title}</h1>
 
-              <p className="mt-3 text-chalk-200/80">
+              <p className="mt-3 text-white/70">
                 {book.author.name} · {book.publisher.name}
               </p>
 
               <div className="mt-5 flex flex-wrap items-center gap-3">
                 <Stars value={book.rating.average} size={18} />
-                <span className="text-sm text-chalk-200/70">
+                <span className="text-sm text-white/65">
                   {totalReviews === 0
                     ? 'Ainda sem avaliações'
                     : book.rating.average.toFixed(1).replace('.', ',') +
@@ -149,15 +152,15 @@ export default function BookDetail() {
                 </span>
               </div>
 
-              <p className="mt-8 max-w-2xl leading-relaxed text-chalk-100/85">{book.synopsis}</p>
+              <p className="mt-8 max-w-2xl leading-relaxed text-white/80">{book.synopsis}</p>
 
               {book.excerpt && (
                 <blockquote className="mt-6 max-w-2xl border-l-2 border-house-accent pl-5">
-                  <p className="font-serif text-xl italic text-chalk-200/90">{book.excerpt}</p>
+                  <p className="font-serif text-xl italic text-white/85">{book.excerpt}</p>
                 </blockquote>
               )}
 
-              <dl className="mt-8 grid max-w-2xl grid-cols-2 gap-5 border-t border-chalk-100/10 pt-8 sm:grid-cols-4">
+              <dl className="mt-8 grid max-w-2xl grid-cols-2 gap-5 border-t border-white/15 pt-8 sm:grid-cols-4">
                 <Detail icon={BookOpen} label="Páginas" value={book.pages ? String(book.pages) : '—'} />
                 <Detail icon={Globe} label="Idioma" value={book.language} />
                 <Detail icon={Building2} label="Editora" value={book.publisher.name} />
@@ -168,35 +171,35 @@ export default function BookDetail() {
                 />
               </dl>
 
-              <div className="mt-10 flex flex-wrap items-center gap-6 rounded-2xl border border-chalk-100/10 bg-stone-800/70 p-6">
+              <div className="mt-10 flex flex-wrap items-center gap-6 rounded-2xl border border-white/15 bg-black/25 p-6">
                 <div>
-                  <p className="text-[0.66rem] uppercase tracking-[0.2em] text-chalk-300/60">Preço</p>
+                  <p className="text-[0.66rem] uppercase tracking-[0.2em] text-white/50">Preço</p>
                   <p className="font-display text-4xl text-house-accent">{formatPrice(book.price * quantity)}</p>
                   {book.publishedAt && (
-                    <p className="mt-1 text-xs text-chalk-300/50">
+                    <p className="mt-1 text-xs text-white/45">
                       Publicado em {formatDate(book.publishedAt)}
                     </p>
                   )}
                 </div>
 
                 <div className="ml-auto flex flex-wrap items-center gap-3">
-                  <div className="flex items-center gap-1 rounded-full border border-chalk-100/20 p-1">
+                  <div className="flex items-center gap-1 rounded-full border border-white/25 p-1">
                     <button
                       type="button"
                       onClick={() => setQuantity((value) => Math.max(1, value - 1))}
                       aria-label="Diminuir quantidade"
-                      className="rounded-full p-2 text-chalk-100 transition hover:bg-chalk-100/10"
+                      className="rounded-full p-2 text-white transition hover:bg-white/10"
                     >
                       <Minus size={15} aria-hidden />
                     </button>
-                    <span className="w-8 text-center text-chalk-100" aria-live="polite">
+                    <span className="w-8 text-center text-white" aria-live="polite">
                       {quantity}
                     </span>
                     <button
                       type="button"
                       onClick={() => setQuantity((value) => Math.min(Math.max(book.stock, 1), value + 1))}
                       aria-label="Aumentar quantidade"
-                      className="rounded-full p-2 text-chalk-100 transition hover:bg-chalk-100/10"
+                      className="rounded-full p-2 text-white transition hover:bg-white/10"
                     >
                       <Plus size={15} aria-hidden />
                     </button>

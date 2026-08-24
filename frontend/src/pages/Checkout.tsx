@@ -7,6 +7,7 @@ import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
 import { useToast } from '../context/ToastContext'
 import { ApiError, api } from '../lib/api'
+import { PageHeader } from '../components/layout/PageHeader'
 import { formatPrice } from '../lib/format'
 import type { Order } from '../types/api'
 
@@ -106,9 +107,10 @@ export default function Checkout() {
   }
 
   return (
-    <section className="mx-auto max-w-7xl px-6 pb-24 pt-36 lg:px-10">
-      <p className="eyebrow mb-3">Último passo</p>
-      <h1 className="mb-12 font-display text-4xl text-chalk-50 sm:text-5xl">Finalizar compra</h1>
+    <>
+      <PageHeader eyebrow="Último passo" title="Finalizar compra" />
+
+      <section className="mx-auto max-w-7xl px-6 pb-24 pt-12 lg:px-10">
 
       <div className="grid gap-10 lg:grid-cols-[1.5fr_1fr]">
         <form onSubmit={placeOrder} className="surface-paper rounded-2xl p-8 shadow-book lg:p-10" noValidate>
@@ -226,6 +228,7 @@ export default function Checkout() {
           </div>
         </aside>
       </div>
-    </section>
+      </section>
+    </>
   )
 }
