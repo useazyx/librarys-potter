@@ -4,6 +4,7 @@ import { useHouse } from '../../context/HouseContext'
 import { formatPrice } from '../../lib/format'
 import type { Book } from '../../types/api'
 import { ButtonLink } from '../ui/Button'
+import { Embers } from '../ui/Embers'
 
 /**
  * Vitrine de abertura, assimétrica: a coluna de texto à esquerda e a capa do
@@ -27,6 +28,8 @@ export function Hero({ book }: { book?: Book }) {
         }}
         aria-hidden
       />
+
+      <Embers count={22} />
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 pb-20 pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 lg:px-10 lg:pb-28 lg:pt-40">
         <div>

@@ -3,6 +3,7 @@ import { Search, SlidersHorizontal, X } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { BookCard } from '../components/catalog/BookCard'
+import { Embers } from '../components/ui/Embers'
 import { BookSkeletonGrid } from '../components/ui/Loaders'
 import { api, type BookFilters } from '../lib/api'
 import type { Author, Book, Publisher } from '../types/api'
@@ -91,38 +92,46 @@ export default function Catalog() {
 
   return (
     <>
-      <header className="relative overflow-hidden pb-16 pt-40">
-        <img
-          src="/img/scenes/estantes.webp"
-          alt=""
+      {/*
+        Cabeçalho em faixa da casa, no mesmo ritmo da home: cor cheia, texto à
+        esquerda e a contagem do acervo à direita — não mais uma fotografia
+        esmaecida atrás de um título centralizado.
+      */}
+      <header className="relative overflow-hidden bg-house-deep pb-14 pt-32 lg:pt-36">
+        <div
+          className="absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage:
+              'repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 54px),repeating-linear-gradient(90deg,#fff 0 1px,transparent 1px 108px)',
+          }}
           aria-hidden
-          className="absolute inset-0 h-full w-full object-cover opacity-25"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-stone-900/85 to-stone-900" aria-hidden />
+        <Embers count={14} />
 
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
-          <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="eyebrow mb-4">
-            O acervo
-          </motion.p>
+        <div className="relative mx-auto flex max-w-7xl flex-wrap items-end justify-between gap-6 px-6 lg:px-10">
+          <div>
+            <p className="rise-in text-[0.66rem] uppercase tracking-[0.4em] text-house-accent">O acervo</p>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.8 }}
-            className="font-display text-5xl text-chalk-50 sm:text-6xl"
+            <h1
+              className="rise-in mt-5 font-display text-5xl text-white sm:text-6xl"
+              style={{ animationDelay: '0.1s' }}
+            >
+              Todos os livros
+            </h1>
+
+            <p className="rise-in mt-5 max-w-xl text-white/70" style={{ animationDelay: '0.2s' }}>
+              Filtre por autor, editora, preço ou disponibilidade — e leve para casa a edição que faltava
+              na sua estante.
+            </p>
+          </div>
+
+          <p
+            className="rise-in font-display text-6xl leading-none text-house-accent/90"
+            style={{ animationDelay: '0.28s' }}
+            aria-hidden
           >
-            Todos os livros
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.25, duration: 0.8 }}
-            className="mt-5 max-w-2xl text-chalk-200/80"
-          >
-            Filtre por autor, editora, preço ou disponibilidade — e leve para casa a edição que faltava na sua
-            estante.
-          </motion.p>
+            {books.length}
+          </p>
         </div>
       </header>
 

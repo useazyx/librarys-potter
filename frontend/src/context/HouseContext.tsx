@@ -56,6 +56,12 @@ interface HouseContextValue {
   house: House | null
   info: HouseInfo | null
   setHouse: (house: House | null) => void
+  /**
+   * Sobe a cada seleção de casa. O `Layout` observa para tocar a cerimônia do
+   * Chapéu Seletor — fica aqui, e não no seletor, para que a cerimônia aconteça
+   * venha a escolha do cabeçalho ou da faixa da home.
+   */
+  ceremony: { house: House; id: number } | null
 }
 
 const HouseContext = createContext<HouseContextValue | undefined>(undefined)
@@ -81,8 +87,12 @@ export function HouseProvider({ children }: { children: ReactNode }) {
     else root.removeAttribute('data-house')
   }, [house])
 
+  const [ceremony, setCeremony] = useState<{ house: House; id: number } | null>(null)
+
   const setHouse = useCallback((next: House | null) => {
     setHouseState(next)
+    // Voltar ao castelo neutro não é uma seleção: não há cerimônia.
+    if (next) setCeremony((current) => ({ house: next, id: (current?.id ?? 0) + 1 }))
 
     try {
       if (next) window.localStorage.setItem(STORAGE_KEY, next)
@@ -93,8 +103,8 @@ export function HouseProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const value = useMemo<HouseContextValue>(
-    () => ({ house, info: house ? HOUSE_INFO[house] : null, setHouse }),
-    [house, setHouse],
+    () => ({ house, info: house ? HOUSE_INFO[house] : null, setHouse, ceremony }),
+    [house, ceremony, setHouse],
   )
 
   return <HouseContext.Provider value={value}>{children}</HouseContext.Provider>

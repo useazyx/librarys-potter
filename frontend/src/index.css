@@ -42,7 +42,7 @@
   --color-ravenclaw-mid: #0e1a40;
   --color-ravenclaw-accent: #b08d4f;
 
-  --color-hufflepuff-deep: #3a2c05;
+  --color-hufflepuff-deep: #241a02;
   --color-hufflepuff-mid: #6b5308;
   --color-hufflepuff-accent: #ecb939;
 
@@ -100,7 +100,7 @@
 }
 
 [data-house='lufa-lufa'] {
-  --house-deep: #3a2c05;
+  --house-deep: #241a02;
   --house-mid: #6b5308;
   --house-accent: #ecb939;
   --house-ink: #fff8e6;
@@ -413,4 +413,167 @@
 
 .candle {
   animation: candle-breathe 4.5s ease-in-out infinite;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Camada de magia.
+
+   Regra que vale para tudo aqui: nada nesta seção pode ser a única coisa que
+   torna conteúdo visível. São brasas, brilhos e reflexos — decoração pura. Se
+   nenhuma animação rodar, o leitor perde o encanto e não perde a página.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* Brasas do salão: motes de luz que sobem devagar e se apagam. */
+@keyframes ember-float {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.6);
+  }
+  15% {
+    opacity: var(--ember-peak, 0.7);
+  }
+  85% {
+    opacity: var(--ember-peak, 0.7);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--ember-drift, 20px), calc(-1 * var(--ember-rise, 320px)) , 0) scale(1);
+  }
+}
+
+.ember {
+  position: absolute;
+  border-radius: 9999px;
+  background: rgb(var(--house-glow) / 0.9);
+  box-shadow: 0 0 12px 2px rgb(var(--house-glow) / 0.55);
+  opacity: 0;
+  animation: ember-float var(--ember-time, 14s) linear infinite;
+  will-change: transform, opacity;
+}
+
+/* Reflexo que atravessa um título ou um filete, como luz de vela passando. */
+@keyframes shimmer-sweep {
+  from {
+    background-position: -150% 0;
+  }
+  to {
+    background-position: 250% 0;
+  }
+}
+
+/*
+  O reflexo é uma camada *sobre* o elemento, não o fundo dele. Assim o elemento
+  conserva a própria cor: se o reflexo não rodar — ou for desligado por
+  movimento reduzido — não some nada. Um `.shimmer` que pintasse o fundo exigiria
+  texto transparente, e aí o texto dependeria da animação para existir.
+*/
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgb(var(--house-glow) / 0.75) 50%,
+    transparent 70%
+  );
+  background-size: 220% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer-sweep 6s ease-in-out infinite;
+}
+
+/*
+  Brilho que segue o ponteiro dentro de um cartão. As coordenadas chegam por
+  `--mx`/`--my`, escritas no evento de mouse; sem JS, o padrão deixa o brilho
+  centralizado e imóvel, que é um estado perfeitamente apresentável.
+*/
+.glow-follow {
+  position: relative;
+  isolation: isolate;
+}
+
+.glow-follow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    rgb(var(--house-glow) / 0.16),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-castle);
+}
+
+.glow-follow:hover::before,
+.glow-follow:focus-within::before {
+  opacity: 1;
+}
+
+/* A cerimônia do Chapéu Seletor: a cor da casa toma a tela e some. */
+@keyframes sorting-flash {
+  0% {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+  22% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.sorting-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 45%, var(--house-mid), var(--house-deep) 70%);
+  /* Repouso invisível — e é o `forwards` que garante que uma animação que não
+     comece deixe a tela livre, em vez de segurar o quadro que a cobre. */
+  opacity: 0;
+  animation: sorting-flash 1.6s var(--ease-castle) forwards;
+}
+
+@keyframes crest-burst {
+  from {
+    transform: scale(0.7) rotate(-6deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.04) rotate(0deg);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.crest-burst {
+  animation: crest-burst 1.1s var(--ease-castle) both;
+}
+
+/* Sob movimento reduzido, brasas e reflexos simplesmente não existem. */
+@media (prefers-reduced-motion: reduce) {
+  .ember,
+  .shimmer::after {
+    display: none;
+  }
 }

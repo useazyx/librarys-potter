@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { useSmoothScroll } from '../../hooks/useSmoothScroll'
+import { SortingCeremony } from '../house/SortingCeremony'
 import { BrandLoader } from '../ui/Loaders'
 import { Footer } from './Footer'
 import { Header } from './Header'
@@ -47,6 +48,8 @@ export function Layout() {
       {/* Page change reads like a sheet being turned. See `.page-turn`: it rests
           uncovered, so it can only ever hide the page while the sweep is running. */}
       {sweepKey && <div key={sweepKey} className="page-turn" aria-hidden />}
+
+      <SortingCeremony />
 
       <main id="conteudo" className="flex-1">
         {/* Suspense sits inside the Layout: a lazily loaded route must not tear

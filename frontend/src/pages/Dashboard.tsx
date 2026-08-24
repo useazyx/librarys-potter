@@ -13,6 +13,7 @@ import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react
 import { useSearchParams } from 'react-router-dom'
 import { Button } from '../components/ui/Button'
 import { Input, Select, Textarea } from '../components/ui/Field'
+import { PageHeader } from '../components/layout/PageHeader'
 import { Modal } from '../components/ui/Modal'
 import { useAuth } from '../context/AuthContext'
 import { useToast } from '../context/ToastContext'
@@ -249,25 +250,18 @@ export default function Dashboard() {
 
   return (
     <>
-      <header className="relative overflow-hidden pb-16 pt-40">
-        <img
-          src="/img/scenes/estantes.webp"
-          alt=""
-          aria-hidden
-          className="absolute inset-0 h-full w-full object-cover opacity-15"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-stone-900/85 to-stone-900" aria-hidden />
+      <PageHeader
+        eyebrow={'Painel · ' + ROLE_LABELS[user.role]}
+        title="Os bastidores da livraria"
+        description={
+          isSupport
+            ? 'Catálogo, vendas, fila de chamados e cadastro de usuários — tudo o que o antigo menu de administração fazia, em uma tela só.'
+            : 'Cuide do catálogo e acompanhe como as vendas estão indo. Apagar registros é atribuição do suporte.'
+        }
+      />
 
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
-          <p className="eyebrow mb-4">Painel · {ROLE_LABELS[user.role]}</p>
-          <h1 className="font-display text-5xl text-chalk-50 sm:text-6xl">Os bastidores da livraria</h1>
-          <p className="mt-5 max-w-2xl text-chalk-200/80">
-            {isSupport
-              ? 'Catálogo, vendas, fila de chamados e cadastro de usuários — tudo o que o antigo menu de administração fazia, em uma tela só.'
-              : 'Cuide do catálogo e acompanhe como as vendas estão indo. Apagar registros é atribuição do suporte.'}
-          </p>
-
-          {sales && (
+      <div className="mx-auto max-w-7xl px-6 pt-10 lg:px-10">
+        {sales && (
             <dl className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <Stat label="Pedidos" value={String(sales.summary.orders)} />
               <Stat label="Faturamento" value={formatPrice(sales.summary.revenue)} />
@@ -275,8 +269,7 @@ export default function Dashboard() {
               <Stat label="Ticket médio" value={formatPrice(sales.summary.averageTicket)} />
             </dl>
           )}
-        </div>
-      </header>
+      </div>
 
       <section className="mx-auto max-w-7xl px-6 py-14 lg:px-10">
         <nav className="mb-10 flex flex-wrap gap-2" aria-label="Seções do painel">

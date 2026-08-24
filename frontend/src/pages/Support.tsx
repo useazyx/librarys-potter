@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { CheckCircle2, LifeBuoy, Send } from 'lucide-react'
 import { useEffect, useState, type FormEvent } from 'react'
+import { PageHeader } from '../components/layout/PageHeader'
 import { Button } from '../components/ui/Button'
 import { Input, Select, Textarea } from '../components/ui/Field'
 import { useAuth } from '../context/AuthContext'
@@ -93,24 +94,11 @@ export default function Support() {
 
   return (
     <>
-      <header className="relative overflow-hidden pb-16 pt-40">
-        <img
-          src="/img/scenes/poltrona.webp"
-          alt=""
-          aria-hidden
-          className="absolute inset-0 h-full w-full object-cover opacity-20"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-stone-900/85 to-stone-900" aria-hidden />
-
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
-          <p className="eyebrow mb-4">Central de ajuda</p>
-          <h1 className="font-display text-5xl text-chalk-50 sm:text-6xl">Relatar um problema</h1>
-          <p className="mt-5 max-w-2xl text-chalk-200/80">
-            Pedido atrasado, livro danificado, dúvida sobre uma edição: abra um chamado e acompanhe a resposta
-            por aqui mesmo.
-          </p>
-        </div>
-      </header>
+      <PageHeader
+        eyebrow="Central de ajuda"
+        title="Relatar um problema"
+        description="Pedido atrasado, livro danificado, dúvida sobre uma edição: abra um chamado e acompanhe a resposta por aqui mesmo."
+      />
 
       <section className="mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-[1.2fr_1fr] lg:px-10">
         <form onSubmit={handleSubmit} className="surface-paper rounded-2xl p-8 shadow-book lg:p-10" noValidate>

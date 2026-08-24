@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
 import { useToast } from '../../context/ToastContext'
+import { usePointerGlow } from '../../hooks/usePointerGlow'
 import { formatPrice } from '../../lib/format'
 import type { Book } from '../../types/api'
 import { Stars } from '../ui/Stars'
@@ -18,6 +19,7 @@ export function BookCard({ book, index = 0 }: BookCardProps) {
   const { add, busy } = useCart()
   const { notify } = useToast()
   const navigate = useNavigate()
+  const onPointerGlow = usePointerGlow()
 
   const soldOut = book.stock <= 0
 
@@ -45,7 +47,8 @@ export function BookCard({ book, index = 0 }: BookCardProps) {
       initial={{ opacity: 0, y: 28 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: Math.min(index, 8) * 0.05, ease: [0.22, 1, 0.36, 1] }}
-      className="group flex h-full flex-col rounded-2xl border border-chalk-100/10 bg-stone-800/70 p-5 transition-colors duration-500 hover:border-house-accent/40"
+      onMouseMove={onPointerGlow}
+      className="glow-follow group flex h-full flex-col rounded-2xl border border-chalk-100/10 bg-stone-800/70 p-5 transition-colors duration-500 hover:border-house-accent/45"
     >
       <Link
         to={'/livro/' + book.slug}

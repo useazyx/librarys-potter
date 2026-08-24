@@ -9,6 +9,7 @@ import {
 } from 'lucide-react'
 import { useEffect, useState, type FormEvent } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { PageHeader } from '../components/layout/PageHeader'
 import { Button, ButtonLink } from '../components/ui/Button'
 import { Input } from '../components/ui/Field'
 import { Stars } from '../components/ui/Stars'
@@ -105,57 +106,44 @@ export default function Profile() {
 
   return (
     <>
-      <header className="relative overflow-hidden pb-16 pt-40">
-        <img
-          src="/img/scenes/salao-biblioteca.webp"
-          alt=""
-          aria-hidden
-          className="absolute inset-0 h-full w-full object-cover opacity-15"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-stone-900/85 to-stone-900" aria-hidden />
+      <PageHeader
+        eyebrow={(ROLE_LABELS[user.role] ?? 'Leitor') + ' da casa'}
+        title={'Olá, ' + user.name.split(' ')[0] + '!'}
+        description={'Na biblioteca desde ' + formatDate(user.memberSince) + ' · ' + user.email}
+        aside={
+          <div className="flex flex-wrap gap-3">
+            {user.role !== 'CUSTOMER' && (
+              <ButtonLink to="/painel" variant="house" size="sm">
+                Ir para o painel
+              </ButtonLink>
+            )}
 
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
-          <p className="eyebrow mb-4">{ROLE_LABELS[user.role] ?? 'Leitor'} da casa</p>
-
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <h1 className="font-display text-5xl text-chalk-50">Olá, {user.name.split(' ')[0]}!</h1>
-              <p className="mt-3 text-chalk-200/80">
-                Na biblioteca desde {formatDate(user.memberSince)} · {user.email}
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-3">
-              {user.role !== 'CUSTOMER' && (
-                <ButtonLink to="/painel" variant="house" size="sm">
-                  Ir para o painel
-                </ButtonLink>
-              )}
-
-              <Button
-                variant="secondary"
-                size="sm"
-                className="border-chalk-200/40 text-chalk-100 hover:border-house-accent hover:text-house-accent"
-                onClick={async () => {
-                  await logout()
-                  notify('Até a próxima leitura!', 'info')
-                  navigate('/')
-                }}
-              >
-                <LogOut size={15} aria-hidden />
-                Sair
-              </Button>
-            </div>
+            <Button
+              variant="secondary"
+              size="sm"
+              className="border-white/40 text-white hover:border-house-accent hover:text-house-accent"
+              onClick={async () => {
+                await logout()
+                notify('Até a próxima leitura!', 'info')
+                navigate('/')
+              }}
+            >
+              <LogOut size={15} aria-hidden />
+              Sair
+            </Button>
           </div>
+        }
+      />
 
-          <dl className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <Stat label="Pedidos feitos" value={String(user.stats.orders)} />
-            <Stat label="Livros comprados" value={String(user.stats.booksBought)} />
-            <Stat label="Avaliações escritas" value={String(user.stats.reviews)} />
-            <Stat label="Total investido" value={formatPrice(user.stats.totalSpent)} />
-          </dl>
-        </div>
-      </header>
+      {/* Os números do leitor, agora abaixo da faixa em vez de dentro dela. */}
+      <div className="mx-auto max-w-7xl px-6 pt-10 lg:px-10">
+        <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Stat label="Pedidos feitos" value={String(user.stats.orders)} />
+          <Stat label="Livros comprados" value={String(user.stats.booksBought)} />
+          <Stat label="Avaliações escritas" value={String(user.stats.reviews)} />
+          <Stat label="Total investido" value={formatPrice(user.stats.totalSpent)} />
+        </dl>
+      </div>
 
       <section className="mx-auto max-w-7xl px-6 py-14 lg:px-10">
         <nav className="mb-10 flex flex-wrap gap-2" aria-label="Seções do perfil">

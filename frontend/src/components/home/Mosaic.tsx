@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { usePointerGlow } from '../../hooks/usePointerGlow'
 
 interface Tile {
   to: string
@@ -51,6 +52,8 @@ const TILES: Tile[] = [
  * ocupam duas colunas, e é essa irregularidade que dá o ritmo da seção.
  */
 export function Mosaic() {
+  const onPointerGlow = usePointerGlow()
+
   return (
     <section className="bg-stone-950 py-20 lg:py-28" aria-labelledby="mosaico-title">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
@@ -62,7 +65,7 @@ export function Mosaic() {
               Descubra a livraria
             </h2>
           </div>
-          <span className="hidden h-px flex-1 bg-house-accent/30 sm:block" aria-hidden />
+          <span className="shimmer hidden h-px flex-1 bg-house-accent/25 sm:block" aria-hidden />
         </div>
 
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -70,7 +73,8 @@ export function Mosaic() {
             <li key={tile.to} className={tile.wide ? 'lg:col-span-2' : undefined}>
               <Link
                 to={tile.to}
-                className="group relative flex h-56 flex-col justify-end overflow-hidden rounded-xl ring-1 ring-white/10 transition-all duration-500 hover:ring-house-accent/60 lg:h-64"
+                onMouseMove={onPointerGlow}
+                className="glow-follow group relative flex h-56 flex-col justify-end overflow-hidden rounded-xl ring-1 ring-white/10 transition-all duration-500 hover:ring-house-accent/60 lg:h-64"
               >
                 <img
                   src={tile.image}
