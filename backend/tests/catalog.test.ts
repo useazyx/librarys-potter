@@ -46,7 +46,7 @@ describe('catálogo', () => {
     const ordered = await app.inject({ method: 'GET', url: '/catalog/books?sort=price-desc' })
 
     expect(cheap.json().books.every((book: { price: number }) => book.price <= 300)).toBe(true)
-    expect(ordered.json().books[0].price).toBe(900)
+    expect(ordered.json().books[0].price).toBe(400)
   })
 
   it('devolve o livro com sinopse, estrelas e recomendações', async () => {

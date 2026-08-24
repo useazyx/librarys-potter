@@ -111,7 +111,7 @@ describe('autenticação', () => {
     expect(user.stats.orders).toBe(1)
     expect(user.stats.reviews).toBe(1)
     expect(user.stats.tickets).toBe(1)
-    expect(user.stats.totalSpent).toBe(900)
+    expect(user.stats.totalSpent).toBe(300)
   })
 
   it('redefine a senha pelo fluxo de token e recusa reutilizar o link', async () => {

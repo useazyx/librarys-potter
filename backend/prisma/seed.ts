@@ -1,8 +1,13 @@
 /**
  * Seeds Library's Potter with the catalogue of the original project: the same
- * five books, the same prices and stock levels of bd.sql, and the same cast of
- * users (Agostinho, Japa e Memphis) in their three roles.
+ * five books, prices and stock levels of bd.sql, and the same cast of users
+ * (Agostinho, Japa e Memphis) in their three roles.
  * Synopses and excerpts are new copy — the old database had none.
+ *
+ * One deliberate departure from bd.sql: A Câmara Secreta is priced R$ 300 here
+ * and not the R$ 900 of the old dump. That row carried preço 900, estoque 900
+ * and a sale of quantidade 999 — someone filling the form with mashed digits,
+ * not a real price. `legacy/bd.sql` keeps the original number, as it must.
  */
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
@@ -44,7 +49,8 @@ const BOOKS = [
     slug: 'harry-potter-e-a-camara-secreta',
     title: 'Harry Potter e a Câmara Secreta',
     isbn: '9781234567892',
-    price: 900,
+    // R$ 900 no bd.sql; ver a nota no topo do arquivo.
+    price: 300,
     stock: 900,
     cover: 'camara-secreta',
     pages: 288,
@@ -216,9 +222,9 @@ async function main() {
       code: 'LP-4K7M2P',
       userId: agostinho.id,
       status: 'DELIVERED',
-      subtotal: 900,
+      subtotal: 300,
       shipping: 0,
-      total: 900,
+      total: 300,
       recipient: 'Agostinho Carrara',
       address: 'Rua do Catete, 1010',
       city: 'Rio de Janeiro',
