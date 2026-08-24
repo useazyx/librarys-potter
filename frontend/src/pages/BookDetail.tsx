@@ -215,7 +215,7 @@ export default function BookDetail() {
             </h2>
 
             {book.reviews.length === 0 ? (
-              <p className="mt-6 text-chalk-200/70">
+              <p className="mt-6 text-chalk-200/85">
                 Ninguém avaliou ainda. Se você já leu, seja o primeiro a contar.
               </p>
             ) : (
@@ -241,14 +241,14 @@ export default function BookDetail() {
           </div>
 
           <aside className="space-y-6">
-            <div className="rounded-2xl border border-chalk-100/10 bg-stone-800/70 p-6">
+            <div className="rounded-2xl border border-chalk-100/15 bg-house-surface p-6">
               <p className="eyebrow mb-4">As notas</p>
 
               <div className="flex items-end gap-3">
                 <span className="font-display text-5xl text-house-accent">
                   {book.rating.average.toFixed(1).replace('.', ',')}
                 </span>
-                <span className="pb-2 text-sm text-chalk-300/60">de 5</span>
+                <span className="pb-2 text-sm text-chalk-200/85">de 5</span>
               </div>
 
               <ul className="mt-5 space-y-2">
@@ -256,7 +256,7 @@ export default function BookDetail() {
                   const percentage = totalReviews === 0 ? 0 : (row.count / totalReviews) * 100
 
                   return (
-                    <li key={row.star} className="flex items-center gap-3 text-xs text-chalk-300/70">
+                    <li key={row.star} className="flex items-center gap-3 text-xs text-chalk-200/88">
                       <span className="flex w-8 items-center gap-1">
                         {row.star}
                         <Star size={11} className="text-house-accent" fill="currentColor" aria-hidden />
@@ -332,7 +332,7 @@ function Detail({
 }) {
   return (
     <div>
-      <dt className="flex items-center gap-2 text-[0.62rem] uppercase tracking-[0.18em] text-chalk-300/60">
+      <dt className="flex items-center gap-2 text-[0.62rem] uppercase tracking-[0.18em] text-chalk-200/85">
         <Icon size={13} aria-hidden /> {label}
       </dt>
       <dd className="mt-1.5 text-sm text-chalk-100">{value}</dd>

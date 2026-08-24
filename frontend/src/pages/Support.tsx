@@ -178,11 +178,11 @@ export default function Support() {
 
         <aside className="space-y-6">
           {user && (
-            <div className="rounded-2xl border border-chalk-100/10 bg-stone-800/70 p-7">
+            <div className="rounded-2xl border border-chalk-100/15 bg-house-surface p-7">
               <p className="eyebrow mb-5">Meus chamados</p>
 
               {tickets.length === 0 ? (
-                <p className="text-sm text-chalk-200/70">Você ainda não abriu nenhum chamado.</p>
+                <p className="text-sm text-chalk-200/85">Você ainda não abriu nenhum chamado.</p>
               ) : (
                 <ul className="space-y-4">
                   {tickets.map((ticket) => (
@@ -197,13 +197,13 @@ export default function Support() {
                         >
                           {TICKET_STATUS_LABELS[ticket.status]}
                         </span>
-                        <span className="ml-auto text-[0.65rem] text-chalk-300/50">
+                        <span className="ml-auto text-[0.65rem] text-chalk-300/80">
                           {formatDateTime(ticket.createdAt)}
                         </span>
                       </div>
 
                       <p className="mt-1.5 text-sm text-chalk-100">{ticket.subject}</p>
-                      <p className="text-xs text-chalk-300/60">
+                      <p className="text-xs text-chalk-200/85">
                         Urgência {URGENCY_LABELS[ticket.urgency].toLowerCase()}
                       </p>
 
@@ -219,14 +219,14 @@ export default function Support() {
             </div>
           )}
 
-          <div className="rounded-2xl border border-chalk-100/10 bg-stone-800/70 p-7">
+          <div className="rounded-2xl border border-chalk-100/15 bg-house-surface p-7">
             <p className="eyebrow mb-5">Perguntas frequentes</p>
 
             <dl className="space-y-5">
               {FAQ.map((item) => (
                 <div key={item.question}>
                   <dt className="font-display text-chalk-50">{item.question}</dt>
-                  <dd className="mt-1.5 text-sm leading-relaxed text-chalk-200/70">{item.answer}</dd>
+                  <dd className="mt-1.5 text-sm leading-relaxed text-chalk-200/85">{item.answer}</dd>
                 </div>
               ))}
             </dl>

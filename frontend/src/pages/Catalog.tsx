@@ -8,6 +8,15 @@ import { BookSkeletonGrid } from '../components/ui/Loaders'
 import { api, type BookFilters } from '../lib/api'
 import type { Author, Book, Publisher } from '../types/api'
 
+/** As quatro prateleiras da loja. O livro vem primeiro porque é uma livraria. */
+const KINDS: Array<{ value: string; label: string }> = [
+  { value: '', label: 'Tudo' },
+  { value: 'BOOK', label: 'Livros' },
+  { value: 'BOX_SET', label: 'Caixas' },
+  { value: 'SPECIAL_EDITION', label: 'Edições especiais' },
+  { value: 'COLLECTIBLE', label: 'Artigos de fã' },
+]
+
 const SORTS: Array<{ value: NonNullable<BookFilters['sort']>; label: string }> = [
   { value: 'relevance', label: 'Ordem da saga' },
   { value: 'title', label: 'Título (A–Z)' },
@@ -33,6 +42,7 @@ export default function Catalog() {
   const filters = useMemo<BookFilters>(
     () => ({
       genre: params.get('genre') ?? undefined,
+      kind: (params.get('tipo') as BookFilters['kind']) ?? undefined,
       author: params.get('author') ?? undefined,
       publisher: params.get('publisher') ?? undefined,
       maxPrice: params.get('maxPrice') ? Number(params.get('maxPrice')) : undefined,
@@ -89,6 +99,16 @@ export default function Catalog() {
   }, [books, search])
 
   const activeFilters = ['genre', 'author', 'publisher', 'maxPrice', 'inStock'].filter((key) => params.get(key))
+  const kind = params.get('tipo') ?? ''
+
+  /** Uma varinha não é um livro: o contador acompanha a prateleira aberta. */
+  function contagem(total: number) {
+    if (kind === 'COLLECTIBLE') return total === 1 ? 'artigo' : 'artigos'
+    if (kind === 'BOX_SET') return total === 1 ? 'caixa' : 'caixas'
+    if (kind === 'SPECIAL_EDITION') return total === 1 ? 'edição' : 'edições'
+    if (kind === 'BOOK') return total === 1 ? 'livro' : 'livros'
+    return total === 1 ? 'item' : 'itens'
+  }
 
   return (
     <>
@@ -127,12 +147,43 @@ export default function Catalog() {
         </div>
       </header>
 
-      <div className="sticky top-[72px] z-30 border-y border-chalk-100/10 bg-stone-900/95 backdrop-blur">
+      {/* Prateleiras: o tipo vive na URL (?tipo=), como os outros filtros. */}
+      <nav className="border-b border-chalk-100/15 bg-house-surface" aria-label="Prateleiras">
+        <div className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-6 lg:px-10">
+          {KINDS.map((item) => {
+            const active = kind === item.value
+
+            return (
+              <button
+                key={item.value || 'tudo'}
+                type="button"
+                onClick={() => updateParam('tipo', item.value || undefined)}
+                aria-current={active ? 'page' : undefined}
+                className={
+                  'relative shrink-0 px-5 py-4 text-[0.72rem] uppercase tracking-[0.16em] transition-colors ' +
+                  (active ? 'text-house-accent' : 'text-chalk-200/85 hover:text-chalk-50')
+                }
+              >
+                {item.label}
+                <span
+                  className={
+                    'absolute inset-x-3 bottom-0 h-0.5 origin-center bg-house-accent transition-transform duration-400 ' +
+                    (active ? 'scale-x-100' : 'scale-x-0')
+                  }
+                  aria-hidden
+                />
+              </button>
+            )
+          })}
+        </div>
+      </nav>
+
+      <div className="sticky top-[72px] z-30 border-y border-chalk-100/15 bg-house-bg/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-3 px-6 py-4 lg:px-10">
           <div className="relative flex-1 sm:max-w-xs">
             <Search
               size={16}
-              className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-chalk-300/50"
+              className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-chalk-300/80"
               aria-hidden
             />
             <input
@@ -141,14 +192,14 @@ export default function Catalog() {
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Buscar por título, autor ou ISBN"
               aria-label="Buscar no catálogo"
-              className="w-full rounded-full border border-chalk-100/15 bg-stone-800 py-2.5 pl-10 pr-9 text-sm text-chalk-100 placeholder:text-chalk-300/40 focus:border-house-accent focus:outline-none"
+              className="w-full rounded-full border border-chalk-100/15 bg-house-surface py-2.5 pl-10 pr-9 text-sm text-chalk-100 placeholder:text-chalk-300/40 focus:border-house-accent focus:outline-none"
             />
             {search && (
               <button
                 type="button"
                 onClick={() => setSearch('')}
                 aria-label="Limpar busca"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-chalk-300/60 hover:text-house-accent"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-chalk-200/85 hover:text-house-accent"
               >
                 <X size={15} aria-hidden />
               </button>
@@ -179,7 +230,7 @@ export default function Catalog() {
             value={filters.sort}
             onChange={(event) => updateParam('sort', event.target.value)}
             aria-label="Ordenar por"
-            className="ml-auto rounded-full border border-chalk-100/15 bg-stone-800 px-4 py-2.5 text-sm text-chalk-100 focus:border-house-accent focus:outline-none"
+            className="ml-auto rounded-full border border-chalk-100/15 bg-house-surface px-4 py-2.5 text-sm text-chalk-100 focus:border-house-accent focus:outline-none"
           >
             {SORTS.map((option) => (
               <option key={option.value} value={option.value}>
@@ -196,7 +247,7 @@ export default function Catalog() {
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="overflow-hidden border-t border-chalk-100/10"
+              className="overflow-hidden border-t border-chalk-100/15"
             >
               <div className="mx-auto grid max-w-7xl gap-6 px-6 py-6 sm:grid-cols-2 lg:grid-cols-4 lg:px-10">
                 <FilterSelect
@@ -223,7 +274,7 @@ export default function Catalog() {
                 <div>
                   <label
                     htmlFor="maxPrice"
-                    className="mb-2 block text-[0.66rem] uppercase tracking-[0.2em] text-chalk-300/70"
+                    className="mb-2 block text-[0.66rem] uppercase tracking-[0.2em] text-chalk-200/88"
                   >
                     Até R$ {params.get('maxPrice') ?? '1000'}
                   </label>
@@ -240,7 +291,7 @@ export default function Catalog() {
                     className="w-full accent-[var(--house-accent)]"
                   />
 
-                  <label className="mt-4 flex items-center gap-2 text-sm text-chalk-200/80">
+                  <label className="mt-4 flex items-center gap-2 text-sm text-chalk-200/90">
                     <input
                       type="checkbox"
                       checked={params.get('inStock') === 'true'}
@@ -272,12 +323,12 @@ export default function Catalog() {
         ) : visible.length === 0 ? (
           <div className="py-24 text-center">
             <p className="font-display text-3xl text-chalk-50">Nenhum livro com esse feitiço.</p>
-            <p className="mt-3 text-chalk-200/70">Tente outro termo ou limpe os filtros.</p>
+            <p className="mt-3 text-chalk-200/85">Tente outro termo ou limpe os filtros.</p>
           </div>
         ) : (
           <>
-            <p className="mb-8 text-[0.68rem] uppercase tracking-[0.2em] text-chalk-300/60" aria-live="polite">
-              {visible.length} {visible.length === 1 ? 'livro' : 'livros'}
+            <p className="mb-8 text-[0.68rem] uppercase tracking-[0.2em] text-chalk-200/85" aria-live="polite">
+              {visible.length} {contagem(visible.length)}
             </p>
 
             <motion.div layout className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -304,13 +355,13 @@ interface FilterSelectProps {
 function FilterSelect({ label, value, onChange, options }: FilterSelectProps) {
   return (
     <div>
-      <label className="mb-2 block text-[0.66rem] uppercase tracking-[0.2em] text-chalk-300/70">
+      <label className="mb-2 block text-[0.66rem] uppercase tracking-[0.2em] text-chalk-200/88">
         {label}
       </label>
       <select
         value={value}
         onChange={(event) => onChange(event.target.value || undefined)}
-        className="w-full rounded-lg border border-chalk-100/15 bg-stone-800 px-4 py-2.5 text-sm text-chalk-100 focus:border-house-accent focus:outline-none"
+        className="w-full rounded-lg border border-chalk-100/15 bg-house-surface px-4 py-2.5 text-sm text-chalk-100 focus:border-house-accent focus:outline-none"
       >
         <option value="">Todos</option>
         {options.map((option) => (

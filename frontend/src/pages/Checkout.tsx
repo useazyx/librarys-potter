@@ -69,7 +69,7 @@ export default function Checkout() {
         <p className="eyebrow mb-3">A coruja já partiu</p>
         <h1 className="font-display text-4xl text-chalk-50 sm:text-5xl">Pedido {placed.code} confirmado</h1>
 
-        <p className="mt-5 text-chalk-200/80">
+        <p className="mt-5 text-chalk-200/90">
           {placed.items.reduce((sum, item) => sum + item.quantity, 0)} livro(s) a caminho de{' '}
           <strong className="text-chalk-50">{placed.delivery.city}</strong>. Total de{' '}
           <strong className="text-house-accent">{formatPrice(placed.total)}</strong>.
@@ -96,7 +96,7 @@ export default function Checkout() {
     return (
       <section className="mx-auto flex min-h-[70vh] max-w-xl flex-col items-center justify-center px-6 text-center">
         <h1 className="font-display text-4xl text-chalk-50">Nada para finalizar</h1>
-        <p className="mt-4 text-chalk-200/70">Seu carrinho está vazio.</p>
+        <p className="mt-4 text-chalk-200/85">Seu carrinho está vazio.</p>
         <div className="mt-10">
           <ButtonLink to="/catalogo" size="lg" variant="house">
             Ver o catálogo
@@ -185,7 +185,7 @@ export default function Checkout() {
         </form>
 
         <aside className="lg:sticky lg:top-28 lg:h-fit">
-          <div className="rounded-2xl border border-chalk-100/10 bg-stone-800/70 p-8">
+          <div className="rounded-2xl border border-chalk-100/15 bg-house-surface p-8">
             <h2 className="font-display text-2xl text-chalk-50">Seu pedido</h2>
 
             <ul className="mt-6 space-y-4">
@@ -199,7 +199,7 @@ export default function Checkout() {
                   />
                   <div className="min-w-0 flex-1 text-sm">
                     <p className="text-chalk-100">{line.book.title}</p>
-                    <p className="text-chalk-300/60">
+                    <p className="text-chalk-200/85">
                       {line.quantity}× {formatPrice(line.book.price)}
                     </p>
                   </div>
@@ -208,21 +208,21 @@ export default function Checkout() {
               ))}
             </ul>
 
-            <dl className="mt-6 space-y-3 border-t border-chalk-100/10 pt-6 text-sm">
+            <dl className="mt-6 space-y-3 border-t border-chalk-100/15 pt-6 text-sm">
               <div className="flex justify-between">
-                <dt className="text-chalk-300/70">Subtotal</dt>
+                <dt className="text-chalk-200/88">Subtotal</dt>
                 <dd className="text-chalk-100">{formatPrice(cart.subtotal)}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-chalk-300/70">Frete</dt>
+                <dt className="text-chalk-200/88">Frete</dt>
                 <dd className="text-chalk-100">
                   {cart.shipping === 0 ? 'Grátis' : formatPrice(cart.shipping)}
                 </dd>
               </div>
             </dl>
 
-            <div className="mt-5 flex items-end justify-between border-t border-chalk-100/10 pt-5">
-              <span className="text-[0.68rem] uppercase tracking-[0.22em] text-chalk-300/70">Total</span>
+            <div className="mt-5 flex items-end justify-between border-t border-chalk-100/15 pt-5">
+              <span className="text-[0.68rem] uppercase tracking-[0.22em] text-chalk-200/88">Total</span>
               <span className="font-display text-3xl text-house-accent">{formatPrice(cart.total)}</span>
             </div>
           </div>

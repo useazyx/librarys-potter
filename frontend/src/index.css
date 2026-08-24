@@ -73,6 +73,13 @@
   --house-ink: #f7f8fa;
   /* Trio RGB do acento, para lavagens com transparência. */
   --house-glow: 170 182 195;
+  /*
+    Fundo da página e superfície dos cartões. É aqui que a casa deixa de ser um
+    detalhe e passa a pintar o site inteiro: o `body` e todo painel elevado saem
+    destes dois tokens, não de um cinza fixo.
+  */
+  --house-bg: #101116;
+  --house-surface: #1b1d24;
 }
 
 [data-house='grifinoria'] {
@@ -81,6 +88,8 @@
   --house-accent: #d3a625;
   --house-ink: #fff6e2;
   --house-glow: 211 166 37;
+  --house-bg: #150a09;
+  --house-surface: #241110;
 }
 
 [data-house='sonserina'] {
@@ -89,6 +98,8 @@
   --house-accent: #a7bcc2;
   --house-ink: #eef5f3;
   --house-glow: 167 188 194;
+  --house-bg: #08150f;
+  --house-surface: #0f2419;
 }
 
 [data-house='corvinal'] {
@@ -97,6 +108,8 @@
   --house-accent: #b08d4f;
   --house-ink: #eef1fb;
   --house-glow: 176 141 79;
+  --house-bg: #080c18;
+  --house-surface: #101529;
 }
 
 [data-house='lufa-lufa'] {
@@ -105,6 +118,8 @@
   --house-accent: #ecb939;
   --house-ink: #fff8e6;
   --house-glow: 236 185 57;
+  --house-bg: #140f04;
+  --house-surface: #221a08;
 }
 
 /* `inline` mantém a referência à variável, em vez de congelar o valor atual. */
@@ -113,6 +128,8 @@
   --color-house-mid: var(--house-mid);
   --color-house-accent: var(--house-accent);
   --color-house-ink: var(--house-ink);
+  --color-house-bg: var(--house-bg);
+  --color-house-surface: var(--house-surface);
 }
 
 @layer base {
@@ -121,7 +138,8 @@
   }
 
   body {
-    background-color: var(--color-stone-900);
+    background-color: var(--house-bg);
+    transition: background-color 0.9s var(--ease-castle);
     color: var(--color-chalk-100);
     font-family: var(--font-sans);
     font-size: 16px;
@@ -170,7 +188,7 @@
     lavagens saem de `--house-glow`, o fundo inteiro muda com a casa escolhida.
   */
   .bg-castle {
-    background-color: var(--color-stone-900);
+    background-color: var(--house-bg);
     background-image:
       radial-gradient(at 15% 0%, rgb(var(--house-glow) / 0.14), transparent 55%),
       radial-gradient(at 85% 90%, rgb(var(--house-glow) / 0.08), transparent 50%);
@@ -178,9 +196,14 @@
   }
 
   /* Bloco de pedra encaixado: usado por cartões e painéis. */
+  /*
+    Painel elevado. Sai de `--house-surface`, então o cartão da Sonserina é
+    esverdeado e o da Corvinal é azulado — a casa não fica só na borda.
+    A borda é mais clara que antes: os painéis estavam sumindo no fundo.
+  */
   .surface-stone {
-    background-color: var(--color-stone-800);
-    border: 1px solid rgb(255 255 255 / 0.06);
+    background-color: var(--house-surface);
+    border: 1px solid rgb(255 255 255 / 0.10);
     color: var(--color-chalk-100);
   }
 
@@ -213,7 +236,7 @@
     imersão.
   */
   .bg-masonry {
-    background-color: var(--color-stone-800);
+    background-color: var(--house-surface);
     background-image:
       radial-gradient(at 20% 0%, rgb(var(--house-glow) / 0.1), transparent 55%),
       radial-gradient(at 80% 100%, rgb(var(--house-glow) / 0.07), transparent 50%);

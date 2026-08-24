@@ -36,7 +36,7 @@ export default function Home() {
       <Hero book={books[0]} />
 
       {/* Faixa fina de números, colada no hero: separa sem abrir um respiro inteiro. */}
-      <section className="border-y border-chalk-100/10 bg-stone-800" aria-label="A saga em números">
+      <section className="border-y border-chalk-100/15 bg-house-surface" aria-label="A saga em números">
         <dl className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-chalk-100/10 px-6 lg:grid-cols-4 lg:px-10">
           {[
             ['7', 'livros na saga'],
@@ -74,9 +74,9 @@ export default function Home() {
         neutro de propósito: com `surface-house` esta seção ficava da mesma cor da
         coluna escolhida na faixa logo acima, e as duas viravam uma mancha só.
       */}
-      <section className="border-t-2 border-house-accent bg-stone-900 py-20 lg:py-28" aria-labelledby="saga-title">
+      <section className="border-t-2 border-house-accent bg-house-bg py-20 lg:py-28" aria-labelledby="saga-title">
         <div ref={revealRef} className="mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="flex flex-wrap items-end justify-between gap-6 border-b border-chalk-100/12 pb-10">
+          <div className="flex flex-wrap items-end justify-between gap-6 border-b border-chalk-100/16 pb-10">
             <h2
               id="saga-title"
               className="max-w-2xl text-balance font-display text-4xl leading-tight text-chalk-50 sm:text-5xl"
@@ -124,7 +124,7 @@ export default function Home() {
               const Icon = promise.icon
 
               return (
-                <li key={promise.title} className="flex gap-4 border-t border-chalk-100/12 pt-6">
+                <li key={promise.title} className="flex gap-4 border-t border-chalk-100/16 pt-6">
                   <Icon size={20} className="mt-1 shrink-0 text-house-accent" aria-hidden />
                   <div>
                     <h3 className="font-display text-base text-chalk-50">{promise.title}</h3>
@@ -138,7 +138,7 @@ export default function Home() {
       </section>
 
       {/* Fecho: faixa larga com a foto à direita e o texto à esquerda. */}
-      <section className="relative overflow-hidden bg-stone-950" aria-labelledby="cta-title">
+      <section className="relative overflow-hidden bg-house-bg" aria-labelledby="cta-title">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 py-20 lg:grid-cols-2 lg:px-10 lg:py-24">
           <div>
             <p className="eyebrow mb-4">Sua carta chegou</p>

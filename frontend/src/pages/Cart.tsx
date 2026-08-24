@@ -77,7 +77,7 @@ export default function CartPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, x: -60, height: 0, marginBottom: 0 }}
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                className="flex gap-5 overflow-hidden rounded-2xl border border-chalk-100/10 bg-stone-800/70 p-5"
+                className="flex gap-5 overflow-hidden rounded-2xl border border-chalk-100/15 bg-house-surface p-5"
               >
                 <Link to={'/livro/' + line.book.slug} className="shrink-0">
                   <img
@@ -96,8 +96,8 @@ export default function CartPage() {
                           {line.book.title}
                         </Link>
                       </h2>
-                      <p className="mt-1 text-sm text-chalk-300/70">{line.book.author}</p>
-                      <p className="mt-2 text-xs text-chalk-300/50">
+                      <p className="mt-1 text-sm text-chalk-200/88">{line.book.author}</p>
+                      <p className="mt-2 text-xs text-chalk-300/80">
                         {formatPrice(line.book.price)} a unidade
                       </p>
                     </div>
@@ -106,7 +106,7 @@ export default function CartPage() {
                       type="button"
                       onClick={() => remove(line.id)}
                       aria-label={'Remover ' + line.book.title}
-                      className="shrink-0 rounded-full p-2 text-chalk-300/60 transition hover:bg-house-mid/15 hover:text-house-mid"
+                      className="shrink-0 rounded-full p-2 text-chalk-200/85 transition hover:bg-house-mid/15 hover:text-house-mid"
                     >
                       <Trash2 size={17} aria-hidden />
                     </button>
@@ -201,11 +201,11 @@ export default function CartPage() {
 function EmptyState({ title, text, action }: { title: string; text: string; action: React.ReactNode }) {
   return (
     <section className="mx-auto flex min-h-[70vh] max-w-xl flex-col items-center justify-center px-6 py-32 text-center">
-      <div className="mb-8 rounded-full border border-chalk-100/15 p-6 text-chalk-200/70">
+      <div className="mb-8 rounded-full border border-chalk-100/15 p-6 text-chalk-200/85">
         <ShoppingBag size={44} aria-hidden />
       </div>
       <h1 className="font-display text-4xl text-chalk-50">{title}</h1>
-      <p className="mt-4 text-chalk-200/70">{text}</p>
+      <p className="mt-4 text-chalk-200/85">{text}</p>
       <div className="mt-10">{action}</div>
     </section>
   )

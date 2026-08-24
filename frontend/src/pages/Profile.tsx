@@ -159,7 +159,7 @@ export default function Profile() {
                 aria-current={active ? 'page' : undefined}
                 className={
                   'relative inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[0.72rem] uppercase tracking-[0.16em] transition-colors ' +
-                  (active ? 'text-chalk-50' : 'text-chalk-200/70 hover:text-house-accent')
+                  (active ? 'text-chalk-50' : 'text-chalk-200/85 hover:text-house-accent')
                 }
               >
                 {active && (
@@ -499,7 +499,7 @@ function Empty({ text, to, action }: { text: string; to?: string; action?: strin
   return (
     <div className="col-span-full rounded-2xl border border-dashed border-chalk-200/25 p-12 text-center">
       <UserRound size={32} className="mx-auto mb-4 text-chalk-200/40" aria-hidden />
-      <p className="text-chalk-200/75">{text}</p>
+      <p className="text-chalk-200/88">{text}</p>
 
       {to && action && (
         <div className="mt-6">

@@ -53,19 +53,19 @@ export function AuthLayout({ title, subtitle, children }: AuthLayoutProps) {
         </div>
       </div>
 
-      <div className="flex items-center justify-center bg-stone-900 px-6 py-32 lg:px-16">
+      <div className="flex items-center justify-center bg-house-bg px-6 py-32 lg:px-16">
         <div className="rise-in w-full max-w-md">
           <Link to="/" className="mb-10 inline-flex items-center gap-3">
             <span className="grid h-10 w-10 place-items-center rounded-full border border-house-accent/50 font-display text-xs text-house-accent">
               LP
             </span>
-            <span className="text-[0.66rem] uppercase tracking-[0.3em] text-chalk-300/70">
+            <span className="text-[0.66rem] uppercase tracking-[0.3em] text-chalk-200/88">
               Library&apos;s Potter
             </span>
           </Link>
 
           <h1 className="font-display text-4xl text-chalk-50">{title}</h1>
-          <p className="mb-10 mt-3 text-chalk-200/75">{subtitle}</p>
+          <p className="mb-10 mt-3 text-chalk-200/88">{subtitle}</p>
 
           <div className="surface-paper rounded-2xl p-8 shadow-book">{children}</div>
         </div>

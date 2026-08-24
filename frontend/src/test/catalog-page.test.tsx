@@ -100,7 +100,7 @@ describe('Catalog page', () => {
       expect(screen.getByText('Harry Potter e a Pedra Filosofal')).toBeInTheDocument(),
     )
     expect(screen.getByText('Harry Potter e a Câmara Secreta')).toBeInTheDocument()
-    expect(screen.getByText('2 livros')).toBeInTheDocument()
+    expect(screen.getByText('2 itens')).toBeInTheDocument()
   })
 
   it('filters as the visitor types', async () => {
@@ -116,7 +116,7 @@ describe('Catalog page', () => {
       expect(screen.queryByText('Harry Potter e a Pedra Filosofal')).not.toBeInTheDocument(),
     )
     expect(screen.getByText('Harry Potter e a Câmara Secreta')).toBeInTheDocument()
-    expect(screen.getByText('1 livro')).toBeInTheDocument()
+    expect(screen.getByText('1 item')).toBeInTheDocument()
   })
 
   it('finds a book by its ISBN, like the old consultalivros', async () => {
@@ -128,7 +128,7 @@ describe('Catalog page', () => {
 
     await userEvent.type(screen.getByLabelText('Buscar no catálogo'), '9788532511010')
 
-    await waitFor(() => expect(screen.getByText('1 livro')).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText('1 item')).toBeInTheDocument())
   })
 
   it('shows a friendly message when nothing matches', async () => {

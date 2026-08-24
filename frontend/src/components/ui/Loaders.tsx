@@ -34,14 +34,14 @@ export function BrandLoader({ label = 'Abrindo a biblioteca…' }: { label?: str
         </motion.text>
       </svg>
 
-      <p className="font-serif text-xl italic text-chalk-200/80">{label}</p>
+      <p className="font-serif text-xl italic text-chalk-200/90">{label}</p>
     </div>
   )
 }
 
 export function BookSkeleton() {
   return (
-    <div className="overflow-hidden rounded-2xl bg-stone-800/70 p-5">
+    <div className="overflow-hidden rounded-2xl bg-house-surface p-5">
       <div className="mb-5 aspect-[2/3] w-full animate-pulse rounded-lg bg-stone-700" />
       <div className="space-y-3">
         <div className="h-4 w-3/4 animate-pulse rounded bg-stone-700" />

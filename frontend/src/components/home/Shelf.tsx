@@ -49,7 +49,7 @@ export function Shelf({ title, eyebrow, description, books }: ShelfProps) {
             <h2 id="shelf-title" className="font-display text-4xl text-chalk-50 sm:text-5xl">
               {title}
             </h2>
-            <p className="mt-4 max-w-xl text-chalk-200/70">{description}</p>
+            <p className="mt-4 max-w-xl text-chalk-200/85">{description}</p>
           </div>
 
           <div className="flex gap-3">

@@ -55,7 +55,7 @@ export function Mosaic() {
   const onPointerGlow = usePointerGlow()
 
   return (
-    <section className="bg-stone-950 py-20 lg:py-28" aria-labelledby="mosaico-title">
+    <section className="bg-house-bg py-20 lg:py-28" aria-labelledby="mosaico-title">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         {/* Cabeçalho alinhado à esquerda, com a régua da casa ao lado do título. */}
         <div className="mb-12 flex flex-wrap items-end justify-between gap-6">

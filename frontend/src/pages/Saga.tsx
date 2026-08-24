@@ -170,7 +170,7 @@ export default function Saga() {
                   <div className={index % 2 === 1 ? 'lg:pr-12 lg:text-right' : 'lg:pl-12'}>
                     <p className="font-display text-4xl text-house-accent">{chapter.year}</p>
                     <h3 className="mt-3 font-display text-2xl text-chalk-50">{chapter.title}</h3>
-                    <p className="mt-4 leading-relaxed text-chalk-200/80">{chapter.text}</p>
+                    <p className="mt-4 leading-relaxed text-chalk-200/90">{chapter.text}</p>
                   </div>
                 </li>
               ))}
@@ -190,7 +190,7 @@ export default function Saga() {
               transition={{ duration: 0.7 }}
             >
               <dt className="font-display text-5xl text-house-accent">{number.value}</dt>
-              <dd className="mt-2 text-[0.68rem] uppercase tracking-[0.2em] text-chalk-300/70">
+              <dd className="mt-2 text-[0.68rem] uppercase tracking-[0.2em] text-chalk-200/88">
                 {number.label}
               </dd>
             </motion.div>
@@ -203,7 +203,7 @@ export default function Saga() {
           <p className="font-serif text-3xl italic text-house-accent">
             &ldquo;Ajuda sempre será dada em Hogwarts a quem pedir.&rdquo;
           </p>
-          <p className="mt-6 text-chalk-200/80">
+          <p className="mt-6 text-chalk-200/90">
             Comece — ou recomece — a leitura pela edição que estava faltando na sua estante.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">

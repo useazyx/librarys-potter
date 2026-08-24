@@ -31,7 +31,7 @@ const SECTIONS = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-chalk-100/10 bg-stone-800">
+    <footer className="border-t border-chalk-100/15 bg-house-surface">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-[1.6fr_1fr_1fr_1.2fr] lg:px-10">
         <div>
           <div className="mb-5 flex items-center gap-3">
@@ -41,7 +41,7 @@ export function Footer() {
             <span className="font-display text-xl text-chalk-100">Library&apos;s Potter</span>
           </div>
 
-          <p className="max-w-sm text-sm leading-relaxed text-chalk-200/70">
+          <p className="max-w-sm text-sm leading-relaxed text-chalk-200/85">
             Uma livraria dedicada à maior saga bruxa de todos os tempos: sete livros, 450 milhões de exemplares
             vendidos, 78 idiomas — e uma prateleira sempre reservada para quem está começando agora.
           </p>
@@ -57,7 +57,7 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               {section.links.map((link) => (
                 <li key={link.to}>
-                  <Link to={link.to} className="link-underline text-chalk-200/80 hover:text-chalk-50">
+                  <Link to={link.to} className="link-underline text-chalk-200/90 hover:text-chalk-50">
                     {link.label}
                   </Link>
                 </li>
@@ -68,7 +68,7 @@ export function Footer() {
 
         <div>
           <h3 className="mb-5 text-[0.68rem] uppercase tracking-[0.3em] text-house-accent">Onde nos achar</h3>
-          <ul className="space-y-4 text-sm text-chalk-200/80">
+          <ul className="space-y-4 text-sm text-chalk-200/90">
             <li className="flex items-start gap-3">
               <MapPin size={18} className="mt-0.5 shrink-0 text-ember-400" aria-hidden />
               <span>{STORE.address}</span>
@@ -93,7 +93,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-chalk-100/10 py-6 text-center text-xs text-chalk-300/50">
+      <div className="border-t border-chalk-100/15 py-6 text-center text-xs text-chalk-300/80">
         © {STORE.since}–{new Date().getFullYear()} Library&apos;s Potter · Todos os direitos reservados ·{' '}
         <a href="/CREDITOS-IMAGENS.md" className="link-underline">
           créditos das imagens

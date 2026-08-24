@@ -62,9 +62,9 @@ export function HouseSwitch() {
       {open && (
         <div
           role="menu"
-          className="absolute right-0 top-full z-50 mt-3 w-64 overflow-hidden rounded-2xl border border-chalk-100/12 bg-stone-800 shadow-book"
+          className="absolute right-0 top-full z-50 mt-3 w-64 overflow-hidden rounded-2xl border border-chalk-100/16 bg-house-surface shadow-book"
         >
-          <p className="border-b border-chalk-100/10 px-4 py-3 text-[0.62rem] uppercase tracking-[0.28em] text-chalk-300">
+          <p className="border-b border-chalk-100/15 px-4 py-3 text-[0.62rem] uppercase tracking-[0.28em] text-chalk-300">
             O Chapéu Seletor
           </p>
 
@@ -97,7 +97,7 @@ export function HouseSwitch() {
               setHouse(null)
               setOpen(false)
             }}
-            className="w-full border-t border-chalk-100/10 px-4 py-3 text-left text-[0.7rem] uppercase tracking-[0.2em] text-chalk-300 transition-colors hover:bg-chalk-100/8 hover:text-chalk-100"
+            className="w-full border-t border-chalk-100/15 px-4 py-3 text-left text-[0.7rem] uppercase tracking-[0.2em] text-chalk-300 transition-colors hover:bg-chalk-100/8 hover:text-chalk-100"
           >
             Voltar ao castelo neutro
           </button>

@@ -285,7 +285,7 @@ export default function Dashboard() {
                 aria-current={active ? 'page' : undefined}
                 className={
                   'relative inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[0.72rem] uppercase tracking-[0.16em] transition-colors ' +
-                  (active ? 'text-chalk-50' : 'text-chalk-200/70 hover:text-house-accent')
+                  (active ? 'text-chalk-50' : 'text-chalk-200/85 hover:text-house-accent')
                 }
               >
                 {active && (
@@ -515,7 +515,7 @@ export default function Dashboard() {
                           'rounded-full border px-4 py-2 text-[0.68rem] uppercase tracking-[0.14em] transition-colors ' +
                           (statusFilter === value
                             ? 'border-house-accent text-house-accent'
-                            : 'border-chalk-200/25 text-chalk-200/70 hover:border-house-accent/60')
+                            : 'border-chalk-200/25 text-chalk-200/85 hover:border-house-accent/60')
                         }
                       >
                         {label}
@@ -526,7 +526,7 @@ export default function Dashboard() {
 
                 <div className="space-y-5">
                   {visibleTickets.length === 0 && (
-                    <p className="rounded-2xl border border-dashed border-chalk-200/25 p-12 text-center text-chalk-200/70">
+                    <p className="rounded-2xl border border-dashed border-chalk-200/25 p-12 text-center text-chalk-200/85">
                       Nenhum chamado nessa situação.
                     </p>
                   )}

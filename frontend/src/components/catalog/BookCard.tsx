@@ -56,7 +56,7 @@ export function BookCard({ book, index = 0 }: BookCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: Math.min(index, 8) * 0.05, ease: [0.22, 1, 0.36, 1] }}
       onMouseMove={onPointerGlow}
-      className="glow-follow group flex h-full flex-col rounded-2xl border border-chalk-100/10 bg-stone-800/70 p-5 transition-colors duration-500 hover:border-house-accent/45"
+      className="glow-follow group flex h-full flex-col rounded-2xl border border-chalk-100/15 bg-house-surface p-5 transition-colors duration-500 hover:border-house-accent/45"
     >
       <Link
         to={'/livro/' + book.slug}
@@ -85,7 +85,7 @@ export function BookCard({ book, index = 0 }: BookCardProps) {
       </Link>
 
       <div className="flex flex-1 flex-col">
-        <p className="text-[0.66rem] uppercase tracking-[0.2em] text-chalk-300/60">{(book.author?.name ?? KIND_LABEL[book.kind])}</p>
+        <p className="text-[0.66rem] uppercase tracking-[0.2em] text-chalk-200/85">{(book.author?.name ?? KIND_LABEL[book.kind])}</p>
 
         <h3 className="mt-2 font-display text-lg leading-snug text-chalk-50">
           <Link to={'/livro/' + book.slug} className="link-underline">
@@ -95,7 +95,7 @@ export function BookCard({ book, index = 0 }: BookCardProps) {
 
         <div className="mt-3 flex items-center gap-2">
           <Stars value={book.rating.average} size={14} />
-          <span className="text-xs text-chalk-300/60">
+          <span className="text-xs text-chalk-200/85">
             {book.rating.count === 0
               ? 'sem avaliações'
               : book.rating.count === 1
@@ -104,9 +104,9 @@ export function BookCard({ book, index = 0 }: BookCardProps) {
           </span>
         </div>
 
-        <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-chalk-200/70">{book.synopsis}</p>
+        <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-chalk-200/85">{book.synopsis}</p>
 
-        <div className="mt-5 flex items-center justify-between gap-3 border-t border-chalk-100/10 pt-4">
+        <div className="mt-5 flex items-center justify-between gap-3 border-t border-chalk-100/15 pt-4">
           <div>
             <span className="font-display text-xl text-house-accent">{formatPrice(book.price)}</span>
             {!soldOut && book.stock <= 5 && (

@@ -41,7 +41,7 @@ export function Header() {
         // Barra solida desde o topo: nada de cabecalho transparente sobre uma
         // foto de tela cheia. A regua na cor da casa marca o limite.
         'fixed inset-x-0 top-0 z-50 border-b border-house-accent/25 backdrop-blur-md transition-shadow duration-500 ' +
-        (scrolled ? 'bg-stone-950/95 shadow-stone' : 'bg-stone-950/80')
+        (scrolled ? 'bg-house-bg/95 shadow-stone' : 'bg-house-bg/85')
       }
     >
       <div className="mx-auto flex max-w-7xl items-center gap-6 px-5 py-3.5 lg:gap-12 lg:px-10">
@@ -51,7 +51,7 @@ export function Header() {
           </span>
           <span className="hidden flex-col leading-none sm:flex">
             <span className="font-display text-lg tracking-wide text-chalk-100">Library&apos;s Potter</span>
-            <span className="text-[0.58rem] uppercase tracking-[0.32em] text-chalk-300/70">
+            <span className="text-[0.58rem] uppercase tracking-[0.32em] text-chalk-200/88">
               A livraria da saga
             </span>
           </span>
@@ -137,7 +137,7 @@ export function Header() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden border-t border-chalk-100/10 bg-stone-900 lg:hidden"
+            className="overflow-hidden border-t border-chalk-100/15 bg-house-bg lg:hidden"
             aria-label="Menu móvel"
           >
             <div className="flex flex-col gap-1 px-6 py-5">
