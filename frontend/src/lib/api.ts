@@ -1,4 +1,5 @@
 import type {
+  ProductKind,
   Author,
   Book,
   BookDetail,
@@ -81,6 +82,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
 
 export type BookFilters = {
   search?: string
+  kind?: ProductKind
   genre?: string
   author?: string
   publisher?: string

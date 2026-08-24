@@ -89,6 +89,224 @@ const BOOKS = [
     excerpt:
       'A felicidade pode ser encontrada mesmo nas horas mais sombrias, se a pessoa lembrar de acender a luz.',
   },
+  {
+    slug: 'harry-potter-e-a-ordem-da-fenix',
+    title: 'Harry Potter e a Ordem da Fênix',
+    isbn: '9781234567895',
+    price: 340,
+    stock: 60,
+    cover: 'ordem-da-fenix',
+    ext: 'svg',
+    pages: 704,
+    publishedAt: '2003-06-21',
+    synopsis:
+      'Ninguém acredita em Harry quando ele diz que Voldemort voltou. O Ministério ocupa Hogwarts, a escola vira um lugar hostil e um grupo de alunos decide aprender a se defender por conta própria. O livro mais longo e mais raivoso da saga, e também o mais sobre luto.',
+    excerpt:
+      'Nós temos algo que Voldemort não tem: algo pelo que vale a pena lutar.',
+  },
+  {
+    slug: 'harry-potter-e-as-reliquias-da-morte',
+    title: 'Harry Potter e as Relíquias da Morte',
+    isbn: '9781234567896',
+    price: 360,
+    stock: 45,
+    cover: 'reliquias-da-morte',
+    ext: 'svg',
+    pages: 592,
+    publishedAt: '2007-07-21',
+    synopsis:
+      'Sem escola, sem professores e sem um plano completo, Harry, Rony e Hermione saem à caça das Horcruxes. O desfecho cobra o preço de tudo o que veio antes e responde à pergunta que a saga vinha fazendo desde a primeira carta: o que fazer com a morte.',
+    excerpt:
+      'Não tenha pena dos mortos, Harry. Tenha pena dos vivos e, acima de tudo, daqueles que vivem sem amor.',
+  },
+]
+
+
+/**
+ * O que a livraria vende além dos volumes avulsos. Os livros continuam sendo o
+ * centro — caixas e edições especiais são livros, e os artigos de fã ficam na
+ * borda do acervo, sem autor nem ISBN, como manda o modelo.
+ */
+const EXTRAS = [
+  {
+    slug: 'caixa-colecao-completa',
+    title: 'Coleção Harry Potter — sete volumes',
+    kind: 'BOX_SET' as const,
+    isbn: '9781234567900',
+    price: 1900,
+    stock: 25,
+    cover: 'box-completa',
+    genre: 'Coleção',
+    pages: 3407,
+    biblio: true,
+    synopsis:
+      'Os sete anos em Hogwarts numa caixa só, das edições brasileiras da Rocco. É a saga inteira, do armário sob a escada ao duelo final, com as lombadas formando a lombada maior quando os livros estão lado a lado na estante.',
+  },
+  {
+    slug: 'caixa-primeiros-anos',
+    title: 'Caixa Hogwarts — os três primeiros anos',
+    kind: 'BOX_SET' as const,
+    isbn: '9781234567901',
+    price: 820,
+    stock: 30,
+    cover: 'box-inicio',
+    genre: 'Coleção',
+    pages: 904,
+    biblio: true,
+    synopsis:
+      'A Pedra Filosofal, a Câmara Secreta e o Prisioneiro de Azkaban — os três livros em que Hogwarts ainda é, sobretudo, uma escola. A porta de entrada mais comum para quem vai começar a saga agora.',
+  },
+  {
+    slug: 'pedra-filosofal-edicao-ilustrada',
+    title: 'A Pedra Filosofal — Edição Ilustrada',
+    kind: 'SPECIAL_EDITION' as const,
+    isbn: '9781234567902',
+    price: 420,
+    stock: 40,
+    cover: 'ed-ilustrada',
+    genre: 'Edição especial',
+    pages: 256,
+    biblio: true,
+    synopsis:
+      'O primeiro ano em formato grande, capa dura e ilustração em cada abertura de capítulo. É o mesmo texto que todo mundo conhece, num objeto feito para ficar aberto sobre a mesa em vez de guardado na estante.',
+  },
+  {
+    slug: 'pedra-filosofal-edicao-grifinoria',
+    title: 'A Pedra Filosofal — Edição Grifinória',
+    kind: 'SPECIAL_EDITION' as const,
+    house: 'grifinoria',
+    isbn: '9781234567903',
+    price: 260,
+    stock: 35,
+    cover: 'ed-grifinoria',
+    genre: 'Edição especial',
+    pages: 264,
+    biblio: true,
+    synopsis:
+      'Edição comemorativa vestida de Grifinória: capa dura em bordô e ouro, brasão em relevo e um caderno final sobre a casa da coragem — quem entrou nela, o que a define e por que o Chapéu hesita tanto diante de alguns alunos.',
+  },
+  {
+    slug: 'pedra-filosofal-edicao-sonserina',
+    title: 'A Pedra Filosofal — Edição Sonserina',
+    kind: 'SPECIAL_EDITION' as const,
+    house: 'sonserina',
+    isbn: '9781234567904',
+    price: 260,
+    stock: 35,
+    cover: 'ed-sonserina',
+    genre: 'Edição especial',
+    pages: 264,
+    biblio: true,
+    synopsis:
+      'Edição comemorativa vestida de Sonserina: capa dura em verde e prata, brasão em relevo e um caderno final sobre a casa da ambição — a mais mal compreendida das quatro, e a que mais rende discussão entre leitores.',
+  },
+  {
+    slug: 'pedra-filosofal-edicao-corvinal',
+    title: 'A Pedra Filosofal — Edição Corvinal',
+    kind: 'SPECIAL_EDITION' as const,
+    house: 'corvinal',
+    isbn: '9781234567905',
+    price: 260,
+    stock: 35,
+    cover: 'ed-corvinal',
+    genre: 'Edição especial',
+    pages: 264,
+    biblio: true,
+    synopsis:
+      'Edição comemorativa vestida de Corvinal: capa dura em azul e bronze, brasão em relevo e um caderno final sobre a casa da sabedoria, com as charadas que a aldrava da Torre faz a quem quer entrar.',
+  },
+  {
+    slug: 'pedra-filosofal-edicao-lufa-lufa',
+    title: 'A Pedra Filosofal — Edição Lufa-Lufa',
+    kind: 'SPECIAL_EDITION' as const,
+    house: 'lufa-lufa',
+    isbn: '9781234567906',
+    price: 260,
+    stock: 35,
+    cover: 'ed-lufa-lufa',
+    genre: 'Edição especial',
+    pages: 264,
+    biblio: true,
+    synopsis:
+      'Edição comemorativa vestida de Lufa-Lufa: capa dura em amarelo e preto, brasão em relevo e um caderno final sobre a casa da lealdade — a que menos aparece nos livros e a que mais gente diz querer para si.',
+  },
+  {
+    slug: 'varinha-de-harry-potter',
+    title: 'Varinha de Harry Potter',
+    kind: 'COLLECTIBLE' as const,
+    price: 350,
+    stock: 55,
+    cover: 'varinha-harry',
+    genre: 'Artigo de fã',
+    synopsis:
+      'Réplica em resina de 36 cm, com acabamento de madeira e o cabo trabalhado. Vem em caixa de colecionador, com a etiqueta de Olivaras. Não faz magia; faz um bom peso de papel e um ótimo presente.',
+  },
+  {
+    slug: 'varinha-de-hermione-granger',
+    title: 'Varinha de Hermione Granger',
+    kind: 'COLLECTIBLE' as const,
+    price: 330,
+    stock: 48,
+    cover: 'varinha-hermione',
+    genre: 'Artigo de fã',
+    synopsis:
+      'Réplica em resina de 36 cm, com a espiral no cabo. Vem em caixa de colecionador. Para quem lê com o dedo marcando a página e discute a tradução na mesa do jantar.',
+  },
+  {
+    slug: 'varinha-de-alvo-dumbledore',
+    title: 'Varinha de Alvo Dumbledore',
+    kind: 'COLLECTIBLE' as const,
+    price: 480,
+    stock: 22,
+    cover: 'varinha-dumbledore',
+    genre: 'Artigo de fã',
+    synopsis:
+      'Réplica em resina de 40 cm da varinha mais famosa da saga, com os nós de sabugueiro ao longo do corpo. Edição em caixa de colecionador, numerada.',
+  },
+  {
+    slug: 'caneca-mapa-do-maroto',
+    title: 'Caneca Mapa do Maroto',
+    kind: 'COLLECTIBLE' as const,
+    price: 120,
+    stock: 90,
+    cover: 'caneca-maroto',
+    genre: 'Artigo de fã',
+    synopsis:
+      'Caneca de cerâmica de 350 ml com o mapa impresso em volta. Com a bebida quente, as pegadas aparecem — e somem de novo quando a caneca esfria. Juro solenemente não fazer nada de bom antes do café.',
+  },
+  {
+    slug: 'cachecol-da-sua-casa',
+    title: 'Cachecol da sua casa',
+    kind: 'COLLECTIBLE' as const,
+    price: 190,
+    stock: 70,
+    cover: 'cachecol',
+    genre: 'Artigo de fã',
+    synopsis:
+      'Cachecol de lã de 180 cm nas listras da casa, com franjas nas pontas. Escolha a casa no fechamento do pedido — ou deixe o Chapéu Seletor do site escolher por você.',
+  },
+  {
+    slug: 'boneco-colecionavel-harry-potter',
+    title: 'Boneco colecionável Harry Potter',
+    kind: 'COLLECTIBLE' as const,
+    price: 160,
+    stock: 65,
+    cover: 'boneco-harry',
+    genre: 'Artigo de fã',
+    synopsis:
+      'Figura de vinil de 10 cm, cabeça grande e uniforme de Hogwarts, na caixa com janela transparente. Fica bem na prateleira, ao lado dos sete volumes.',
+  },
+  {
+    slug: 'marcadores-magneticos-das-casas',
+    title: 'Marcadores magnéticos das quatro casas',
+    kind: 'COLLECTIBLE' as const,
+    price: 90,
+    stock: 120,
+    cover: 'marcadores',
+    genre: 'Artigo de fã',
+    synopsis:
+      'Kit com quatro marcadores magnéticos, um por casa, que dobram sobre a página e não caem quando o livro fecha. O jeito civilizado de marcar onde parou, em vez de dobrar a ponta da folha.',
+  },
 ]
 
 async function main() {
@@ -136,12 +354,35 @@ async function main() {
       genre: 'Fantasia',
       synopsis: book.synopsis,
       excerpt: book.excerpt,
-      coverUrl: '/img/books/' + book.cover + '.webp',
+      coverUrl: '/img/books/' + book.cover + '.' + (book.ext ?? 'webp'),
       pages: book.pages,
       language: 'Português',
       featured: book.featured ?? false,
       publishedAt: new Date(book.publishedAt),
       position: index + 1,
+    })),
+  })
+
+
+  console.log('Semeando caixas, edições especiais e artigos de fã...')
+
+  await prisma.book.createMany({
+    data: EXTRAS.map((item, index) => ({
+      slug: item.slug,
+      title: item.title,
+      kind: item.kind,
+      isbn: 'isbn' in item ? item.isbn : null,
+      // Artigo de fã não tem autor nem editora — o modelo aceita nulo de propósito.
+      authorId: 'biblio' in item ? rowling.id : null,
+      publisherId: 'biblio' in item ? rocco.id : null,
+      price: item.price,
+      stock: item.stock,
+      genre: item.genre,
+      synopsis: item.synopsis,
+      coverUrl: '/img/products/' + item.cover + '.svg',
+      pages: 'pages' in item ? item.pages : null,
+      featured: item.kind === 'BOX_SET',
+      position: 100 + index,
     })),
   })
 

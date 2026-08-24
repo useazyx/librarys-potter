@@ -19,6 +19,18 @@ enum Role {
   SUPPORT
 }
 
+/// O que a livraria vende. Livro continua sendo o centro; o resto orbita.
+enum ProductKind {
+  /// Um volume avulso da saga.
+  BOOK
+  /// Caixa com vários volumes.
+  BOX_SET
+  /// Edição comemorativa, ilustrada ou de casa.
+  SPECIAL_EDITION
+  /// Artigo de fã: varinha, colecionável, caneca.
+  COLLECTIBLE
+}
+
 enum OrderStatus {
   PENDING
   PAID
@@ -49,12 +61,12 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  cart            Cart?
-  orders          Order[]
-  reviews         Review[]
-  tickets         SupportTicket[] @relation("TicketAuthor")
-  handledTickets  SupportTicket[] @relation("TicketHandler")
-  passwordResets  PasswordReset[]
+  cart           Cart?
+  orders         Order[]
+  reviews        Review[]
+  tickets        SupportTicket[] @relation("TicketAuthor")
+  handledTickets SupportTicket[] @relation("TicketHandler")
+  passwordResets PasswordReset[]
 
   @@map("users")
 }
@@ -101,30 +113,33 @@ model Publisher {
 }
 
 model Book {
-  id          String   @id @default(uuid())
-  slug        String   @unique
+  id          String      @id @default(uuid())
+  slug        String      @unique
   title       String
-  isbn        String   @unique
-  authorId    String
-  publisherId String
-  publishedAt DateTime? @db.Date
-  price       Decimal  @db.Decimal(10, 2)
+  kind        ProductKind @default(BOOK)
+  /// Nulo em artigos de fã, que não têm ISBN.
+  isbn        String?     @unique
+  /// Nulos em artigos de fã: uma varinha não tem autor nem editora.
+  authorId    String?
+  publisherId String?
+  publishedAt DateTime?   @db.Date
+  price       Decimal     @db.Decimal(10, 2)
   /// Stock is decremented inside the checkout transaction, never by hand.
-  stock       Int      @default(0)
+  stock       Int         @default(0)
   genre       String
   synopsis    String
   excerpt     String?
   coverUrl    String
   pages       Int?
-  language    String   @default("Português")
-  featured    Boolean  @default(false)
-  position    Int      @default(0)
+  language    String      @default("Português")
+  featured    Boolean     @default(false)
+  position    Int         @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  author     Author      @relation(fields: [authorId], references: [id], onDelete: Restrict)
-  publisher  Publisher   @relation(fields: [publisherId], references: [id], onDelete: Restrict)
+  author     Author?     @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  publisher  Publisher?  @relation(fields: [publisherId], references: [id], onDelete: Restrict)
   reviews    Review[]
   cartItems  CartItem[]
   orderItems OrderItem[]
@@ -132,6 +147,7 @@ model Book {
   @@index([authorId])
   @@index([publisherId])
   @@index([genre])
+  @@index([kind])
   @@map("books")
 }
 
@@ -205,9 +221,9 @@ model Order {
 }
 
 model OrderItem {
-  id     String  @id @default(uuid())
-  orderId String
-  bookId String?
+  id        String  @id @default(uuid())
+  orderId   String
+  bookId    String?
   /// Title, price and cover are snapshotted so editing the catalogue never
   /// rewrites what a reader actually bought.
   title     String

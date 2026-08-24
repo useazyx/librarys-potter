@@ -10,6 +10,7 @@ import type { Author, Book, Publisher } from '../types/api'
 
 function makeBook(overrides: Partial<Book> & { id: string; slug: string; title: string }): Book {
   return {
+    kind: 'BOOK',
     isbn: '9788532511000',
     price: 300,
     stock: 6,

@@ -83,8 +83,8 @@ export default function Catalog() {
       (book) =>
         book.title.toLowerCase().includes(term) ||
         book.synopsis.toLowerCase().includes(term) ||
-        book.isbn.includes(term) ||
-        book.author.name.toLowerCase().includes(term),
+        (book.isbn ?? '').includes(term) ||
+        (book.author?.name ?? '').toLowerCase().includes(term),
     )
   }, [books, search])
 

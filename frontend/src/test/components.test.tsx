@@ -16,6 +16,7 @@ const book: Book = {
   id: 'b3f1c2d4-0000-4000-8000-000000000001',
   slug: 'harry-potter-e-a-pedra-filosofal',
   title: 'Harry Potter e a Pedra Filosofal',
+  kind: 'BOOK',
   isbn: '9788532511010',
   price: 200,
   stock: 4,

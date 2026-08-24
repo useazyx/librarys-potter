@@ -23,8 +23,15 @@ function serializeBook(book: BookRecord, rating?: { average: number; count: numb
     language: book.language,
     featured: book.featured,
     publishedAt: book.publishedAt,
-    author: { id: book.author.id, slug: book.author.slug, name: book.author.name, nationality: book.author.nationality },
-    publisher: { id: book.publisher.id, slug: book.publisher.slug, name: book.publisher.name, city: book.publisher.city },
+    kind: book.kind,
+    // Artigo de fã não tem autor nem editora: o contrato devolve `null`, e o
+    // frontend decide o que mostrar no lugar.
+    author: book.author
+      ? { id: book.author.id, slug: book.author.slug, name: book.author.name, nationality: book.author.nationality }
+      : null,
+    publisher: book.publisher
+      ? { id: book.publisher.id, slug: book.publisher.slug, name: book.publisher.name, city: book.publisher.city }
+      : null,
     rating: rating ?? { average: 0, count: 0 },
   }
 }
@@ -55,6 +62,7 @@ export type BookSort = 'relevance' | 'price-asc' | 'price-desc' | 'title' | 'new
 interface ListBooksInput {
   search?: string
   genre?: string
+  kind?: 'BOOK' | 'BOX_SET' | 'SPECIAL_EDITION' | 'COLLECTIBLE'
   author?: string
   publisher?: string
   minPrice?: number
@@ -68,6 +76,7 @@ export class ListBooksService {
   async execute(filters: ListBooksInput) {
     const where: Prisma.BookWhereInput = {
       ...(filters.genre ? { genre: filters.genre } : {}),
+      ...(filters.kind ? { kind: filters.kind } : {}),
       ...(filters.author ? { author: { slug: filters.author } } : {}),
       ...(filters.publisher ? { publisher: { slug: filters.publisher } } : {}),
       ...(filters.featured === undefined ? {} : { featured: filters.featured }),

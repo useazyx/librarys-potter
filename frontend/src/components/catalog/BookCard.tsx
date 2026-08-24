@@ -9,6 +9,14 @@ import { formatPrice } from '../../lib/format'
 import type { Book } from '../../types/api'
 import { Stars } from '../ui/Stars'
 
+/** Onde iria o autor, um artigo de fã mostra o que ele é. */
+const KIND_LABEL: Record<Book['kind'], string> = {
+  BOOK: 'Livro',
+  BOX_SET: 'Caixa de coleção',
+  SPECIAL_EDITION: 'Edição especial',
+  COLLECTIBLE: 'Artigo de fã',
+}
+
 interface BookCardProps {
   book: Book
   index?: number
@@ -77,7 +85,7 @@ export function BookCard({ book, index = 0 }: BookCardProps) {
       </Link>
 
       <div className="flex flex-1 flex-col">
-        <p className="text-[0.66rem] uppercase tracking-[0.2em] text-chalk-300/60">{book.author.name}</p>
+        <p className="text-[0.66rem] uppercase tracking-[0.2em] text-chalk-300/60">{(book.author?.name ?? KIND_LABEL[book.kind])}</p>
 
         <h3 className="mt-2 font-display text-lg leading-snug text-chalk-50">
           <Link to={'/livro/' + book.slug} className="link-underline">

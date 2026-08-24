@@ -12,6 +12,7 @@ import {
 const listBooksQuerySchema = z.object({
   search: z.string().min(1).max(120).optional(),
   genre: z.string().min(1).optional(),
+  kind: z.enum(['BOOK', 'BOX_SET', 'SPECIAL_EDITION', 'COLLECTIBLE']).optional(),
   author: z.string().min(1).optional(),
   publisher: z.string().min(1).optional(),
   minPrice: z.coerce.number().nonnegative().optional(),

@@ -19,11 +19,16 @@ export interface Publisher {
   bookCount: number
 }
 
+/** O que a livraria vende. Livro é o centro; o resto orbita. */
+export type ProductKind = 'BOOK' | 'BOX_SET' | 'SPECIAL_EDITION' | 'COLLECTIBLE'
+
 export interface Book {
+  kind: ProductKind
   id: string
   slug: string
   title: string
-  isbn: string
+  /** Nulo em artigo de fã. */
+  isbn: string | null
   price: number
   stock: number
   genre: string
@@ -34,8 +39,9 @@ export interface Book {
   language: string
   featured: boolean
   publishedAt: string | null
-  author: { id: string; slug: string; name: string; nationality: string }
-  publisher: { id: string; slug: string; name: string; city: string }
+  /** Nulos em artigo de fã: uma varinha não tem autor nem editora. */
+  author: { id: string; slug: string; name: string; nationality: string } | null
+  publisher: { id: string; slug: string; name: string; city: string } | null
   rating: { average: number; count: number }
 }
 
@@ -65,7 +71,7 @@ export interface CartLine {
     price: number
     coverUrl: string
     stock: number
-    author: string
+    author: string | null
   }
 }
 

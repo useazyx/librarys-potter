@@ -145,9 +145,9 @@ export default function Dashboard() {
       book,
       form: {
         title: book.title,
-        isbn: book.isbn,
-        authorId: book.author.id,
-        publisherId: book.publisher.id,
+        isbn: book.isbn ?? '',
+        authorId: (book.author?.id ?? ''),
+        publisherId: (book.publisher?.id ?? ''),
         price: String(book.price),
         stock: String(book.stock),
         genre: book.genre,
@@ -358,8 +358,8 @@ export default function Dashboard() {
                               </span>
                             </div>
                           </td>
-                          <td className="px-6 py-4 text-stone-700">{book.author.name}</td>
-                          <td className="px-6 py-4 text-stone-700">{book.publisher.name}</td>
+                          <td className="px-6 py-4 text-stone-700">{(book.author?.name ?? '—')}</td>
+                          <td className="px-6 py-4 text-stone-700">{(book.publisher?.name ?? '—')}</td>
                           <td className="px-6 py-4 text-right font-medium">{formatPrice(book.price)}</td>
                           <td className="px-6 py-4 text-right">
                             <span

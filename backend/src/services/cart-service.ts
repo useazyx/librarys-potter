@@ -33,7 +33,7 @@ export function serializeCart(cart: LoadedCart) {
       price: toMoney(item.book.price),
       coverUrl: item.book.coverUrl,
       stock: item.book.stock,
-      author: item.book.author.name,
+      author: item.book.author?.name ?? null,
     },
   }))
 

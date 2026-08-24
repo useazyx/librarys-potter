@@ -129,7 +129,7 @@ export default function BookDetail() {
               <h1 className="rise-in font-display text-4xl text-white sm:text-5xl">{book.title}</h1>
 
               <p className="mt-3 text-white/70">
-                {book.author.name} · {book.publisher.name}
+                {[book.author?.name, book.publisher?.name].filter(Boolean).join(' · ') || 'Artigo de fã da livraria'}
               </p>
 
               <div className="mt-5 flex flex-wrap items-center gap-3">
@@ -155,7 +155,7 @@ export default function BookDetail() {
               <dl className="mt-8 grid max-w-2xl grid-cols-2 gap-5 border-t border-white/15 pt-8 sm:grid-cols-4">
                 <Detail icon={BookOpen} label="Páginas" value={book.pages ? String(book.pages) : '—'} />
                 <Detail icon={Globe} label="Idioma" value={book.language} />
-                <Detail icon={Building2} label="Editora" value={book.publisher.name} />
+                <Detail icon={Building2} label="Editora" value={book.publisher?.name ?? "—"} />
                 <Detail
                   icon={Package}
                   label="Estoque"

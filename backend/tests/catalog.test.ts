@@ -21,14 +21,42 @@ describe('catálogo', () => {
     expect(response.json().service).toBe('librarys-potter-api')
   })
 
-  it('lista os cinco livros da casa com preço numérico', async () => {
+  it('lista o acervo inteiro com preço numérico', async () => {
     const response = await app.inject({ method: 'GET', url: '/catalog/books' })
     const { books } = response.json()
 
     expect(response.statusCode).toBe(200)
-    expect(books).toHaveLength(5)
+    expect(books).toHaveLength(21)
     expect(typeof books[0].price).toBe('number')
     expect(books[0].author.name).toBe('J. K. Rowling')
+  })
+
+  it('separa o acervo por tipo, e artigo de fã vem sem autor', async () => {
+    const pedido = (kind: string) => app.inject({ method: 'GET', url: '/catalog/books?kind=' + kind })
+
+    const livros = await pedido('BOOK')
+    const caixas = await pedido('BOX_SET')
+    const especiais = await pedido('SPECIAL_EDITION')
+    const fa = await pedido('COLLECTIBLE')
+
+    // A saga fechou em sete volumes.
+    expect(livros.json().books).toHaveLength(7)
+    expect(caixas.json().books).toHaveLength(2)
+    expect(especiais.json().books).toHaveLength(5)
+    expect(fa.json().books).toHaveLength(7)
+
+    expect(livros.json().books.every((b: { kind: string }) => b.kind === 'BOOK')).toBe(true)
+
+    // Uma varinha não tem autor, editora nem ISBN — e o contrato diz isso.
+    const varinha = fa.json().books.find((b: { slug: string }) => b.slug === 'varinha-de-harry-potter')
+    expect(varinha.author).toBeNull()
+    expect(varinha.publisher).toBeNull()
+    expect(varinha.isbn).toBeNull()
+  })
+
+  it('recusa um tipo que não existe', async () => {
+    const response = await app.inject({ method: 'GET', url: '/catalog/books?kind=VARINHA' })
+    expect(response.statusCode).toBe(400)
   })
 
   it('busca por título, por autor e por ISBN', async () => {
@@ -36,8 +64,12 @@ describe('catálogo', () => {
     const byAuthor = await app.inject({ method: 'GET', url: '/catalog/books?search=rowling' })
     const byIsbn = await app.inject({ method: 'GET', url: '/catalog/books?search=9781234567890' })
 
-    expect(byTitle.json().books).toHaveLength(1)
-    expect(byAuthor.json().books).toHaveLength(5)
+    // Dois: o volume avulso e a caixa cuja sinopse cita o Prisioneiro de Azkaban.
+    const titulos = byTitle.json().books.map((b: { title: string }) => b.title)
+    expect(titulos).toHaveLength(2)
+    expect(titulos).toContain('Harry Potter e o Prisioneiro de Azkaban')
+    // Autora entra em livros, caixas e edições especiais, mas não nos artigos de fã.
+    expect(byAuthor.json().books).toHaveLength(14)
     expect(byIsbn.json().books[0].title).toBe('Harry Potter e a Pedra Filosofal')
   })
 
@@ -46,7 +78,8 @@ describe('catálogo', () => {
     const ordered = await app.inject({ method: 'GET', url: '/catalog/books?sort=price-desc' })
 
     expect(cheap.json().books.every((book: { price: number }) => book.price <= 300)).toBe(true)
-    expect(ordered.json().books[0].price).toBe(400)
+    // O item mais caro do acervo passou a ser a coleção completa.
+    expect(ordered.json().books[0].price).toBe(1900)
   })
 
   it('devolve o livro com sinopse, estrelas e recomendações', async () => {
@@ -75,8 +108,13 @@ describe('catálogo', () => {
     const publishers = await app.inject({ method: 'GET', url: '/catalog/publishers' })
     const genres = await app.inject({ method: 'GET', url: '/catalog/genres' })
 
-    expect(authors.json().authors[0].bookCount).toBe(5)
+    // A autora assina livros, caixas e edições especiais — não os artigos de fã.
+    expect(authors.json().authors[0].bookCount).toBe(14)
     expect(publishers.json().publishers[0].name).toBe('Editora Rocco')
-    expect(genres.json().genres[0]).toEqual({ genre: 'Fantasia', count: 5 })
+
+    const generos: Array<{ genre: string; count: number }> = genres.json().genres
+    expect(generos.find((g) => g.genre === 'Fantasia')).toEqual({ genre: 'Fantasia', count: 7 })
+    expect(generos.find((g) => g.genre === 'Artigo de fã')).toEqual({ genre: 'Artigo de fã', count: 7 })
+    expect(generos.find((g) => g.genre === 'Edição especial')).toEqual({ genre: 'Edição especial', count: 5 })
   })
 })
