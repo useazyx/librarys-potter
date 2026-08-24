@@ -41,7 +41,7 @@ export function Shelf({ title, eyebrow, description, books }: ShelfProps) {
   if (books.length === 0) return null
 
   return (
-    <section className="py-24" aria-labelledby="shelf-title">
+    <section className="py-20 lg:py-24" aria-labelledby="shelf-title">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
           <div>

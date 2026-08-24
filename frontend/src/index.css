@@ -376,24 +376,24 @@
 }
 
 /*
-  O brasão que se desenha sozinho ao entrar em cena. Mesma regra: o traço
-  completo é o estado de repouso, e o keyframe é que o apaga para redesenhá-lo.
-  Se a animação não rodar, o brasão aparece inteiro.
+  Entrada do brasão: sobe e assenta. Puramente decorativa — o escudo é uma
+  imagem, e o estado de repouso da regra já é o visível.
 */
-@keyframes crest-draw {
+@keyframes crest-rise {
   from {
-    stroke-dashoffset: var(--crest-length, 1200);
+    opacity: 0;
+    transform: translateY(22px) scale(0.94);
   }
   to {
-    stroke-dashoffset: 0;
+    opacity: 1;
+    transform: none;
   }
 }
 
-.crest-draw {
-  stroke-dasharray: var(--crest-length, 1200);
-  stroke-dashoffset: 0;
-  animation: crest-draw 2.2s var(--ease-castle) both;
+.crest-rise {
+  animation: crest-rise 1s var(--ease-castle) both;
 }
+
 
 /*
   A vela do salão: um brilho que respira. Puramente decorativo — nunca carrega

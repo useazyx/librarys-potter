@@ -1,16 +1,16 @@
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { BookOpen, LifeBuoy, Sparkles, Truck } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Hero } from '../components/home/Hero'
-import { HousePicker } from '../components/house/HousePicker'
+import { Mosaic } from '../components/home/Mosaic'
 import { Shelf } from '../components/home/Shelf'
+import { HousePicker } from '../components/house/HousePicker'
 import { ButtonLink } from '../components/ui/Button'
 import { useReveal } from '../hooks/useReveal'
 import { api } from '../lib/api'
 import type { Book } from '../types/api'
 
 const PROMISES = [
-  { icon: Truck, title: 'Frete grátis acima de R$ 250', text: 'Entregamos para todo o Brasil, embalado como carta de Hogwarts.' },
+  { icon: Truck, title: 'Frete grátis acima de R$ 250', text: 'Para todo o Brasil, embalado como carta de Hogwarts.' },
   { icon: BookOpen, title: 'Edições da Rocco', text: 'As capas que uma geração inteira reconhece de longe.' },
   { icon: Sparkles, title: 'Avaliado por leitores', text: 'Estrelas e comentários de quem já leu — inclusive os sinceros demais.' },
   { icon: LifeBuoy, title: 'Suporte de verdade', text: 'Abra um chamado e acompanhe a resposta do começo ao fim.' },
@@ -18,12 +18,7 @@ const PROMISES = [
 
 export default function Home() {
   const [books, setBooks] = useState<Book[]>([])
-  const storyRef = useRef<HTMLDivElement>(null)
   const revealRef = useReveal<HTMLDivElement>({ stagger: 110 })
-  const reduceMotion = useReducedMotion()
-
-  const { scrollYProgress } = useScroll({ target: storyRef, offset: ['start end', 'end start'] })
-  const imageY = useTransform(scrollYProgress, [0, 1], ['-8%', '8%'])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -38,7 +33,29 @@ export default function Home() {
 
   return (
     <>
-      <Hero />
+      <Hero book={books[0]} />
+
+      {/* Faixa fina de números, colada no hero: separa sem abrir um respiro inteiro. */}
+      <section className="border-y border-chalk-100/10 bg-stone-800" aria-label="A saga em números">
+        <dl className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-chalk-100/10 px-6 lg:grid-cols-4 lg:px-10">
+          {[
+            ['7', 'livros na saga'],
+            ['450mi', 'exemplares vendidos'],
+            ['78', 'idiomas'],
+            ['1997', 'a primeira carta'],
+          ].map(([value, label], index) => (
+            <div key={label} className={'px-5 py-7 ' + (index % 2 === 0 ? 'pl-0 lg:pl-5' : '')}>
+              <dt className="sr-only">{label}</dt>
+              <dd>
+                <span className="block font-display text-3xl text-house-accent lg:text-4xl">{value}</span>
+                <span className="mt-1 block text-[0.62rem] uppercase tracking-[0.24em] text-chalk-300">
+                  {label}
+                </span>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
 
       <Shelf
         eyebrow="Na prateleira"
@@ -47,57 +64,28 @@ export default function Home() {
         books={books}
       />
 
+      <Mosaic />
+
       <HousePicker />
 
-      {/* "Sobre" da home antiga, agora com espaço para respirar. */}
-      <section className="overflow-hidden bg-masonry py-24 lg:py-32" aria-labelledby="saga-title">
-        <div ref={storyRef} className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2 lg:px-10">
-          <div className="relative">
-            <div className="overflow-hidden rounded-[2rem] shadow-book">
-              <motion.img
-                src="/img/scenes/livros-antigos.webp"
-                alt="Livros antigos empilhados ao lado de um castiçal"
-                className="h-[28rem] w-full scale-110 object-cover"
-                style={{ y: reduceMotion ? undefined : imageY }}
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.85, rotate: -5 }}
-              whileInView={{ opacity: 1, scale: 1, rotate: -5 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute -bottom-8 -right-2 hidden rounded-2xl bg-house-deep px-8 py-6 text-center text-chalk-50 shadow-book sm:block"
+      {/*
+        "Sobre" da home antiga, agora com o texto em duas colunas e um filete da
+        casa no topo — não mais foto de um lado e parágrafo do outro. O fundo é
+        neutro de propósito: com `surface-house` esta seção ficava da mesma cor da
+        coluna escolhida na faixa logo acima, e as duas viravam uma mancha só.
+      */}
+      <section className="border-t-2 border-house-accent bg-stone-900 py-20 lg:py-28" aria-labelledby="saga-title">
+        <div ref={revealRef} className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="flex flex-wrap items-end justify-between gap-6 border-b border-chalk-100/12 pb-10">
+            <h2
+              id="saga-title"
+              className="max-w-2xl text-balance font-display text-4xl leading-tight text-chalk-50 sm:text-5xl"
+              data-reveal
             >
-              <p className="font-display text-4xl leading-none text-house-accent">450mi</p>
-              <p className="mt-2 text-[0.62rem] uppercase tracking-[0.24em]">exemplares vendidos</p>
-            </motion.div>
-          </div>
-
-          <div ref={revealRef}>
-            <p className="eyebrow mb-4" data-reveal>
-              A maior saga bruxa de todos os tempos
-            </p>
-
-            <h2 id="saga-title" className="text-balance font-display text-4xl text-chalk-50 sm:text-5xl" data-reveal>
               Tudo começou com uma carta entregue por uma coruja
             </h2>
 
-            <p className="mt-6 leading-relaxed text-chalk-200/80" data-reveal>
-              A vida do menino Harry Potter não tinha um pingo de magia: ele vivia com os tios, dormia num
-              armário sob a escada e nunca havia comemorado um aniversário. Até o dia em que recebeu um convite
-              para estudar num lugar chamado Hogwarts.
-            </p>
-
-            <p className="mt-4 leading-relaxed text-chalk-200/80" data-reveal>
-              Na sua jornada, Harry não enfrenta apenas batalhas e feitiços. Ele precisa superar traições,
-              surpresas e, sobretudo, aprender a lidar com os próprios sentimentos. O amor, a amizade e uma boa
-              dose de imaginação são os elementos-chave da história.
-            </p>
-
-            <div className="mt-10" data-reveal>
+            <div data-reveal>
               <ButtonLink
                 to="/saga"
                 variant="secondary"
@@ -107,79 +95,89 @@ export default function Home() {
               </ButtonLink>
             </div>
           </div>
+
+          <div className="mt-10 grid gap-x-14 gap-y-6 md:grid-cols-2">
+            <p className="text-lg leading-relaxed text-chalk-200/85" data-reveal>
+              A vida do menino Harry Potter não tinha um pingo de magia: ele vivia com os tios, dormia num
+              armário sob a escada e nunca havia comemorado um aniversário. Até o dia em que recebeu um
+              convite para estudar num lugar chamado Hogwarts.
+            </p>
+
+            <p className="text-lg leading-relaxed text-chalk-200/85" data-reveal>
+              Na sua jornada, Harry não enfrenta apenas batalhas e feitiços. Ele precisa superar traições,
+              surpresas e, sobretudo, aprender a lidar com os próprios sentimentos. O amor, a amizade e uma
+              boa dose de imaginação são os elementos-chave da história.
+            </p>
+          </div>
         </div>
       </section>
 
-      <section className="py-24" aria-labelledby="promises-title">
+      {/* As quatro promessas, agora em lista horizontal enxuta. */}
+      <section className="py-16 lg:py-20" aria-labelledby="promises-title">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <h2 id="promises-title" className="sr-only">
             Por que comprar aqui
           </h2>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {PROMISES.map((promise, index) => {
+          <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+            {PROMISES.map((promise) => {
               const Icon = promise.icon
 
               return (
-                <motion.article
-                  key={promise.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ duration: 0.7, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  className="rounded-2xl border border-chalk-100/10 bg-stone-800/60 p-7"
-                >
-                  <Icon size={26} className="mb-5 text-house-accent" aria-hidden />
-                  <h3 className="font-display text-lg text-chalk-50">{promise.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-chalk-200/70">{promise.text}</p>
-                </motion.article>
+                <li key={promise.title} className="flex gap-4 border-t border-chalk-100/12 pt-6">
+                  <Icon size={20} className="mt-1 shrink-0 text-house-accent" aria-hidden />
+                  <div>
+                    <h3 className="font-display text-base text-chalk-50">{promise.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-chalk-300">{promise.text}</p>
+                  </div>
+                </li>
               )
             })}
-          </div>
+          </ul>
         </div>
       </section>
 
-      <section className="relative overflow-hidden py-28" aria-labelledby="cta-title">
-        <img
-          src="/img/scenes/castelo.webp"
-          alt=""
-          aria-hidden
-          className="absolute inset-0 h-full w-full object-cover opacity-35"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-stone-900 via-stone-900/80 to-stone-900/40" aria-hidden />
+      {/* Fecho: faixa larga com a foto à direita e o texto à esquerda. */}
+      <section className="relative overflow-hidden bg-stone-950" aria-labelledby="cta-title">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 py-20 lg:grid-cols-2 lg:px-10 lg:py-24">
+          <div>
+            <p className="eyebrow mb-4">Sua carta chegou</p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto max-w-3xl px-6 text-center"
-        >
-          <p className="eyebrow mb-4">Sua carta chegou</p>
+            <h2 id="cta-title" className="text-balance font-display text-4xl text-chalk-50 sm:text-5xl">
+              Crie sua conta e comece a coleção
+            </h2>
 
-          <h2 id="cta-title" className="text-balance font-display text-4xl text-chalk-50 sm:text-5xl">
-            Crie sua conta e comece a coleção
-          </h2>
+            <p className="mt-6 max-w-md text-chalk-300">
+              Guarde seus pedidos, avalie o que já leu e fale com o suporte sem sair do site.
+            </p>
 
-          <p className="mx-auto mt-6 max-w-xl text-chalk-200/80">
-            Guarde seus pedidos, avalie o que já leu e fale com o suporte sem sair do site.
-          </p>
-
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <ButtonLink to="/cadastro" size="lg" variant="house">
-              Criar minha conta
-            </ButtonLink>
-            <ButtonLink
-              to="/catalogo"
-              size="lg"
-              variant="secondary"
-              className="border-chalk-100/50 text-chalk-50 hover:border-house-accent hover:text-house-accent"
-            >
-              Só olhar os livros
-            </ButtonLink>
+            <div className="mt-9 flex flex-wrap gap-4">
+              <ButtonLink to="/cadastro" size="lg" variant="house">
+                Criar minha conta
+              </ButtonLink>
+              <ButtonLink
+                to="/catalogo"
+                size="lg"
+                variant="secondary"
+                className="border-chalk-100/40 text-chalk-100 hover:border-house-accent hover:text-house-accent"
+              >
+                Só olhar os livros
+              </ButtonLink>
+            </div>
           </div>
-        </motion.div>
+
+          <div className="relative h-64 overflow-hidden rounded-xl lg:h-80">
+            <img
+              src="/img/scenes/castelo.webp"
+              alt=""
+              aria-hidden
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-house-deep/35" aria-hidden />
+          </div>
+        </div>
       </section>
     </>
   )

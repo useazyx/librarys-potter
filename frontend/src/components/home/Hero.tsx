@@ -1,122 +1,105 @@
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
-import { useRef } from 'react'
+import { ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { useHouse } from '../../context/HouseContext'
+import { formatPrice } from '../../lib/format'
+import type { Book } from '../../types/api'
 import { ButtonLink } from '../ui/Button'
 
-const TITLE = ["Library's", 'Potter']
-
-export function Hero() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const reduceMotion = useReducedMotion()
+/**
+ * Vitrine de abertura, assimétrica: a coluna de texto à esquerda e a capa do
+ * livro em destaque à direita, sobre uma faixa na cor da casa. Não é uma
+ * fotografia de tela cheia com o título centralizado — a loja começa mostrando
+ * um livro, que é o que ela vende.
+ *
+ * Toda a entrada usa `.rise-in`, cujo estado de repouso é o visível.
+ */
+export function Hero({ book }: { book?: Book }) {
   const { info } = useHouse()
 
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
-
-  // The hall drifts slower than the text: depth without a jump.
-  const imageY = useTransform(scrollYProgress, [0, 1], ['0%', '16%'])
-  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '45%'])
-
   return (
-    <section
-      ref={sectionRef}
-      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden"
-      aria-labelledby="hero-title"
-    >
-      <motion.div className="absolute inset-0" style={{ y: reduceMotion ? undefined : imageY }}>
-        <motion.img
-          src="/img/scenes/salao-biblioteca.webp"
-          alt="Salão de uma biblioteca antiga, com estantes de madeira até o teto"
-          className="h-[116%] w-full object-cover"
-          initial={{ scale: 1.12 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 9, ease: 'easeOut' }}
-          fetchPriority="high"
-        />
-      </motion.div>
-
-      {/* Keeps the title legible over the photograph and hands the page to the castle below. */}
-      <div className="absolute inset-0 bg-stone-950/70" aria-hidden />
+    <section className="relative overflow-hidden bg-house-deep" aria-labelledby="hero-title">
+      {/* Cantaria do castelo ao fundo, bem discreta. */}
       <div
-        className="absolute inset-0 bg-gradient-to-b from-stone-950/85 via-house-deep/45 to-stone-900"
+        className="absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage:
+            'repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 54px),repeating-linear-gradient(90deg,#fff 0 1px,transparent 1px 108px)',
+        }}
         aria-hidden
       />
 
-      {/*
-        Todo o texto abaixo entra por `.rise-in`, e não pelo framer-motion: o
-        estado de repouso da regra já é o visível, então uma animação que não
-        rode deixa o leitor com o título na tela em vez de um hero vazio.
-      */}
-      <motion.div
-        className="relative z-10 mx-auto max-w-4xl px-6 pb-24 pt-32 text-center"
-        style={{ y: reduceMotion ? undefined : contentY }}
-      >
-        <p
-          className="rise-in mb-6 text-[0.68rem] uppercase tracking-[0.42em] text-house-accent"
-          style={{ animationDelay: '0.15s' }}
-        >
-          A livraria da saga · sete livros · uma geração
-        </p>
+      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 pb-20 pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 lg:px-10 lg:pb-28 lg:pt-40">
+        <div>
+          <p className="rise-in text-[0.66rem] uppercase tracking-[0.4em] text-house-accent" style={{ animationDelay: '0.05s' }}>
+            {info ? 'Livraria da ' + info.name : 'A livraria da saga'} · desde 1997
+          </p>
 
-        <h1
-          id="hero-title"
-          className="font-display text-5xl text-chalk-50 drop-shadow-[0_4px_28px_rgba(3,3,6,0.9)] sm:text-7xl lg:text-8xl"
-        >
-          {TITLE.map((word, index) => (
-            <span
-              key={word}
-              className="rise-in mr-[0.25em] inline-block"
-              style={{ animationDelay: 0.25 + index * 0.12 + 's', ['--rise' as string]: '40px' }}
-            >
-              {word}
-            </span>
-          ))}
-        </h1>
-
-        <p
-          className="rise-in mx-auto mt-8 max-w-xl text-balance font-serif text-xl italic text-chalk-200/90"
-          style={{ animationDelay: '0.7s' }}
-        >
-          &ldquo;Não faz bem viver de sonhos e esquecer de viver.&rdquo; Aqui, os dois cabem na mesma
-          prateleira.
-        </p>
-
-        <div
-          className="rise-in mt-12 flex flex-wrap items-center justify-center gap-4"
-          style={{ animationDelay: '0.9s' }}
-        >
-          <ButtonLink to="/catalogo" size="lg" variant="house">
-            Ver o catálogo
-          </ButtonLink>
-          <ButtonLink
-            to="/saga"
-            size="lg"
-            variant="secondary"
-            className="border-chalk-100/50 text-chalk-50 hover:border-house-accent hover:text-house-accent"
+          <h1
+            id="hero-title"
+            className="rise-in mt-6 font-display text-5xl leading-[0.95] text-white sm:text-6xl lg:text-7xl"
+            style={{ animationDelay: '0.15s' }}
           >
-            Conhecer a saga
-          </ButtonLink>
+            Sete livros.
+            <br />
+            Uma geração
+            <br />
+            <span className="text-house-accent">inteira.</span>
+          </h1>
+
+          <p
+            className="rise-in mt-8 max-w-md text-lg leading-relaxed text-white/70"
+            style={{ animationDelay: '0.28s' }}
+          >
+            As edições brasileiras da Rocco, as capas que você reconhece de longe e as avaliações de
+            quem já leu — inclusive as sinceras demais.
+          </p>
+
+          <div className="rise-in mt-10 flex flex-wrap items-center gap-4" style={{ animationDelay: '0.4s' }}>
+            <ButtonLink to="/catalogo" size="lg" variant="house">
+              Ver o acervo
+            </ButtonLink>
+            <Link
+              to="/saga"
+              className="link-underline inline-flex items-center gap-2 text-[0.76rem] uppercase tracking-[0.24em] text-white/80 transition-colors hover:text-house-accent"
+            >
+              <span data-active={false}>Conhecer a saga</span>
+              <ArrowRight size={15} aria-hidden />
+            </Link>
+          </div>
         </div>
 
-        {info && (
-          <p
-            className="rise-in mt-10 text-[0.66rem] uppercase tracking-[0.28em] text-house-accent/80"
-            style={{ animationDelay: '1.1s' }}
+        {/* A capa em destaque, apoiada como um livro numa mesa. */}
+        {book && (
+          <div
+            className="rise-in relative mx-auto w-full max-w-[17rem] lg:max-w-[20rem]"
+            style={{ animationDelay: '0.32s' }}
           >
-            A livraria está vestida de {info.name}
-          </p>
-        )}
-      </motion.div>
+            <Link to={'/livro/' + book.slug} className="group block">
+              <div className="relative">
+                <div
+                  className="absolute -inset-6 rounded-full bg-house-accent/20 blur-3xl"
+                  aria-hidden
+                />
+                <img
+                  src={book.coverUrl}
+                  alt={'Capa de ' + book.title}
+                  className="relative w-full rounded-lg shadow-book transition-transform duration-700 group-hover:-translate-y-2"
+                  fetchPriority="high"
+                  decoding="async"
+                />
+              </div>
 
-      <motion.div
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-chalk-100/60"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 10, 0] }}
-        transition={{ opacity: { delay: 1.5 }, y: { duration: 2.4, repeat: Infinity, ease: 'easeInOut' } }}
-        aria-hidden
-      >
-        <ChevronDown size={28} aria-hidden />
-      </motion.div>
+              <div className="relative mt-7 flex items-end justify-between gap-4 border-t border-white/15 pt-5">
+                <div className="min-w-0">
+                  <p className="text-[0.6rem] uppercase tracking-[0.28em] text-white/50">Em destaque</p>
+                  <p className="mt-2 truncate font-display text-xl text-white">{book.title}</p>
+                </div>
+                <p className="shrink-0 font-display text-2xl text-house-accent">{formatPrice(book.price)}</p>
+              </div>
+            </Link>
+          </div>
+        )}
+      </div>
     </section>
   )
 }

@@ -21,8 +21,6 @@ export function Header() {
   const { itemCount } = useCart()
   const location = useLocation()
 
-  // Only the home page has a hero the header can float over.
-  const overHero = location.pathname === '/' && !scrolled
   const isStaff = user?.role === 'SUPPLIER' || user?.role === 'SUPPORT'
 
   useEffect(() => {
@@ -40,11 +38,13 @@ export function Header() {
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className={
-        'fixed inset-x-0 top-0 z-50 transition-colors duration-500 ' +
-        (overHero ? 'bg-transparent' : 'border-b border-chalk-100/10 bg-stone-900/92 backdrop-blur-md')
+        // Barra solida desde o topo: nada de cabecalho transparente sobre uma
+        // foto de tela cheia. A regua na cor da casa marca o limite.
+        'fixed inset-x-0 top-0 z-50 border-b border-house-accent/25 backdrop-blur-md transition-shadow duration-500 ' +
+        (scrolled ? 'bg-stone-950/95 shadow-stone' : 'bg-stone-950/80')
       }
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 py-4 lg:px-10">
+      <div className="mx-auto flex max-w-7xl items-center gap-6 px-5 py-3.5 lg:gap-12 lg:px-10">
         <Link to="/" className="flex items-center gap-3" aria-label="Library's Potter, página inicial">
           <span className="grid h-11 w-11 place-items-center rounded-full border border-house-accent/50 font-display text-sm text-house-accent">
             LP
@@ -57,7 +57,7 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-9 lg:flex" aria-label="Principal">
+        <nav className="hidden flex-1 items-center gap-8 lg:flex" aria-label="Principal">
           {LINKS.map((link) => (
             <NavLink
               key={link.to}
@@ -70,7 +70,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-1 sm:gap-3">
+        <div className="ml-auto flex items-center gap-1 sm:gap-3">
           <HouseSwitch />
 
           {isStaff && (

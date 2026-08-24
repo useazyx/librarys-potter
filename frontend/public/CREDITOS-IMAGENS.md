@@ -7,6 +7,27 @@ Cálice de Fogo e Enigma do Príncipe — vieram do material do projeto original
 a `legacy/livro5.jpg`), apenas redimensionadas e convertidas para WebP. São as capas da edição
 brasileira publicada pela Rocco.
 
+## Brasões das casas (Wikimedia Commons)
+
+Os quatro escudos em `img/houses/` são interpretações heráldicas das casas de Hogwarts, as
+mesmas que a Wikipédia usa para ilustrar o artigo *Hogwarts*. **Não** são os brasões oficiais
+dos filmes, que são material protegido da Warner Bros. e não existem sob licença livre.
+
+Todos os quatro estão sob **CC BY-SA 3.0** — <https://creativecommons.org/licenses/by-sa/3.0/> —
+e foram usados sem alteração:
+
+| Arquivo | Original no Commons |
+|---|---|
+| `img/houses/grifinoria.svg` | [Blason Gryffondor.svg](https://commons.wikimedia.org/wiki/File:Blason_Gryffondor.svg) |
+| `img/houses/sonserina.svg` | [Blason Serpentard.svg](https://commons.wikimedia.org/wiki/File:Blason_Serpentard.svg) |
+| `img/houses/corvinal.svg` | [Blason Serdaigle.svg](https://commons.wikimedia.org/wiki/File:Blason_Serdaigle.svg) |
+| `img/houses/lufa-lufa.svg` | [Blason Poufsouffle.svg](https://commons.wikimedia.org/wiki/File:Blason_Poufsouffle.svg) |
+
+Como são CC BY-SA, valem para eles as mesmas observações de *copyleft* do fim desta página.
+
+"Harry Potter" e os nomes das casas são marcas da Warner Bros. Entertainment Inc. Este é um
+trabalho acadêmico, sem fim comercial e sem vínculo com a detentora dos direitos.
+
 ## Fotografia editorial (Wikimedia Commons)
 
 Usadas como cenário nas páginas de início, catálogo, saga, ajuda, perfil, painel, login,
