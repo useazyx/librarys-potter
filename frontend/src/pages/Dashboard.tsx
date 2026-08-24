@@ -47,9 +47,9 @@ const TABS: Array<{ id: TabId; label: string; icon: typeof BookCopy; supportOnly
 ]
 
 const TICKET_TONES: Record<string, string> = {
-  OPEN: 'bg-copper-500/20 text-copper-500',
-  IN_PROGRESS: 'bg-gold-500/20 text-gold-500',
-  RESOLVED: 'bg-sage-600/20 text-sage-600',
+  OPEN: 'bg-ember-600/20 text-ember-600',
+  IN_PROGRESS: 'bg-house-accent/20 text-house-accent',
+  RESOLVED: 'bg-mandrake-600/20 text-mandrake-600',
 }
 
 const EMPTY_BOOK = {
@@ -256,12 +256,12 @@ export default function Dashboard() {
           aria-hidden
           className="absolute inset-0 h-full w-full object-cover opacity-15"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-night-900/85 to-night-900" aria-hidden />
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-900/85 to-stone-900" aria-hidden />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
           <p className="eyebrow mb-4">Painel · {ROLE_LABELS[user.role]}</p>
-          <h1 className="font-display text-5xl text-parchment-50 sm:text-6xl">Os bastidores da livraria</h1>
-          <p className="mt-5 max-w-2xl text-parchment-200/80">
+          <h1 className="font-display text-5xl text-chalk-50 sm:text-6xl">Os bastidores da livraria</h1>
+          <p className="mt-5 max-w-2xl text-chalk-200/80">
             {isSupport
               ? 'Catálogo, vendas, fila de chamados e cadastro de usuários — tudo o que o antigo menu de administração fazia, em uma tela só.'
               : 'Cuide do catálogo e acompanhe como as vendas estão indo. Apagar registros é atribuição do suporte.'}
@@ -292,13 +292,13 @@ export default function Dashboard() {
                 aria-current={active ? 'page' : undefined}
                 className={
                   'relative inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[0.72rem] uppercase tracking-[0.16em] transition-colors ' +
-                  (active ? 'text-parchment-50' : 'text-parchment-200/70 hover:text-gold-400')
+                  (active ? 'text-chalk-50' : 'text-chalk-200/70 hover:text-house-accent')
                 }
               >
                 {active && (
                   <motion.span
                     layoutId="dashboard-tab"
-                    className="absolute inset-0 rounded-full bg-burgundy-600"
+                    className="absolute inset-0 rounded-full bg-house-deep"
                     transition={{ type: 'spring', stiffness: 320, damping: 30 }}
                   />
                 )}
@@ -321,10 +321,10 @@ export default function Dashboard() {
           >
             {tab === 'catalogo' && (
               <div className="surface-paper overflow-hidden rounded-2xl shadow-book">
-                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-night-800/10 p-6 sm:p-8">
+                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-stone-800/10 p-6 sm:p-8">
                   <div>
                     <h2 className="font-display text-2xl">Estante</h2>
-                    <p className="mt-1 text-sm text-night-700/75">
+                    <p className="mt-1 text-sm text-stone-700/75">
                       {books.length} {books.length === 1 ? 'título' : 'títulos'} no catálogo.
                     </p>
                   </div>
@@ -337,7 +337,7 @@ export default function Dashboard() {
 
                 <div className="overflow-x-auto">
                   <table className="w-full min-w-3xl text-left text-sm">
-                    <thead className="bg-parchment-200/60 text-[0.66rem] uppercase tracking-[0.16em] text-night-700">
+                    <thead className="bg-chalk-200/60 text-[0.66rem] uppercase tracking-[0.16em] text-stone-700">
                       <tr>
                         <th scope="col" className="px-6 py-4 font-medium">Livro</th>
                         <th scope="col" className="px-6 py-4 font-medium">Autor</th>
@@ -348,35 +348,35 @@ export default function Dashboard() {
                       </tr>
                     </thead>
 
-                    <tbody className="divide-y divide-night-800/10">
+                    <tbody className="divide-y divide-stone-800/10">
                       {books.map((book) => (
-                        <tr key={book.id} className="transition-colors hover:bg-parchment-200/40">
+                        <tr key={book.id} className="transition-colors hover:bg-chalk-200/40">
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-3">
                               <img
                                 src={book.coverUrl}
                                 alt=""
-                                className="h-14 w-10 rounded object-cover shadow-warm"
+                                className="h-14 w-10 rounded object-cover shadow-stone"
                                 loading="lazy"
                               />
                               <span>
                                 <span className="block font-medium leading-snug">{book.title}</span>
-                                <span className="text-xs text-night-700/70">{book.isbn}</span>
+                                <span className="text-xs text-stone-700/70">{book.isbn}</span>
                               </span>
                             </div>
                           </td>
-                          <td className="px-6 py-4 text-night-700">{book.author.name}</td>
-                          <td className="px-6 py-4 text-night-700">{book.publisher.name}</td>
+                          <td className="px-6 py-4 text-stone-700">{book.author.name}</td>
+                          <td className="px-6 py-4 text-stone-700">{book.publisher.name}</td>
                           <td className="px-6 py-4 text-right font-medium">{formatPrice(book.price)}</td>
                           <td className="px-6 py-4 text-right">
                             <span
                               className={
                                 'rounded-full px-2.5 py-1 text-xs ' +
                                 (book.stock === 0
-                                  ? 'bg-burgundy-600/15 text-burgundy-600'
+                                  ? 'bg-house-deep/15 text-house-deep'
                                   : book.stock <= 3
-                                    ? 'bg-gold-500/20 text-gold-500'
-                                    : 'bg-sage-600/15 text-sage-600')
+                                    ? 'bg-house-accent/20 text-house-accent'
+                                    : 'bg-mandrake-600/15 text-mandrake-600')
                               }
                             >
                               {book.stock}
@@ -388,7 +388,7 @@ export default function Dashboard() {
                                 type="button"
                                 onClick={() => openEdit(book)}
                                 aria-label={'Editar ' + book.title}
-                                className="rounded-full p-2 text-night-700/60 transition hover:bg-night-800/10 hover:text-night-800"
+                                className="rounded-full p-2 text-stone-700/60 transition hover:bg-stone-800/10 hover:text-stone-800"
                               >
                                 <Pencil size={15} aria-hidden />
                               </button>
@@ -398,7 +398,7 @@ export default function Dashboard() {
                                   type="button"
                                   onClick={() => deleteBook(book)}
                                   aria-label={'Apagar ' + book.title}
-                                  className="rounded-full p-2 text-night-700/60 transition hover:bg-burgundy-600/10 hover:text-burgundy-600"
+                                  className="rounded-full p-2 text-stone-700/60 transition hover:bg-house-deep/10 hover:text-house-deep"
                                 >
                                   <Trash2 size={15} aria-hidden />
                                 </button>
@@ -425,36 +425,36 @@ export default function Dashboard() {
 
             {tab === 'vendas' && (
               <div className="grid gap-6 lg:grid-cols-2">
-                <div className="surface-paper rounded-2xl p-8 shadow-warm">
+                <div className="surface-paper rounded-2xl p-8 shadow-stone">
                   <h2 className="font-display text-2xl">Mais vendidos</h2>
 
                   <ol className="mt-6 space-y-4">
                     {sales?.bestSellers.length === 0 && (
-                      <p className="text-sm text-night-700/75">Nenhuma venda registrada ainda.</p>
+                      <p className="text-sm text-stone-700/75">Nenhuma venda registrada ainda.</p>
                     )}
 
                     {sales?.bestSellers.map((entry, index) => (
                       <li key={entry.title} className="flex items-center gap-4">
-                        <span className="font-display text-2xl text-gold-500">{index + 1}</span>
+                        <span className="font-display text-2xl text-house-accent">{index + 1}</span>
                         <span className="flex-1">
                           <span className="block leading-snug">{entry.title}</span>
-                          <span className="text-sm text-night-700/70">
+                          <span className="text-sm text-stone-700/70">
                             {entry.quantity} {entry.quantity === 1 ? 'exemplar' : 'exemplares'}
                           </span>
                         </span>
-                        <span className="font-medium text-burgundy-600">{formatPrice(entry.revenue)}</span>
+                        <span className="font-medium text-house-deep">{formatPrice(entry.revenue)}</span>
                       </li>
                     ))}
                   </ol>
                 </div>
 
-                <div className="surface-paper rounded-2xl p-8 shadow-warm">
+                <div className="surface-paper rounded-2xl p-8 shadow-stone">
                   <h2 className="font-display text-2xl">Estoque baixo</h2>
-                  <p className="mt-1 text-sm text-night-700/75">Títulos que pedem reposição.</p>
+                  <p className="mt-1 text-sm text-stone-700/75">Títulos que pedem reposição.</p>
 
                   <ul className="mt-6 space-y-4">
                     {sales?.lowStock.length === 0 && (
-                      <p className="text-sm text-night-700/75">Todas as estantes estão bem servidas.</p>
+                      <p className="text-sm text-stone-700/75">Todas as estantes estão bem servidas.</p>
                     )}
 
                     {sales?.lowStock.map((entry) => (
@@ -462,11 +462,11 @@ export default function Dashboard() {
                         <img
                           src={entry.coverUrl}
                           alt=""
-                          className="h-14 w-10 rounded object-cover shadow-warm"
+                          className="h-14 w-10 rounded object-cover shadow-stone"
                           loading="lazy"
                         />
                         <span className="flex-1 leading-snug">{entry.title}</span>
-                        <span className="rounded-full bg-burgundy-600/15 px-3 py-1 text-xs text-burgundy-600">
+                        <span className="rounded-full bg-house-deep/15 px-3 py-1 text-xs text-house-deep">
                           {entry.stock} restantes
                         </span>
                       </li>
@@ -474,12 +474,12 @@ export default function Dashboard() {
                   </ul>
                 </div>
 
-                <div className="surface-paper overflow-hidden rounded-2xl shadow-warm lg:col-span-2">
-                  <h2 className="border-b border-night-800/10 p-8 pb-6 font-display text-2xl">Últimos pedidos</h2>
+                <div className="surface-paper overflow-hidden rounded-2xl shadow-stone lg:col-span-2">
+                  <h2 className="border-b border-stone-800/10 p-8 pb-6 font-display text-2xl">Últimos pedidos</h2>
 
                   <div className="overflow-x-auto">
                     <table className="w-full min-w-2xl text-left text-sm">
-                      <thead className="bg-parchment-200/60 text-[0.66rem] uppercase tracking-[0.16em] text-night-700">
+                      <thead className="bg-chalk-200/60 text-[0.66rem] uppercase tracking-[0.16em] text-stone-700">
                         <tr>
                           <th scope="col" className="px-6 py-4 font-medium">Pedido</th>
                           <th scope="col" className="px-6 py-4 font-medium">Cliente</th>
@@ -489,16 +489,16 @@ export default function Dashboard() {
                         </tr>
                       </thead>
 
-                      <tbody className="divide-y divide-night-800/10">
+                      <tbody className="divide-y divide-stone-800/10">
                         {sales?.orders.map((order) => (
                           <tr key={order.id}>
                             <td className="px-6 py-4 font-medium">{order.code}</td>
-                            <td className="px-6 py-4 text-night-700">
+                            <td className="px-6 py-4 text-stone-700">
                               {order.customer.name}
-                              <span className="block text-xs text-night-700/65">{order.customer.email}</span>
+                              <span className="block text-xs text-stone-700/65">{order.customer.email}</span>
                             </td>
-                            <td className="px-6 py-4 text-night-700">{formatDateTime(order.createdAt)}</td>
-                            <td className="px-6 py-4 text-night-700">{ORDER_STATUS_LABELS[order.status]}</td>
+                            <td className="px-6 py-4 text-stone-700">{formatDateTime(order.createdAt)}</td>
+                            <td className="px-6 py-4 text-stone-700">{ORDER_STATUS_LABELS[order.status]}</td>
                             <td className="px-6 py-4 text-right font-medium">{formatPrice(order.total)}</td>
                           </tr>
                         ))}
@@ -521,8 +521,8 @@ export default function Dashboard() {
                         className={
                           'rounded-full border px-4 py-2 text-[0.68rem] uppercase tracking-[0.14em] transition-colors ' +
                           (statusFilter === value
-                            ? 'border-gold-400 text-gold-400'
-                            : 'border-parchment-200/25 text-parchment-200/70 hover:border-gold-400/60')
+                            ? 'border-house-accent text-house-accent'
+                            : 'border-chalk-200/25 text-chalk-200/70 hover:border-house-accent/60')
                         }
                       >
                         {label}
@@ -533,20 +533,20 @@ export default function Dashboard() {
 
                 <div className="space-y-5">
                   {visibleTickets.length === 0 && (
-                    <p className="rounded-2xl border border-dashed border-parchment-200/25 p-12 text-center text-parchment-200/70">
+                    <p className="rounded-2xl border border-dashed border-chalk-200/25 p-12 text-center text-chalk-200/70">
                       Nenhum chamado nessa situação.
                     </p>
                   )}
 
                   {visibleTickets.map((ticket) => (
-                    <article key={ticket.id} className="surface-paper rounded-2xl p-6 shadow-warm sm:p-8">
+                    <article key={ticket.id} className="surface-paper rounded-2xl p-6 shadow-stone sm:p-8">
                       <div className="flex flex-wrap items-start justify-between gap-4">
                         <div>
                           <p className="font-display text-xl">{ticket.subject}</p>
-                          <p className="mt-1 text-sm text-night-700/75">
+                          <p className="mt-1 text-sm text-stone-700/75">
                             {ticket.code} · {ticket.name} · {ticket.email}
                           </p>
-                          <p className="text-sm text-night-700/75">
+                          <p className="text-sm text-stone-700/75">
                             {formatDateTime(ticket.createdAt)} · urgência{' '}
                             {URGENCY_LABELS[ticket.urgency].toLowerCase()}
                           </p>
@@ -555,26 +555,26 @@ export default function Dashboard() {
                         <span
                           className={
                             'rounded-full px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.14em] ' +
-                            (TICKET_TONES[ticket.status] ?? 'bg-night-800/10 text-night-700')
+                            (TICKET_TONES[ticket.status] ?? 'bg-stone-800/10 text-stone-700')
                           }
                         >
                           {TICKET_STATUS_LABELS[ticket.status]}
                         </span>
                       </div>
 
-                      <p className="mt-4 text-sm leading-relaxed text-night-700">{ticket.description}</p>
+                      <p className="mt-4 text-sm leading-relaxed text-stone-700">{ticket.description}</p>
 
                       {ticket.resolution && (
-                        <div className="mt-5 rounded-xl border-l-4 border-sage-600 bg-sage-400/10 p-5">
-                          <p className="text-[0.66rem] uppercase tracking-[0.18em] text-sage-600">
+                        <div className="mt-5 rounded-xl border-l-4 border-mandrake-600 bg-mandrake-400/10 p-5">
+                          <p className="text-[0.66rem] uppercase tracking-[0.18em] text-mandrake-600">
                             Resposta {ticket.handledBy ? '· ' + ticket.handledBy.name : ''}
                             {ticket.resolvedAt ? ' · ' + formatDate(ticket.resolvedAt) : ''}
                           </p>
-                          <p className="mt-2 text-sm text-night-800">{ticket.resolution}</p>
+                          <p className="mt-2 text-sm text-stone-800">{ticket.resolution}</p>
                         </div>
                       )}
 
-                      <div className="mt-6 flex flex-wrap gap-3 border-t border-night-800/10 pt-5">
+                      <div className="mt-6 flex flex-wrap gap-3 border-t border-stone-800/10 pt-5">
                         {ticket.status === 'OPEN' && (
                           <Button
                             variant="secondary"
@@ -609,13 +609,13 @@ export default function Dashboard() {
 
             {tab === 'usuarios' && isSupport && (
               <div className="surface-paper overflow-hidden rounded-2xl shadow-book">
-                <h2 className="border-b border-night-800/10 p-8 pb-6 font-display text-2xl">
+                <h2 className="border-b border-stone-800/10 p-8 pb-6 font-display text-2xl">
                   Quem frequenta a livraria
                 </h2>
 
                 <div className="overflow-x-auto">
                   <table className="w-full min-w-3xl text-left text-sm">
-                    <thead className="bg-parchment-200/60 text-[0.66rem] uppercase tracking-[0.16em] text-night-700">
+                    <thead className="bg-chalk-200/60 text-[0.66rem] uppercase tracking-[0.16em] text-stone-700">
                       <tr>
                         <th scope="col" className="px-6 py-4 font-medium">Nome</th>
                         <th scope="col" className="px-6 py-4 font-medium">E-mail</th>
@@ -627,17 +627,17 @@ export default function Dashboard() {
                       </tr>
                     </thead>
 
-                    <tbody className="divide-y divide-night-800/10">
+                    <tbody className="divide-y divide-stone-800/10">
                       {users.map((staffUser) => (
-                        <tr key={staffUser.id} className="transition-colors hover:bg-parchment-200/40">
+                        <tr key={staffUser.id} className="transition-colors hover:bg-chalk-200/40">
                           <td className="px-6 py-4 font-medium">{staffUser.name}</td>
-                          <td className="px-6 py-4 text-night-700">{staffUser.email}</td>
+                          <td className="px-6 py-4 text-stone-700">{staffUser.email}</td>
                           <td className="px-6 py-4">
-                            <span className="rounded-full bg-night-800/10 px-3 py-1 text-xs text-night-700">
+                            <span className="rounded-full bg-stone-800/10 px-3 py-1 text-xs text-stone-700">
                               {ROLE_LABELS[staffUser.role] ?? staffUser.role}
                             </span>
                           </td>
-                          <td className="px-6 py-4 text-night-700">{formatDate(staffUser.createdAt)}</td>
+                          <td className="px-6 py-4 text-stone-700">{formatDate(staffUser.createdAt)}</td>
                           <td className="px-6 py-4 text-right">{staffUser.stats.orders}</td>
                           <td className="px-6 py-4 text-right">{staffUser.stats.reviews}</td>
                           <td className="px-6 py-4 text-right">{staffUser.stats.tickets}</td>
@@ -655,7 +655,7 @@ export default function Dashboard() {
       <Modal open={editing !== null} onClose={() => setEditing(null)} labelledBy="book-form-title">
         {editing && (
           <form onSubmit={saveBook} className="p-8 sm:p-10" noValidate>
-            <h2 id="book-form-title" className="font-display text-3xl text-night-800">
+            <h2 id="book-form-title" className="font-display text-3xl text-stone-800">
               {editing.book ? 'Editar livro' : 'Novo livro'}
             </h2>
 
@@ -812,21 +812,21 @@ export default function Dashboard() {
                 className="sm:col-span-2"
               />
 
-              <label className="flex items-center gap-3 text-sm text-night-800 sm:col-span-2">
+              <label className="flex items-center gap-3 text-sm text-stone-800 sm:col-span-2">
                 <input
                   type="checkbox"
                   checked={editing.form.featured}
                   onChange={(event) =>
                     setEditing({ ...editing, form: { ...editing.form, featured: event.target.checked } })
                   }
-                  className="h-4 w-4 accent-burgundy-600"
+                  className="h-4 w-4 accent-house-deep"
                 />
                 Destacar na página inicial
               </label>
             </div>
 
             {formErrors.form && (
-              <p className="mt-6 rounded-lg bg-burgundy-600/10 px-4 py-3 text-sm text-burgundy-600" role="alert">
+              <p className="mt-6 rounded-lg bg-house-deep/10 px-4 py-3 text-sm text-house-deep" role="alert">
                 {formErrors.form}
               </p>
             )}
@@ -871,10 +871,10 @@ function ResolveForm({
         setSaving(false)
       }}
     >
-      <h2 id="resolve-title" className="font-display text-3xl text-night-800">
+      <h2 id="resolve-title" className="font-display text-3xl text-stone-800">
         Resolver {ticket.code}
       </h2>
-      <p className="mt-2 text-night-700">{ticket.subject}</p>
+      <p className="mt-2 text-stone-700">{ticket.subject}</p>
 
       <Textarea
         label="O que foi feito"
@@ -972,15 +972,15 @@ function PeopleTab({ authors, publishers, canDelete, onAuthorsChange, onPublishe
 
   return (
     <div className="grid gap-6 lg:grid-cols-2">
-      <div className="surface-paper rounded-2xl p-8 shadow-warm">
+      <div className="surface-paper rounded-2xl p-8 shadow-stone">
         <h2 className="font-display text-2xl">Autores</h2>
 
-        <ul className="mt-6 divide-y divide-night-800/10">
+        <ul className="mt-6 divide-y divide-stone-800/10">
           {authors.map((entry) => (
             <li key={entry.id} className="flex items-center gap-4 py-3">
               <span className="flex-1">
                 <span className="block leading-snug">{entry.name}</span>
-                <span className="text-sm text-night-700/70">
+                <span className="text-sm text-stone-700/70">
                   {entry.nationality} · {entry.bookCount} {entry.bookCount === 1 ? 'livro' : 'livros'}
                 </span>
               </span>
@@ -990,7 +990,7 @@ function PeopleTab({ authors, publishers, canDelete, onAuthorsChange, onPublishe
                   type="button"
                   onClick={() => removeAuthor(entry)}
                   aria-label={'Apagar ' + entry.name}
-                  className="rounded-full p-2 text-night-700/60 transition hover:bg-burgundy-600/10 hover:text-burgundy-600"
+                  className="rounded-full p-2 text-stone-700/60 transition hover:bg-house-deep/10 hover:text-house-deep"
                 >
                   <Trash2 size={15} aria-hidden />
                 </button>
@@ -999,7 +999,7 @@ function PeopleTab({ authors, publishers, canDelete, onAuthorsChange, onPublishe
           ))}
         </ul>
 
-        <form onSubmit={addAuthor} className="mt-8 border-t border-night-800/10 pt-6" noValidate>
+        <form onSubmit={addAuthor} className="mt-8 border-t border-stone-800/10 pt-6" noValidate>
           <h3 className="font-display text-lg">Cadastrar autor</h3>
 
           <Input
@@ -1025,15 +1025,15 @@ function PeopleTab({ authors, publishers, canDelete, onAuthorsChange, onPublishe
         </form>
       </div>
 
-      <div className="surface-paper rounded-2xl p-8 shadow-warm">
+      <div className="surface-paper rounded-2xl p-8 shadow-stone">
         <h2 className="font-display text-2xl">Editoras</h2>
 
-        <ul className="mt-6 divide-y divide-night-800/10">
+        <ul className="mt-6 divide-y divide-stone-800/10">
           {publishers.map((entry) => (
             <li key={entry.id} className="flex items-center gap-4 py-3">
               <span className="flex-1">
                 <span className="block leading-snug">{entry.name}</span>
-                <span className="text-sm text-night-700/70">
+                <span className="text-sm text-stone-700/70">
                   {entry.city}
                   {entry.founded ? ' · desde ' + entry.founded : ''} · {entry.bookCount}{' '}
                   {entry.bookCount === 1 ? 'livro' : 'livros'}
@@ -1045,7 +1045,7 @@ function PeopleTab({ authors, publishers, canDelete, onAuthorsChange, onPublishe
                   type="button"
                   onClick={() => removePublisher(entry)}
                   aria-label={'Apagar ' + entry.name}
-                  className="rounded-full p-2 text-night-700/60 transition hover:bg-burgundy-600/10 hover:text-burgundy-600"
+                  className="rounded-full p-2 text-stone-700/60 transition hover:bg-house-deep/10 hover:text-house-deep"
                 >
                   <Trash2 size={15} aria-hidden />
                 </button>
@@ -1054,7 +1054,7 @@ function PeopleTab({ authors, publishers, canDelete, onAuthorsChange, onPublishe
           ))}
         </ul>
 
-        <form onSubmit={addPublisher} className="mt-8 border-t border-night-800/10 pt-6" noValidate>
+        <form onSubmit={addPublisher} className="mt-8 border-t border-stone-800/10 pt-6" noValidate>
           <h3 className="font-display text-lg">Cadastrar editora</h3>
 
           <Input
@@ -1095,9 +1095,9 @@ function PeopleTab({ authors, publishers, canDelete, onAuthorsChange, onPublishe
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-parchment-200/15 bg-parchment-200/5 p-6">
-      <dt className="text-[0.66rem] uppercase tracking-[0.2em] text-parchment-200/65">{label}</dt>
-      <dd className="mt-2 font-display text-3xl text-gold-400">{value}</dd>
+    <div className="rounded-2xl border border-chalk-200/15 bg-chalk-200/5 p-6">
+      <dt className="text-[0.66rem] uppercase tracking-[0.2em] text-chalk-200/65">{label}</dt>
+      <dd className="mt-2 font-display text-3xl text-house-accent">{value}</dd>
     </div>
   )
 }

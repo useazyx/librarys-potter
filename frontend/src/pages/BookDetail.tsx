@@ -103,12 +103,12 @@ export default function BookDetail() {
           aria-hidden
           className="absolute inset-0 h-full w-full object-cover opacity-20"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-night-900/90 to-night-900" aria-hidden />
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-900/90 to-stone-900" aria-hidden />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
           <Link
             to="/catalogo"
-            className="mb-10 inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.2em] text-parchment-200/70 transition hover:text-gold-400"
+            className="mb-10 inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.2em] text-chalk-200/70 transition hover:text-house-accent"
           >
             <ArrowLeft size={15} aria-hidden /> Voltar ao catálogo
           </Link>
@@ -131,15 +131,15 @@ export default function BookDetail() {
             <div>
               <p className="eyebrow mb-3">{book.genre}</p>
 
-              <h1 className="font-display text-4xl text-parchment-50 sm:text-5xl">{book.title}</h1>
+              <h1 className="font-display text-4xl text-chalk-50 sm:text-5xl">{book.title}</h1>
 
-              <p className="mt-3 text-parchment-200/80">
+              <p className="mt-3 text-chalk-200/80">
                 {book.author.name} · {book.publisher.name}
               </p>
 
               <div className="mt-5 flex flex-wrap items-center gap-3">
                 <Stars value={book.rating.average} size={18} />
-                <span className="text-sm text-parchment-200/70">
+                <span className="text-sm text-chalk-200/70">
                   {totalReviews === 0
                     ? 'Ainda sem avaliações'
                     : book.rating.average.toFixed(1).replace('.', ',') +
@@ -149,15 +149,15 @@ export default function BookDetail() {
                 </span>
               </div>
 
-              <p className="mt-8 max-w-2xl leading-relaxed text-parchment-100/85">{book.synopsis}</p>
+              <p className="mt-8 max-w-2xl leading-relaxed text-chalk-100/85">{book.synopsis}</p>
 
               {book.excerpt && (
-                <blockquote className="mt-6 max-w-2xl border-l-2 border-gold-400 pl-5">
-                  <p className="font-serif text-xl italic text-parchment-200/90">{book.excerpt}</p>
+                <blockquote className="mt-6 max-w-2xl border-l-2 border-house-accent pl-5">
+                  <p className="font-serif text-xl italic text-chalk-200/90">{book.excerpt}</p>
                 </blockquote>
               )}
 
-              <dl className="mt-8 grid max-w-2xl grid-cols-2 gap-5 border-t border-parchment-100/10 pt-8 sm:grid-cols-4">
+              <dl className="mt-8 grid max-w-2xl grid-cols-2 gap-5 border-t border-chalk-100/10 pt-8 sm:grid-cols-4">
                 <Detail icon={BookOpen} label="Páginas" value={book.pages ? String(book.pages) : '—'} />
                 <Detail icon={Globe} label="Idioma" value={book.language} />
                 <Detail icon={Building2} label="Editora" value={book.publisher.name} />
@@ -168,41 +168,41 @@ export default function BookDetail() {
                 />
               </dl>
 
-              <div className="mt-10 flex flex-wrap items-center gap-6 rounded-2xl border border-parchment-100/10 bg-night-800/70 p-6">
+              <div className="mt-10 flex flex-wrap items-center gap-6 rounded-2xl border border-chalk-100/10 bg-stone-800/70 p-6">
                 <div>
-                  <p className="text-[0.66rem] uppercase tracking-[0.2em] text-parchment-300/60">Preço</p>
-                  <p className="font-display text-4xl text-gold-400">{formatPrice(book.price * quantity)}</p>
+                  <p className="text-[0.66rem] uppercase tracking-[0.2em] text-chalk-300/60">Preço</p>
+                  <p className="font-display text-4xl text-house-accent">{formatPrice(book.price * quantity)}</p>
                   {book.publishedAt && (
-                    <p className="mt-1 text-xs text-parchment-300/50">
+                    <p className="mt-1 text-xs text-chalk-300/50">
                       Publicado em {formatDate(book.publishedAt)}
                     </p>
                   )}
                 </div>
 
                 <div className="ml-auto flex flex-wrap items-center gap-3">
-                  <div className="flex items-center gap-1 rounded-full border border-parchment-100/20 p-1">
+                  <div className="flex items-center gap-1 rounded-full border border-chalk-100/20 p-1">
                     <button
                       type="button"
                       onClick={() => setQuantity((value) => Math.max(1, value - 1))}
                       aria-label="Diminuir quantidade"
-                      className="rounded-full p-2 text-parchment-100 transition hover:bg-parchment-100/10"
+                      className="rounded-full p-2 text-chalk-100 transition hover:bg-chalk-100/10"
                     >
                       <Minus size={15} aria-hidden />
                     </button>
-                    <span className="w-8 text-center text-parchment-100" aria-live="polite">
+                    <span className="w-8 text-center text-chalk-100" aria-live="polite">
                       {quantity}
                     </span>
                     <button
                       type="button"
                       onClick={() => setQuantity((value) => Math.min(Math.max(book.stock, 1), value + 1))}
                       aria-label="Aumentar quantidade"
-                      className="rounded-full p-2 text-parchment-100 transition hover:bg-parchment-100/10"
+                      className="rounded-full p-2 text-chalk-100 transition hover:bg-chalk-100/10"
                     >
                       <Plus size={15} aria-hidden />
                     </button>
                   </div>
 
-                  <Button onClick={handleAdd} loading={busy} disabled={soldOut} size="lg" variant="gold">
+                  <Button onClick={handleAdd} loading={busy} disabled={soldOut} size="lg" variant="house">
                     {soldOut ? 'Esgotado' : 'Adicionar ao carrinho'}
                   </Button>
                 </div>
@@ -215,30 +215,30 @@ export default function BookDetail() {
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10" aria-labelledby="reviews-title">
         <div className="grid gap-12 lg:grid-cols-[1fr_minmax(0,22rem)]">
           <div>
-            <h2 id="reviews-title" className="font-display text-3xl text-parchment-50">
+            <h2 id="reviews-title" className="font-display text-3xl text-chalk-50">
               O que os leitores acharam
             </h2>
 
             {book.reviews.length === 0 ? (
-              <p className="mt-6 text-parchment-200/70">
+              <p className="mt-6 text-chalk-200/70">
                 Ninguém avaliou ainda. Se você já leu, seja o primeiro a contar.
               </p>
             ) : (
               <ul className="mt-8 space-y-5">
                 {book.reviews.map((review) => (
-                  <li key={review.id} className="surface-paper rounded-2xl p-6 shadow-warm">
+                  <li key={review.id} className="surface-paper rounded-2xl p-6 shadow-stone">
                     <div className="flex flex-wrap items-center gap-3">
                       <span className="font-display text-lg">{review.user.name}</span>
                       <Stars value={review.rating} size={14} />
                       {review.verifiedPurchase && (
-                        <span className="rounded-full bg-sage-600/15 px-2.5 py-1 text-[0.6rem] uppercase tracking-[0.14em] text-sage-600">
+                        <span className="rounded-full bg-mandrake-600/15 px-2.5 py-1 text-[0.6rem] uppercase tracking-[0.14em] text-mandrake-600">
                           Compra verificada
                         </span>
                       )}
-                      <span className="ml-auto text-xs text-night-800/50">{formatDate(review.createdAt)}</span>
+                      <span className="ml-auto text-xs text-stone-800/50">{formatDate(review.createdAt)}</span>
                     </div>
 
-                    {review.comment && <p className="mt-3 leading-relaxed text-night-800/85">{review.comment}</p>}
+                    {review.comment && <p className="mt-3 leading-relaxed text-stone-800/85">{review.comment}</p>}
                   </li>
                 ))}
               </ul>
@@ -246,14 +246,14 @@ export default function BookDetail() {
           </div>
 
           <aside className="space-y-6">
-            <div className="rounded-2xl border border-parchment-100/10 bg-night-800/70 p-6">
+            <div className="rounded-2xl border border-chalk-100/10 bg-stone-800/70 p-6">
               <p className="eyebrow mb-4">As notas</p>
 
               <div className="flex items-end gap-3">
-                <span className="font-display text-5xl text-gold-400">
+                <span className="font-display text-5xl text-house-accent">
                   {book.rating.average.toFixed(1).replace('.', ',')}
                 </span>
-                <span className="pb-2 text-sm text-parchment-300/60">de 5</span>
+                <span className="pb-2 text-sm text-chalk-300/60">de 5</span>
               </div>
 
               <ul className="mt-5 space-y-2">
@@ -261,14 +261,14 @@ export default function BookDetail() {
                   const percentage = totalReviews === 0 ? 0 : (row.count / totalReviews) * 100
 
                   return (
-                    <li key={row.star} className="flex items-center gap-3 text-xs text-parchment-300/70">
+                    <li key={row.star} className="flex items-center gap-3 text-xs text-chalk-300/70">
                       <span className="flex w-8 items-center gap-1">
                         {row.star}
-                        <Star size={11} className="text-gold-400" fill="currentColor" aria-hidden />
+                        <Star size={11} className="text-house-accent" fill="currentColor" aria-hidden />
                       </span>
-                      <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-parchment-100/10">
+                      <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-chalk-100/10">
                         <motion.span
-                          className="block h-full rounded-full bg-gold-400"
+                          className="block h-full rounded-full bg-house-accent"
                           initial={{ width: 0 }}
                           whileInView={{ width: percentage + '%' }}
                           viewport={{ once: true }}
@@ -282,7 +282,7 @@ export default function BookDetail() {
               </ul>
             </div>
 
-            <form onSubmit={submitReview} className="surface-paper rounded-2xl p-6 shadow-warm">
+            <form onSubmit={submitReview} className="surface-paper rounded-2xl p-6 shadow-stone">
               <p className="mb-4 font-display text-xl">Deixe a sua avaliação</p>
 
               <StarPicker value={rating} onChange={setRating} />
@@ -292,7 +292,7 @@ export default function BookDetail() {
                 onChange={(event) => setComment(event.target.value)}
                 placeholder="Conte o que você achou da leitura (opcional)."
                 maxLength={1500}
-                className="mt-5 min-h-28 w-full rounded-lg border border-night-800/15 bg-parchment-50 px-4 py-3 text-sm text-night-800 placeholder:text-night-800/40 focus:border-burgundy-500 focus:outline-none"
+                className="mt-5 min-h-28 w-full rounded-lg border border-stone-800/15 bg-chalk-50 px-4 py-3 text-sm text-stone-800 placeholder:text-stone-800/40 focus:border-house-mid focus:outline-none"
               />
 
               <Button type="submit" loading={sending} className="mt-4 w-full">
@@ -300,7 +300,7 @@ export default function BookDetail() {
               </Button>
 
               {!user && (
-                <p className="mt-3 text-center text-xs text-night-800/60">
+                <p className="mt-3 text-center text-xs text-stone-800/60">
                   Você precisa estar logado para avaliar.
                 </p>
               )}
@@ -311,7 +311,7 @@ export default function BookDetail() {
 
       {book.related.length > 0 && (
         <section className="mx-auto max-w-7xl px-6 pb-24 lg:px-10" aria-labelledby="related-title">
-          <h2 id="related-title" className="mb-10 font-display text-3xl text-parchment-50">
+          <h2 id="related-title" className="mb-10 font-display text-3xl text-chalk-50">
             Quem leu este, levou também
           </h2>
 
@@ -337,10 +337,10 @@ function Detail({
 }) {
   return (
     <div>
-      <dt className="flex items-center gap-2 text-[0.62rem] uppercase tracking-[0.18em] text-parchment-300/60">
+      <dt className="flex items-center gap-2 text-[0.62rem] uppercase tracking-[0.18em] text-chalk-300/60">
         <Icon size={13} aria-hidden /> {label}
       </dt>
-      <dd className="mt-1.5 text-sm text-parchment-100">{value}</dd>
+      <dd className="mt-1.5 text-sm text-chalk-100">{value}</dd>
     </div>
   )
 }

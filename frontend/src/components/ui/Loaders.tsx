@@ -6,14 +6,14 @@ import { motion } from 'framer-motion'
  */
 export function BrandLoader({ label = 'Abrindo a biblioteca…' }: { label?: string }) {
   return (
-    <div className="flex min-h-[60vh] flex-col items-center justify-center gap-8 bg-midnight">
+    <div className="flex min-h-[60vh] flex-col items-center justify-center gap-8 bg-castle">
       <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden>
         <motion.circle
           cx="60"
           cy="60"
           r="46"
           fill="none"
-          stroke="var(--color-gold-400)"
+          stroke="var(--color-house-accent)"
           strokeWidth="1.5"
           strokeDasharray="290"
           initial={{ strokeDashoffset: 290, opacity: 0.25 }}
@@ -24,7 +24,7 @@ export function BrandLoader({ label = 'Abrindo a biblioteca…' }: { label?: str
           x="60"
           y="72"
           textAnchor="middle"
-          fill="var(--color-parchment-100)"
+          fill="var(--color-chalk-100)"
           style={{ font: '600 34px var(--font-display)' }}
           initial={{ opacity: 0.35 }}
           animate={{ opacity: 1 }}
@@ -34,19 +34,19 @@ export function BrandLoader({ label = 'Abrindo a biblioteca…' }: { label?: str
         </motion.text>
       </svg>
 
-      <p className="font-serif text-xl italic text-parchment-200/80">{label}</p>
+      <p className="font-serif text-xl italic text-chalk-200/80">{label}</p>
     </div>
   )
 }
 
 export function BookSkeleton() {
   return (
-    <div className="overflow-hidden rounded-2xl bg-night-800/70 p-5">
-      <div className="mb-5 aspect-[2/3] w-full animate-pulse rounded-lg bg-night-700" />
+    <div className="overflow-hidden rounded-2xl bg-stone-800/70 p-5">
+      <div className="mb-5 aspect-[2/3] w-full animate-pulse rounded-lg bg-stone-700" />
       <div className="space-y-3">
-        <div className="h-4 w-3/4 animate-pulse rounded bg-night-700" />
-        <div className="h-3 w-1/2 animate-pulse rounded bg-night-700/70" />
-        <div className="h-8 w-28 animate-pulse rounded-full bg-night-700/70" />
+        <div className="h-4 w-3/4 animate-pulse rounded bg-stone-700" />
+        <div className="h-3 w-1/2 animate-pulse rounded bg-stone-700/70" />
+        <div className="h-8 w-28 animate-pulse rounded-full bg-stone-700/70" />
       </div>
     </div>
   )

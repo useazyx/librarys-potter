@@ -34,10 +34,10 @@ export function Layout() {
   }, [location.pathname])
 
   return (
-    <div className="flex min-h-screen flex-col bg-midnight">
+    <div className="flex min-h-screen flex-col bg-castle">
       <a
         href="#conteudo"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[110] focus:rounded-full focus:bg-gold-500 focus:px-5 focus:py-3 focus:text-sm focus:text-night-900"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[110] focus:rounded-full focus:bg-house-accent focus:px-5 focus:py-3 focus:text-sm focus:text-stone-900"
       >
         Pular para o conteúdo
       </a>

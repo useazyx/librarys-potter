@@ -36,17 +36,17 @@ const TABS: Array<{ id: TabId; label: string; icon: typeof Package }> = [
 ]
 
 const ORDER_TONES: Record<string, string> = {
-  PENDING: 'bg-gold-500/20 text-gold-500',
-  PAID: 'bg-sage-400/25 text-sage-600',
-  SHIPPED: 'bg-copper-500/20 text-copper-500',
-  DELIVERED: 'bg-sage-600/20 text-sage-600',
-  CANCELLED: 'bg-night-800/10 text-night-700',
+  PENDING: 'bg-house-accent/20 text-house-accent',
+  PAID: 'bg-mandrake-400/25 text-mandrake-600',
+  SHIPPED: 'bg-ember-600/20 text-ember-600',
+  DELIVERED: 'bg-mandrake-600/20 text-mandrake-600',
+  CANCELLED: 'bg-stone-800/10 text-stone-700',
 }
 
 const TICKET_TONES: Record<string, string> = {
-  OPEN: 'bg-copper-500/20 text-copper-500',
-  IN_PROGRESS: 'bg-gold-500/20 text-gold-500',
-  RESOLVED: 'bg-sage-600/20 text-sage-600',
+  OPEN: 'bg-ember-600/20 text-ember-600',
+  IN_PROGRESS: 'bg-house-accent/20 text-house-accent',
+  RESOLVED: 'bg-mandrake-600/20 text-mandrake-600',
 }
 
 /** Orders that have not shipped yet are the only ones the reader may cancel. */
@@ -112,22 +112,22 @@ export default function Profile() {
           aria-hidden
           className="absolute inset-0 h-full w-full object-cover opacity-15"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-night-900/85 to-night-900" aria-hidden />
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-900/85 to-stone-900" aria-hidden />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
           <p className="eyebrow mb-4">{ROLE_LABELS[user.role] ?? 'Leitor'} da casa</p>
 
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <h1 className="font-display text-5xl text-parchment-50">Olá, {user.name.split(' ')[0]}!</h1>
-              <p className="mt-3 text-parchment-200/80">
+              <h1 className="font-display text-5xl text-chalk-50">Olá, {user.name.split(' ')[0]}!</h1>
+              <p className="mt-3 text-chalk-200/80">
                 Na biblioteca desde {formatDate(user.memberSince)} · {user.email}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-3">
               {user.role !== 'CUSTOMER' && (
-                <ButtonLink to="/painel" variant="gold" size="sm">
+                <ButtonLink to="/painel" variant="house" size="sm">
                   Ir para o painel
                 </ButtonLink>
               )}
@@ -135,7 +135,7 @@ export default function Profile() {
               <Button
                 variant="secondary"
                 size="sm"
-                className="border-parchment-200/40 text-parchment-100 hover:border-gold-400 hover:text-gold-400"
+                className="border-chalk-200/40 text-chalk-100 hover:border-house-accent hover:text-house-accent"
                 onClick={async () => {
                   await logout()
                   notify('Até a próxima leitura!', 'info')
@@ -171,13 +171,13 @@ export default function Profile() {
                 aria-current={active ? 'page' : undefined}
                 className={
                   'relative inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[0.72rem] uppercase tracking-[0.16em] transition-colors ' +
-                  (active ? 'text-parchment-50' : 'text-parchment-200/70 hover:text-gold-400')
+                  (active ? 'text-chalk-50' : 'text-chalk-200/70 hover:text-house-accent')
                 }
               >
                 {active && (
                   <motion.span
                     layoutId="profile-tab"
-                    className="absolute inset-0 rounded-full bg-burgundy-600"
+                    className="absolute inset-0 rounded-full bg-house-deep"
                     transition={{ type: 'spring', stiffness: 320, damping: 30 }}
                   />
                 )}
@@ -205,17 +205,17 @@ export default function Profile() {
                 )}
 
                 {orders.map((order) => (
-                  <article key={order.id} className="surface-paper rounded-2xl p-6 shadow-warm sm:p-8">
+                  <article key={order.id} className="surface-paper rounded-2xl p-6 shadow-stone sm:p-8">
                     <div className="flex flex-wrap items-start justify-between gap-4">
                       <div>
                         <p className="font-display text-2xl">{order.code}</p>
-                        <p className="mt-1 text-sm text-night-700/75">{formatDateTime(order.createdAt)}</p>
+                        <p className="mt-1 text-sm text-stone-700/75">{formatDateTime(order.createdAt)}</p>
                       </div>
 
                       <span
                         className={
                           'rounded-full px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.14em] ' +
-                          (ORDER_TONES[order.status] ?? 'bg-night-800/10 text-night-700')
+                          (ORDER_TONES[order.status] ?? 'bg-stone-800/10 text-stone-700')
                         }
                       >
                         {ORDER_STATUS_LABELS[order.status]}
@@ -228,12 +228,12 @@ export default function Profile() {
                           <img
                             src={item.coverUrl}
                             alt=""
-                            className="h-20 w-14 rounded object-cover shadow-warm"
+                            className="h-20 w-14 rounded object-cover shadow-stone"
                             loading="lazy"
                           />
                           <span className="text-sm">
                             <span className="block max-w-48 leading-snug">{item.title}</span>
-                            <span className="text-night-700/70">
+                            <span className="text-stone-700/70">
                               {item.quantity}× {formatPrice(item.unitPrice)}
                             </span>
                           </span>
@@ -241,15 +241,15 @@ export default function Profile() {
                       ))}
                     </ul>
 
-                    <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-night-800/10 pt-5">
-                      <p className="text-sm text-night-700/80">
+                    <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-stone-800/10 pt-5">
+                      <p className="text-sm text-stone-700/80">
                         Entrega para {order.delivery.recipient} · {order.delivery.city}/{order.delivery.state}
                         <br />
                         Frete {order.shipping === 0 ? 'grátis' : formatPrice(order.shipping)}
                       </p>
 
                       <div className="flex items-center gap-5">
-                        <span className="font-display text-2xl text-burgundy-600">
+                        <span className="font-display text-2xl text-house-deep">
                           {formatPrice(order.total)}
                         </span>
 
@@ -278,7 +278,7 @@ export default function Profile() {
                 {reviews.map((review) => (
                   <article
                     key={review.id}
-                    className="surface-paper flex gap-5 rounded-2xl p-6 shadow-warm"
+                    className="surface-paper flex gap-5 rounded-2xl p-6 shadow-stone"
                   >
                     <Link to={'/livro/' + review.book.slug} className="shrink-0">
                       <img
@@ -302,7 +302,7 @@ export default function Profile() {
                           type="button"
                           onClick={() => removeReview(review.id)}
                           aria-label={'Apagar avaliação de ' + review.book.title}
-                          className="rounded-full p-2 text-night-700/60 transition hover:bg-burgundy-600/10 hover:text-burgundy-600"
+                          className="rounded-full p-2 text-stone-700/60 transition hover:bg-house-deep/10 hover:text-house-deep"
                         >
                           <Trash2 size={16} aria-hidden />
                         </button>
@@ -311,12 +311,12 @@ export default function Profile() {
                       <Stars value={review.rating} className="mt-2" />
 
                       {review.comment && (
-                        <p className="mt-3 font-serif text-lg italic leading-snug text-night-700">
+                        <p className="mt-3 font-serif text-lg italic leading-snug text-stone-700">
                           &ldquo;{review.comment}&rdquo;
                         </p>
                       )}
 
-                      <p className="mt-3 text-[0.68rem] uppercase tracking-[0.14em] text-night-700/55">
+                      <p className="mt-3 text-[0.68rem] uppercase tracking-[0.14em] text-stone-700/55">
                         {formatDate(review.createdAt)}
                       </p>
                     </div>
@@ -332,11 +332,11 @@ export default function Profile() {
                 )}
 
                 {tickets.map((ticket) => (
-                  <article key={ticket.id} className="surface-paper rounded-2xl p-6 shadow-warm sm:p-8">
+                  <article key={ticket.id} className="surface-paper rounded-2xl p-6 shadow-stone sm:p-8">
                     <div className="flex flex-wrap items-start justify-between gap-4">
                       <div>
                         <p className="font-display text-xl">{ticket.subject}</p>
-                        <p className="mt-1 text-sm text-night-700/75">
+                        <p className="mt-1 text-sm text-stone-700/75">
                           {ticket.code} · {formatDateTime(ticket.createdAt)} · urgência{' '}
                           {URGENCY_LABELS[ticket.urgency].toLowerCase()}
                         </p>
@@ -345,22 +345,22 @@ export default function Profile() {
                       <span
                         className={
                           'rounded-full px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.14em] ' +
-                          (TICKET_TONES[ticket.status] ?? 'bg-night-800/10 text-night-700')
+                          (TICKET_TONES[ticket.status] ?? 'bg-stone-800/10 text-stone-700')
                         }
                       >
                         {TICKET_STATUS_LABELS[ticket.status]}
                       </span>
                     </div>
 
-                    <p className="mt-4 text-sm leading-relaxed text-night-700">{ticket.description}</p>
+                    <p className="mt-4 text-sm leading-relaxed text-stone-700">{ticket.description}</p>
 
                     {ticket.resolution && (
-                      <div className="mt-5 rounded-xl border-l-4 border-sage-600 bg-sage-400/10 p-5">
-                        <p className="text-[0.66rem] uppercase tracking-[0.18em] text-sage-600">
+                      <div className="mt-5 rounded-xl border-l-4 border-mandrake-600 bg-mandrake-400/10 p-5">
+                        <p className="text-[0.66rem] uppercase tracking-[0.18em] text-mandrake-600">
                           Resposta do suporte
                           {ticket.handledBy ? ' · ' + ticket.handledBy.name : ''}
                         </p>
-                        <p className="mt-2 text-sm text-night-800">{ticket.resolution}</p>
+                        <p className="mt-2 text-sm text-stone-800">{ticket.resolution}</p>
                       </div>
                     )}
                   </article>
@@ -430,9 +430,9 @@ function AccountTab() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-2">
-      <form onSubmit={saveName} className="surface-paper rounded-2xl p-8 shadow-warm" noValidate>
+      <form onSubmit={saveName} className="surface-paper rounded-2xl p-8 shadow-stone" noValidate>
         <h2 className="font-display text-2xl">Seus dados</h2>
-        <p className="mt-2 text-sm text-night-700/80">
+        <p className="mt-2 text-sm text-stone-700/80">
           O e-mail e o papel de acesso são fixos — fale com o suporte se precisar mudar.
         </p>
 
@@ -455,9 +455,9 @@ function AccountTab() {
         </Button>
       </form>
 
-      <form onSubmit={savePassword} className="surface-paper rounded-2xl p-8 shadow-warm" noValidate>
+      <form onSubmit={savePassword} className="surface-paper rounded-2xl p-8 shadow-stone" noValidate>
         <h2 className="font-display text-2xl">Trocar a senha</h2>
-        <p className="mt-2 text-sm text-night-700/80">
+        <p className="mt-2 text-sm text-stone-700/80">
           Confirme a senha atual antes de escolher a nova. Se esqueceu, use a página de redefinição.
         </p>
 
@@ -485,7 +485,7 @@ function AccountTab() {
         />
 
         {passwordErrors.form && (
-          <p className="mt-5 rounded-lg bg-burgundy-600/10 px-4 py-3 text-sm text-burgundy-600" role="alert">
+          <p className="mt-5 rounded-lg bg-house-deep/10 px-4 py-3 text-sm text-house-deep" role="alert">
             {passwordErrors.form}
           </p>
         )}
@@ -500,22 +500,22 @@ function AccountTab() {
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-parchment-200/15 bg-parchment-200/5 p-6">
-      <dt className="text-[0.66rem] uppercase tracking-[0.2em] text-parchment-200/65">{label}</dt>
-      <dd className="mt-2 font-display text-3xl text-gold-400">{value}</dd>
+    <div className="rounded-2xl border border-chalk-200/15 bg-chalk-200/5 p-6">
+      <dt className="text-[0.66rem] uppercase tracking-[0.2em] text-chalk-200/65">{label}</dt>
+      <dd className="mt-2 font-display text-3xl text-house-accent">{value}</dd>
     </div>
   )
 }
 
 function Empty({ text, to, action }: { text: string; to?: string; action?: string }) {
   return (
-    <div className="col-span-full rounded-2xl border border-dashed border-parchment-200/25 p-12 text-center">
-      <UserRound size={32} className="mx-auto mb-4 text-parchment-200/40" aria-hidden />
-      <p className="text-parchment-200/75">{text}</p>
+    <div className="col-span-full rounded-2xl border border-dashed border-chalk-200/25 p-12 text-center">
+      <UserRound size={32} className="mx-auto mb-4 text-chalk-200/40" aria-hidden />
+      <p className="text-chalk-200/75">{text}</p>
 
       {to && action && (
         <div className="mt-6">
-          <ButtonLink to={to} variant="secondary" size="sm" className="border-parchment-200/40 text-parchment-100">
+          <ButtonLink to={to} variant="secondary" size="sm" className="border-chalk-200/40 text-chalk-100">
             {action}
           </ButtonLink>
         </div>

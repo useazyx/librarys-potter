@@ -17,14 +17,14 @@ export function Stars({ value, size = 16, className = '' }: StarsProps) {
       role="img"
       aria-label={value.toFixed(1).replace('.', ',') + ' de 5 estrelas'}
     >
-      <span className="flex gap-0.5 text-night-800/25">
+      <span className="flex gap-0.5 text-stone-800/25">
         {[0, 1, 2, 3, 4].map((index) => (
           <Star key={index} size={size} aria-hidden />
         ))}
       </span>
 
       <span
-        className="absolute inset-0 flex gap-0.5 overflow-hidden text-gold-500"
+        className="absolute inset-0 flex gap-0.5 overflow-hidden text-house-accent"
         style={{ width: percentage + '%' }}
         aria-hidden
       >
@@ -65,7 +65,7 @@ export function StarPicker({ value, onChange, size = 30 }: StarPickerProps) {
         >
           <Star
             size={size}
-            className={star <= shown ? 'text-gold-500' : 'text-night-800/25'}
+            className={star <= shown ? 'text-house-accent' : 'text-stone-800/25'}
             fill={star <= shown ? 'currentColor' : 'none'}
             aria-hidden
           />

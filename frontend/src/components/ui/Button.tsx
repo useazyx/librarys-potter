@@ -3,14 +3,14 @@ import { Loader2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import type { ReactNode } from 'react'
 
-type Variant = 'primary' | 'secondary' | 'ghost' | 'gold'
+type Variant = 'primary' | 'secondary' | 'ghost' | 'house'
 type Size = 'sm' | 'md' | 'lg'
 
 const VARIANTS: Record<Variant, string> = {
-  primary: 'bg-burgundy-600 text-parchment-50 hover:bg-burgundy-500 shadow-book',
-  secondary: 'border border-night-800/25 text-night-800 hover:border-burgundy-600 hover:text-burgundy-600',
-  ghost: 'text-night-800 hover:text-burgundy-600',
-  gold: 'bg-gold-500 text-night-900 hover:bg-gold-400 shadow-warm',
+  primary: 'bg-house-deep text-chalk-50 hover:bg-house-mid shadow-book',
+  secondary: 'border border-stone-800/25 text-stone-800 hover:border-house-deep hover:text-house-deep',
+  ghost: 'text-stone-800 hover:text-house-deep',
+  house: 'bg-house-accent text-stone-950 shadow-stone hover:brightness-110',
 }
 
 const SIZES: Record<Size, string> = {

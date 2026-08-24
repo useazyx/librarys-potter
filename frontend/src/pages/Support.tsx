@@ -32,9 +32,9 @@ const FAQ = [
 ]
 
 const STATUS_TONES: Record<string, string> = {
-  OPEN: 'bg-copper-500/20 text-copper-400',
-  IN_PROGRESS: 'bg-gold-500/20 text-gold-400',
-  RESOLVED: 'bg-sage-600/20 text-sage-400',
+  OPEN: 'bg-ember-600/20 text-ember-400',
+  IN_PROGRESS: 'bg-house-accent/20 text-house-accent',
+  RESOLVED: 'bg-mandrake-600/20 text-mandrake-400',
 }
 
 export default function Support() {
@@ -100,12 +100,12 @@ export default function Support() {
           aria-hidden
           className="absolute inset-0 h-full w-full object-cover opacity-20"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-night-900/85 to-night-900" aria-hidden />
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-900/85 to-stone-900" aria-hidden />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
           <p className="eyebrow mb-4">Central de ajuda</p>
-          <h1 className="font-display text-5xl text-parchment-50 sm:text-6xl">Relatar um problema</h1>
-          <p className="mt-5 max-w-2xl text-parchment-200/80">
+          <h1 className="font-display text-5xl text-chalk-50 sm:text-6xl">Relatar um problema</h1>
+          <p className="mt-5 max-w-2xl text-chalk-200/80">
             Pedido atrasado, livro danificado, dúvida sobre uma edição: abra um chamado e acompanhe a resposta
             por aqui mesmo.
           </p>
@@ -115,7 +115,7 @@ export default function Support() {
       <section className="mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-[1.2fr_1fr] lg:px-10">
         <form onSubmit={handleSubmit} className="surface-paper rounded-2xl p-8 shadow-book lg:p-10" noValidate>
           <h2 className="mb-6 flex items-center gap-2 font-display text-2xl">
-            <LifeBuoy size={20} className="text-burgundy-600" aria-hidden />
+            <LifeBuoy size={20} className="text-house-deep" aria-hidden />
             Abrir chamado
           </h2>
 
@@ -179,7 +179,7 @@ export default function Support() {
             <motion.p
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-6 flex items-center gap-2 text-sm text-sage-600"
+              className="mt-6 flex items-center gap-2 text-sm text-mandrake-600"
               role="status"
             >
               <CheckCircle2 size={16} aria-hidden />
@@ -190,17 +190,17 @@ export default function Support() {
 
         <aside className="space-y-6">
           {user && (
-            <div className="rounded-2xl border border-parchment-100/10 bg-night-800/70 p-7">
+            <div className="rounded-2xl border border-chalk-100/10 bg-stone-800/70 p-7">
               <p className="eyebrow mb-5">Meus chamados</p>
 
               {tickets.length === 0 ? (
-                <p className="text-sm text-parchment-200/70">Você ainda não abriu nenhum chamado.</p>
+                <p className="text-sm text-chalk-200/70">Você ainda não abriu nenhum chamado.</p>
               ) : (
                 <ul className="space-y-4">
                   {tickets.map((ticket) => (
-                    <li key={ticket.id} className="border-l-2 border-parchment-100/15 pl-4">
+                    <li key={ticket.id} className="border-l-2 border-chalk-100/15 pl-4">
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="font-display text-parchment-50">{ticket.code}</span>
+                        <span className="font-display text-chalk-50">{ticket.code}</span>
                         <span
                           className={
                             'rounded-full px-2.5 py-0.5 text-[0.58rem] uppercase tracking-[0.14em] ' +
@@ -209,18 +209,18 @@ export default function Support() {
                         >
                           {TICKET_STATUS_LABELS[ticket.status]}
                         </span>
-                        <span className="ml-auto text-[0.65rem] text-parchment-300/50">
+                        <span className="ml-auto text-[0.65rem] text-chalk-300/50">
                           {formatDateTime(ticket.createdAt)}
                         </span>
                       </div>
 
-                      <p className="mt-1.5 text-sm text-parchment-100">{ticket.subject}</p>
-                      <p className="text-xs text-parchment-300/60">
+                      <p className="mt-1.5 text-sm text-chalk-100">{ticket.subject}</p>
+                      <p className="text-xs text-chalk-300/60">
                         Urgência {URGENCY_LABELS[ticket.urgency].toLowerCase()}
                       </p>
 
                       {ticket.resolution && (
-                        <p className="mt-2 rounded-lg bg-sage-600/10 px-3 py-2 text-xs text-sage-400">
+                        <p className="mt-2 rounded-lg bg-mandrake-600/10 px-3 py-2 text-xs text-mandrake-400">
                           {ticket.resolution}
                         </p>
                       )}
@@ -231,14 +231,14 @@ export default function Support() {
             </div>
           )}
 
-          <div className="rounded-2xl border border-parchment-100/10 bg-night-800/70 p-7">
+          <div className="rounded-2xl border border-chalk-100/10 bg-stone-800/70 p-7">
             <p className="eyebrow mb-5">Perguntas frequentes</p>
 
             <dl className="space-y-5">
               {FAQ.map((item) => (
                 <div key={item.question}>
-                  <dt className="font-display text-parchment-50">{item.question}</dt>
-                  <dd className="mt-1.5 text-sm leading-relaxed text-parchment-200/70">{item.answer}</dd>
+                  <dt className="font-display text-chalk-50">{item.question}</dt>
+                  <dd className="mt-1.5 text-sm leading-relaxed text-chalk-200/70">{item.answer}</dd>
                 </div>
               ))}
             </dl>

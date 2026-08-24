@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
+import { HouseSwitch } from '../house/HouseSwitch'
 import { ButtonLink } from '../ui/Button'
 
 const LINKS = [
@@ -40,17 +41,17 @@ export function Header() {
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className={
         'fixed inset-x-0 top-0 z-50 transition-colors duration-500 ' +
-        (overHero ? 'bg-transparent' : 'border-b border-parchment-100/10 bg-night-900/92 backdrop-blur-md')
+        (overHero ? 'bg-transparent' : 'border-b border-chalk-100/10 bg-stone-900/92 backdrop-blur-md')
       }
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 py-4 lg:px-10">
         <Link to="/" className="flex items-center gap-3" aria-label="Library's Potter, página inicial">
-          <span className="grid h-11 w-11 place-items-center rounded-full border border-gold-400/50 font-display text-sm text-gold-400">
+          <span className="grid h-11 w-11 place-items-center rounded-full border border-house-accent/50 font-display text-sm text-house-accent">
             LP
           </span>
           <span className="hidden flex-col leading-none sm:flex">
-            <span className="font-display text-lg tracking-wide text-parchment-100">Library&apos;s Potter</span>
-            <span className="text-[0.58rem] uppercase tracking-[0.32em] text-parchment-300/70">
+            <span className="font-display text-lg tracking-wide text-chalk-100">Library&apos;s Potter</span>
+            <span className="text-[0.58rem] uppercase tracking-[0.32em] text-chalk-300/70">
               A livraria da saga
             </span>
           </span>
@@ -62,7 +63,7 @@ export function Header() {
               key={link.to}
               to={link.to}
               end={link.to === '/'}
-              className="link-underline text-[0.76rem] uppercase tracking-[0.24em] text-parchment-100/85 transition-colors hover:text-gold-400"
+              className="link-underline text-[0.76rem] uppercase tracking-[0.24em] text-chalk-100/85 transition-colors hover:text-house-accent"
             >
               {({ isActive }) => <span data-active={isActive}>{link.label}</span>}
             </NavLink>
@@ -70,11 +71,13 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-1 sm:gap-3">
+          <HouseSwitch />
+
           {isStaff && (
             <Link
               to="/painel"
               aria-label="Painel"
-              className="rounded-full p-2.5 text-parchment-100/85 transition-colors hover:bg-parchment-100/10 hover:text-gold-400"
+              className="rounded-full p-2.5 text-chalk-100/85 transition-colors hover:bg-chalk-100/10 hover:text-house-accent"
             >
               <LayoutDashboard size={20} aria-hidden />
             </Link>
@@ -83,7 +86,7 @@ export function Header() {
           <Link
             to="/carrinho"
             aria-label={'Carrinho com ' + itemCount + ' item(ns)'}
-            className="relative rounded-full p-2.5 text-parchment-100/85 transition-colors hover:bg-parchment-100/10 hover:text-gold-400"
+            className="relative rounded-full p-2.5 text-chalk-100/85 transition-colors hover:bg-chalk-100/10 hover:text-house-accent"
           >
             <ShoppingBag size={20} aria-hidden />
             <AnimatePresence>
@@ -93,7 +96,7 @@ export function Header() {
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   exit={{ scale: 0 }}
-                  className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-burgundy-500 px-1 text-[0.65rem] font-semibold text-parchment-50"
+                  className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-house-mid px-1 text-[0.65rem] font-semibold text-chalk-50"
                 >
                   {itemCount}
                 </motion.span>
@@ -104,13 +107,13 @@ export function Header() {
           <Link
             to={user ? '/perfil' : '/login'}
             aria-label={user ? 'Meu perfil' : 'Entrar'}
-            className="rounded-full p-2.5 text-parchment-100/85 transition-colors hover:bg-parchment-100/10 hover:text-gold-400"
+            className="rounded-full p-2.5 text-chalk-100/85 transition-colors hover:bg-chalk-100/10 hover:text-house-accent"
           >
             <User size={20} aria-hidden />
           </Link>
 
           <div className="hidden lg:block">
-            <ButtonLink to="/catalogo" size="sm" variant="gold">
+            <ButtonLink to="/catalogo" size="sm" variant="house">
               Ver livros
             </ButtonLink>
           </div>
@@ -120,7 +123,7 @@ export function Header() {
             onClick={() => setOpen((value) => !value)}
             aria-label={open ? 'Fechar menu' : 'Abrir menu'}
             aria-expanded={open}
-            className="rounded-full p-2.5 text-parchment-100/85 transition-colors hover:bg-parchment-100/10 lg:hidden"
+            className="rounded-full p-2.5 text-chalk-100/85 transition-colors hover:bg-chalk-100/10 lg:hidden"
           >
             {open ? <X size={22} aria-hidden /> : <Menu size={22} aria-hidden />}
           </button>
@@ -134,7 +137,7 @@ export function Header() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden border-t border-parchment-100/10 bg-night-900 lg:hidden"
+            className="overflow-hidden border-t border-chalk-100/10 bg-stone-900 lg:hidden"
             aria-label="Menu móvel"
           >
             <div className="flex flex-col gap-1 px-6 py-5">
@@ -148,7 +151,7 @@ export function Header() {
                   <NavLink
                     to={link.to}
                     end={link.to === '/'}
-                    className="block py-3 font-display text-2xl text-parchment-100"
+                    className="block py-3 font-display text-2xl text-chalk-100"
                   >
                     {link.label}
                   </NavLink>
@@ -156,12 +159,12 @@ export function Header() {
               ))}
 
               {isStaff && (
-                <NavLink to="/painel" className="flex items-center gap-2 py-3 font-display text-2xl text-gold-400">
+                <NavLink to="/painel" className="flex items-center gap-2 py-3 font-display text-2xl text-house-accent">
                   <LifeBuoy size={20} aria-hidden /> Painel
                 </NavLink>
               )}
 
-              <ButtonLink to="/catalogo" className="mt-4 w-full" variant="gold">
+              <ButtonLink to="/catalogo" className="mt-4 w-full" variant="house">
                 Ver livros
               </ButtonLink>
             </div>

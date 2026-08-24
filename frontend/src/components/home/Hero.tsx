@@ -1,6 +1,7 @@
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { useRef } from 'react'
+import { useHouse } from '../../context/HouseContext'
 import { ButtonLink } from '../ui/Button'
 
 const TITLE = ["Library's", 'Potter']
@@ -8,6 +9,7 @@ const TITLE = ["Library's", 'Potter']
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
   const reduceMotion = useReducedMotion()
+  const { info } = useHouse()
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
 
@@ -33,81 +35,87 @@ export function Hero() {
         />
       </motion.div>
 
-      {/* Keeps the title legible over the photograph and hands the page to the night below. */}
-      <div className="absolute inset-0 bg-night-900/72" aria-hidden />
+      {/* Keeps the title legible over the photograph and hands the page to the castle below. */}
+      <div className="absolute inset-0 bg-stone-950/70" aria-hidden />
       <div
-        className="absolute inset-0 bg-gradient-to-b from-night-900/85 via-night-900/35 to-night-900"
+        className="absolute inset-0 bg-gradient-to-b from-stone-950/85 via-house-deep/45 to-stone-900"
         aria-hidden
       />
 
+      {/*
+        Todo o texto abaixo entra por `.rise-in`, e não pelo framer-motion: o
+        estado de repouso da regra já é o visível, então uma animação que não
+        rode deixa o leitor com o título na tela em vez de um hero vazio.
+      */}
       <motion.div
         className="relative z-10 mx-auto max-w-4xl px-6 pb-24 pt-32 text-center"
         style={{ y: reduceMotion ? undefined : contentY }}
       >
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15, duration: 0.7 }}
-          className="mb-6 text-[0.68rem] uppercase tracking-[0.42em] text-gold-400"
+        <p
+          className="rise-in mb-6 text-[0.68rem] uppercase tracking-[0.42em] text-house-accent"
+          style={{ animationDelay: '0.15s' }}
         >
           A livraria da saga · sete livros · uma geração
-        </motion.p>
+        </p>
 
         <h1
           id="hero-title"
-          className="font-display text-5xl text-parchment-50 drop-shadow-[0_4px_28px_rgba(5,8,14,0.85)] sm:text-7xl lg:text-8xl"
+          className="font-display text-5xl text-chalk-50 drop-shadow-[0_4px_28px_rgba(3,3,6,0.9)] sm:text-7xl lg:text-8xl"
         >
           {TITLE.map((word, index) => (
-            <motion.span
+            <span
               key={word}
-              className="mr-[0.25em] inline-block"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25 + index * 0.12, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              className="rise-in mr-[0.25em] inline-block"
+              style={{ animationDelay: 0.25 + index * 0.12 + 's', ['--rise' as string]: '40px' }}
             >
               {word}
-            </motion.span>
+            </span>
           ))}
         </h1>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.7, duration: 0.9 }}
-          className="mx-auto mt-8 max-w-xl text-balance font-serif text-xl italic text-parchment-200/90"
+        <p
+          className="rise-in mx-auto mt-8 max-w-xl text-balance font-serif text-xl italic text-chalk-200/90"
+          style={{ animationDelay: '0.7s' }}
         >
           &ldquo;Não faz bem viver de sonhos e esquecer de viver.&rdquo; Aqui, os dois cabem na mesma
           prateleira.
-        </motion.p>
+        </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.7 }}
-          className="mt-12 flex flex-wrap items-center justify-center gap-4"
+        <div
+          className="rise-in mt-12 flex flex-wrap items-center justify-center gap-4"
+          style={{ animationDelay: '0.9s' }}
         >
-          <ButtonLink to="/catalogo" size="lg" variant="gold">
+          <ButtonLink to="/catalogo" size="lg" variant="house">
             Ver o catálogo
           </ButtonLink>
           <ButtonLink
             to="/saga"
             size="lg"
             variant="secondary"
-            className="border-parchment-100/50 text-parchment-50 hover:border-gold-400 hover:text-gold-400"
+            className="border-chalk-100/50 text-chalk-50 hover:border-house-accent hover:text-house-accent"
           >
             Conhecer a saga
           </ButtonLink>
-        </motion.div>
+        </div>
+
+        {info && (
+          <p
+            className="rise-in mt-10 text-[0.66rem] uppercase tracking-[0.28em] text-house-accent/80"
+            style={{ animationDelay: '1.1s' }}
+          >
+            A livraria está vestida de {info.name}
+          </p>
+        )}
       </motion.div>
 
       <motion.div
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-parchment-100/60"
+        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-chalk-100/60"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, y: [0, 10, 0] }}
         transition={{ opacity: { delay: 1.5 }, y: { duration: 2.4, repeat: Infinity, ease: 'easeInOut' } }}
         aria-hidden
       >
-        <ChevronDown size={28} />
+        <ChevronDown size={28} aria-hidden />
       </motion.div>
     </section>
   )

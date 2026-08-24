@@ -66,13 +66,22 @@ export default function Saga() {
       )
 
       gsap.utils.toArray<HTMLElement>('.saga-entry').forEach((entry) => {
-        gsap.from(entry, {
-          opacity: 0,
-          y: 60,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: entry, start: 'top 82%' },
-        })
+        // `fromTo` com `immediateRender: false` em vez de `from`: assim o estado
+        // invisível só é aplicado quando o ScrollTrigger dispara. Um `from`
+        // esconde a entrada na hora e a deixa escondida para sempre se o gatilho
+        // não vier — a mesma armadilha da transição de página.
+        gsap.fromTo(
+          entry,
+          { opacity: 0, y: 60 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: 'power3.out',
+            immediateRender: false,
+            scrollTrigger: { trigger: entry, start: 'top 82%' },
+          },
+        )
       })
     }, timelineRef)
 
@@ -88,7 +97,7 @@ export default function Saga() {
           aria-hidden
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-night-900 via-night-900/75 to-night-900/45" aria-hidden />
+        <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-stone-900/75 to-stone-900/45" aria-hidden />
 
         <div className="relative mx-auto w-full max-w-7xl px-6 pb-20 lg:px-10">
           <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="eyebrow mb-4">
@@ -99,7 +108,7 @@ export default function Saga() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.12, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-3xl text-balance font-display text-5xl text-parchment-50 drop-shadow-[0_4px_28px_rgba(5,8,14,0.85)] sm:text-6xl"
+            className="max-w-3xl text-balance font-display text-5xl text-chalk-50 drop-shadow-[0_4px_28px_rgba(3,3,6,0.9)] sm:text-6xl"
           >
             Sete livros, uma geração inteira
           </motion.h1>
@@ -108,7 +117,7 @@ export default function Saga() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.35, duration: 0.9 }}
-            className="mt-6 max-w-2xl font-serif text-xl italic text-parchment-200/85"
+            className="mt-6 max-w-2xl font-serif text-xl italic text-chalk-200/85"
           >
             J. K. Rowling criou a aventura que se tornou o maior fenômeno editorial de todos os tempos — e que
             ainda chega a cada leitor pela primeira vez.
@@ -123,9 +132,9 @@ export default function Saga() {
           </h2>
 
           <div className="relative">
-            <div className="absolute left-4 top-0 h-full w-px bg-parchment-100/12 lg:left-1/2" aria-hidden />
+            <div className="absolute left-4 top-0 h-full w-px bg-chalk-100/12 lg:left-1/2" aria-hidden />
             <div
-              className="saga-progress absolute left-4 top-0 h-full w-px origin-top bg-gold-400 lg:left-1/2"
+              className="saga-progress absolute left-4 top-0 h-full w-px origin-top bg-house-accent lg:left-1/2"
               aria-hidden
             />
 
@@ -139,7 +148,7 @@ export default function Saga() {
                   }
                 >
                   <span
-                    className="absolute left-[9px] top-2 h-3.5 w-3.5 rounded-full bg-gold-400 ring-4 ring-night-900 lg:left-1/2 lg:-translate-x-1/2"
+                    className="absolute left-[9px] top-2 h-3.5 w-3.5 rounded-full bg-house-accent ring-4 ring-stone-900 lg:left-1/2 lg:-translate-x-1/2"
                     aria-hidden
                   />
 
@@ -154,9 +163,9 @@ export default function Saga() {
                   </figure>
 
                   <div className={index % 2 === 1 ? 'lg:pr-12 lg:text-right' : 'lg:pl-12'}>
-                    <p className="font-display text-4xl text-gold-400">{chapter.year}</p>
-                    <h3 className="mt-3 font-display text-2xl text-parchment-50">{chapter.title}</h3>
-                    <p className="mt-4 leading-relaxed text-parchment-200/80">{chapter.text}</p>
+                    <p className="font-display text-4xl text-house-accent">{chapter.year}</p>
+                    <h3 className="mt-3 font-display text-2xl text-chalk-50">{chapter.title}</h3>
+                    <p className="mt-4 leading-relaxed text-chalk-200/80">{chapter.text}</p>
                   </div>
                 </li>
               ))}
@@ -165,7 +174,7 @@ export default function Saga() {
         </div>
       </section>
 
-      <section className="bg-ruled py-20">
+      <section className="bg-masonry py-20">
         <dl className="mx-auto grid max-w-4xl gap-10 px-6 text-center sm:grid-cols-3">
           {NUMBERS.map((number) => (
             <motion.div
@@ -175,8 +184,8 @@ export default function Saga() {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              <dt className="font-display text-5xl text-gold-400">{number.value}</dt>
-              <dd className="mt-2 text-[0.68rem] uppercase tracking-[0.2em] text-parchment-300/70">
+              <dt className="font-display text-5xl text-house-accent">{number.value}</dt>
+              <dd className="mt-2 text-[0.68rem] uppercase tracking-[0.2em] text-chalk-300/70">
                 {number.label}
               </dd>
             </motion.div>
@@ -186,21 +195,21 @@ export default function Saga() {
 
       <section className="py-24 text-center">
         <div className="mx-auto max-w-2xl px-6">
-          <p className="font-serif text-3xl italic text-gold-400">
+          <p className="font-serif text-3xl italic text-house-accent">
             &ldquo;Ajuda sempre será dada em Hogwarts a quem pedir.&rdquo;
           </p>
-          <p className="mt-6 text-parchment-200/80">
+          <p className="mt-6 text-chalk-200/80">
             Comece — ou recomece — a leitura pela edição que estava faltando na sua estante.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <ButtonLink to="/catalogo" size="lg" variant="gold">
+            <ButtonLink to="/catalogo" size="lg" variant="house">
               Ver o catálogo
             </ButtonLink>
             <ButtonLink
               to="/ajuda"
               size="lg"
               variant="secondary"
-              className="border-parchment-100/40 text-parchment-100 hover:border-gold-400 hover:text-gold-400"
+              className="border-chalk-100/40 text-chalk-100 hover:border-house-accent hover:text-house-accent"
             >
               Falar com a livraria
             </ButtonLink>

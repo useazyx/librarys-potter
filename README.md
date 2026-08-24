@@ -151,8 +151,9 @@ src/
 └── types/        contratos da API
 ```
 
-Design "biblioteca à meia-noite": fundo `night-900`, cartões em pergaminho, dourado de lombada e
-o bordô das capas da Rocco. Títulos em Cinzel, citações em EB Garamond, texto em Inter. Todas as
+Design "as quatro casas": a base é o castelo — pedra fria (`stone-*`) e giz (`chalk-*`) — e a cor
+entra pela casa que o leitor escolhe. Escolher a casa reveste o site inteiro, e a escolha é
+lembrada na próxima visita. Títulos em Cinzel, citações em EB Garamond, texto em Inter. Todas as
 animações respeitam `prefers-reduced-motion`, o foco de teclado é visível e as imagens abaixo da
 dobra usam `loading="lazy"`.
 

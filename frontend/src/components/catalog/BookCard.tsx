@@ -45,7 +45,7 @@ export function BookCard({ book, index = 0 }: BookCardProps) {
       initial={{ opacity: 0, y: 28 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: Math.min(index, 8) * 0.05, ease: [0.22, 1, 0.36, 1] }}
-      className="group flex h-full flex-col rounded-2xl border border-parchment-100/10 bg-night-800/70 p-5 transition-colors duration-500 hover:border-gold-400/40"
+      className="group flex h-full flex-col rounded-2xl border border-chalk-100/10 bg-stone-800/70 p-5 transition-colors duration-500 hover:border-house-accent/40"
     >
       <Link
         to={'/livro/' + book.slug}
@@ -61,22 +61,22 @@ export function BookCard({ book, index = 0 }: BookCardProps) {
         />
 
         {soldOut && (
-          <span className="absolute inset-x-0 bottom-0 bg-night-900/85 py-2 text-center text-[0.65rem] uppercase tracking-[0.2em] text-parchment-200">
+          <span className="absolute inset-x-0 bottom-0 bg-stone-900/85 py-2 text-center text-[0.65rem] uppercase tracking-[0.2em] text-chalk-200">
             Esgotado
           </span>
         )}
 
         {book.featured && !soldOut && (
-          <span className="absolute left-3 top-3 rounded-full bg-gold-500 px-2.5 py-1 text-[0.6rem] uppercase tracking-[0.16em] text-night-900">
+          <span className="absolute left-3 top-3 rounded-full bg-house-accent px-2.5 py-1 text-[0.6rem] uppercase tracking-[0.16em] text-stone-900">
             Destaque
           </span>
         )}
       </Link>
 
       <div className="flex flex-1 flex-col">
-        <p className="text-[0.66rem] uppercase tracking-[0.2em] text-parchment-300/60">{book.author.name}</p>
+        <p className="text-[0.66rem] uppercase tracking-[0.2em] text-chalk-300/60">{book.author.name}</p>
 
-        <h3 className="mt-2 font-display text-lg leading-snug text-parchment-50">
+        <h3 className="mt-2 font-display text-lg leading-snug text-chalk-50">
           <Link to={'/livro/' + book.slug} className="link-underline">
             {book.title}
           </Link>
@@ -84,7 +84,7 @@ export function BookCard({ book, index = 0 }: BookCardProps) {
 
         <div className="mt-3 flex items-center gap-2">
           <Stars value={book.rating.average} size={14} />
-          <span className="text-xs text-parchment-300/60">
+          <span className="text-xs text-chalk-300/60">
             {book.rating.count === 0
               ? 'sem avaliações'
               : book.rating.count === 1
@@ -93,13 +93,13 @@ export function BookCard({ book, index = 0 }: BookCardProps) {
           </span>
         </div>
 
-        <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-parchment-200/70">{book.synopsis}</p>
+        <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-chalk-200/70">{book.synopsis}</p>
 
-        <div className="mt-5 flex items-center justify-between gap-3 border-t border-parchment-100/10 pt-4">
+        <div className="mt-5 flex items-center justify-between gap-3 border-t border-chalk-100/10 pt-4">
           <div>
-            <span className="font-display text-xl text-gold-400">{formatPrice(book.price)}</span>
+            <span className="font-display text-xl text-house-accent">{formatPrice(book.price)}</span>
             {!soldOut && book.stock <= 5 && (
-              <p className="text-[0.65rem] uppercase tracking-[0.14em] text-copper-400">
+              <p className="text-[0.65rem] uppercase tracking-[0.14em] text-ember-400">
                 últimos {book.stock}
               </p>
             )}
@@ -111,7 +111,7 @@ export function BookCard({ book, index = 0 }: BookCardProps) {
             disabled={busy || soldOut}
             whileHover={{ scale: soldOut ? 1 : 1.04 }}
             whileTap={{ scale: soldOut ? 1 : 0.96 }}
-            className="inline-flex items-center gap-2 rounded-full bg-burgundy-500 px-4 py-2.5 text-[0.68rem] font-medium uppercase tracking-[0.16em] text-parchment-50 transition-colors hover:bg-burgundy-400 disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex items-center gap-2 rounded-full bg-house-mid px-4 py-2.5 text-[0.68rem] font-medium uppercase tracking-[0.16em] text-chalk-50 transition-colors hover:bg-house-mid disabled:cursor-not-allowed disabled:opacity-40"
           >
             <Plus size={14} aria-hidden />
             {soldOut ? 'Esgotado' : 'Comprar'}

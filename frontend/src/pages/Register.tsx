@@ -83,7 +83,7 @@ export default function Register() {
     >
       <form onSubmit={handleSubmit} noValidate>
         <fieldset>
-          <legend className="mb-3 block text-[0.7rem] font-medium uppercase tracking-[0.22em] text-night-700">
+          <legend className="mb-3 block text-[0.7rem] font-medium uppercase tracking-[0.22em] text-stone-700">
             Eu quero entrar como
           </legend>
 
@@ -98,8 +98,8 @@ export default function Register() {
                   className={
                     'relative flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition-colors duration-300 ' +
                     (selected
-                      ? 'border-burgundy-600 bg-burgundy-600/5'
-                      : 'border-night-800/15 hover:border-burgundy-500/60')
+                      ? 'border-house-deep bg-house-deep/5'
+                      : 'border-stone-800/15 hover:border-house-mid/60')
                   }
                 >
                   <input
@@ -114,21 +114,21 @@ export default function Register() {
                   <span
                     className={
                       'mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full transition-colors duration-300 ' +
-                      (selected ? 'bg-burgundy-600 text-parchment-50' : 'bg-night-800/10 text-night-700')
+                      (selected ? 'bg-house-deep text-chalk-50' : 'bg-stone-800/10 text-stone-700')
                     }
                   >
                     <Icon size={17} aria-hidden />
                   </span>
 
                   <span>
-                    <span className="block font-display text-lg text-night-800">{option.label}</span>
-                    <span className="block text-sm leading-snug text-night-700/80">{option.description}</span>
+                    <span className="block font-display text-lg text-stone-800">{option.label}</span>
+                    <span className="block text-sm leading-snug text-stone-700/80">{option.description}</span>
                   </span>
 
                   {selected && (
                     <motion.span
                       layoutId="register-role"
-                      className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-burgundy-600"
+                      className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-house-deep"
                       transition={{ type: 'spring', stiffness: 340, damping: 30 }}
                       aria-hidden
                     />
@@ -173,7 +173,7 @@ export default function Register() {
         />
 
         {errors.form && (
-          <p className="mt-5 rounded-lg bg-burgundy-600/10 px-4 py-3 text-sm text-burgundy-600" role="alert">
+          <p className="mt-5 rounded-lg bg-house-deep/10 px-4 py-3 text-sm text-house-deep" role="alert">
             {errors.form}
           </p>
         )}
@@ -183,9 +183,9 @@ export default function Register() {
         </Button>
       </form>
 
-      <p className="mt-8 text-center text-sm text-night-700">
+      <p className="mt-8 text-center text-sm text-stone-700">
         Já tem conta?{' '}
-        <Link to="/login" className="link-underline text-burgundy-600">
+        <Link to="/login" className="link-underline text-house-deep">
           Faça login
         </Link>
       </p>

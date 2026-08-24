@@ -63,7 +63,7 @@ export default function Login() {
         />
 
         {error && (
-          <p className="mt-5 rounded-lg bg-burgundy-600/10 px-4 py-3 text-sm text-burgundy-600" role="alert">
+          <p className="mt-5 rounded-lg bg-house-deep/10 px-4 py-3 text-sm text-house-deep" role="alert">
             {error}
           </p>
         )}
@@ -73,15 +73,15 @@ export default function Login() {
         </Button>
       </form>
 
-      <div className="mt-8 space-y-3 text-center text-sm text-night-700">
+      <div className="mt-8 space-y-3 text-center text-sm text-stone-700">
         <p>
-          <Link to="/redefinir-senha" className="link-underline text-burgundy-600">
+          <Link to="/redefinir-senha" className="link-underline text-house-deep">
             Esqueceu sua senha?
           </Link>
         </p>
         <p>
           Não tem uma conta?{' '}
-          <Link to="/cadastro" className="link-underline text-burgundy-600">
+          <Link to="/cadastro" className="link-underline text-house-deep">
             Cadastre-se
           </Link>
         </p>

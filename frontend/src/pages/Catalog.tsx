@@ -98,7 +98,7 @@ export default function Catalog() {
           aria-hidden
           className="absolute inset-0 h-full w-full object-cover opacity-25"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-night-900/85 to-night-900" aria-hidden />
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-900/85 to-stone-900" aria-hidden />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
           <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="eyebrow mb-4">
@@ -109,7 +109,7 @@ export default function Catalog() {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.8 }}
-            className="font-display text-5xl text-parchment-50 sm:text-6xl"
+            className="font-display text-5xl text-chalk-50 sm:text-6xl"
           >
             Todos os livros
           </motion.h1>
@@ -118,7 +118,7 @@ export default function Catalog() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.25, duration: 0.8 }}
-            className="mt-5 max-w-2xl text-parchment-200/80"
+            className="mt-5 max-w-2xl text-chalk-200/80"
           >
             Filtre por autor, editora, preço ou disponibilidade — e leve para casa a edição que faltava na sua
             estante.
@@ -126,12 +126,12 @@ export default function Catalog() {
         </div>
       </header>
 
-      <div className="sticky top-[72px] z-30 border-y border-parchment-100/10 bg-night-900/95 backdrop-blur">
+      <div className="sticky top-[72px] z-30 border-y border-chalk-100/10 bg-stone-900/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-3 px-6 py-4 lg:px-10">
           <div className="relative flex-1 sm:max-w-xs">
             <Search
               size={16}
-              className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-parchment-300/50"
+              className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-chalk-300/50"
               aria-hidden
             />
             <input
@@ -140,14 +140,14 @@ export default function Catalog() {
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Buscar por título, autor ou ISBN"
               aria-label="Buscar no catálogo"
-              className="w-full rounded-full border border-parchment-100/15 bg-night-800 py-2.5 pl-10 pr-9 text-sm text-parchment-100 placeholder:text-parchment-300/40 focus:border-gold-400 focus:outline-none"
+              className="w-full rounded-full border border-chalk-100/15 bg-stone-800 py-2.5 pl-10 pr-9 text-sm text-chalk-100 placeholder:text-chalk-300/40 focus:border-house-accent focus:outline-none"
             />
             {search && (
               <button
                 type="button"
                 onClick={() => setSearch('')}
                 aria-label="Limpar busca"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-parchment-300/60 hover:text-gold-400"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-chalk-300/60 hover:text-house-accent"
               >
                 <X size={15} aria-hidden />
               </button>
@@ -161,14 +161,14 @@ export default function Catalog() {
             className={
               'inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-[0.7rem] uppercase tracking-[0.16em] transition ' +
               (activeFilters.length > 0
-                ? 'border-gold-400 text-gold-400'
-                : 'border-parchment-100/20 text-parchment-100/80 hover:border-gold-400')
+                ? 'border-house-accent text-house-accent'
+                : 'border-chalk-100/20 text-chalk-100/80 hover:border-house-accent')
             }
           >
             <SlidersHorizontal size={14} aria-hidden />
             Filtros
             {activeFilters.length > 0 && (
-              <span className="rounded-full bg-gold-400 px-1.5 text-[0.62rem] text-night-900">
+              <span className="rounded-full bg-house-accent px-1.5 text-[0.62rem] text-stone-900">
                 {activeFilters.length}
               </span>
             )}
@@ -178,7 +178,7 @@ export default function Catalog() {
             value={filters.sort}
             onChange={(event) => updateParam('sort', event.target.value)}
             aria-label="Ordenar por"
-            className="ml-auto rounded-full border border-parchment-100/15 bg-night-800 px-4 py-2.5 text-sm text-parchment-100 focus:border-gold-400 focus:outline-none"
+            className="ml-auto rounded-full border border-chalk-100/15 bg-stone-800 px-4 py-2.5 text-sm text-chalk-100 focus:border-house-accent focus:outline-none"
           >
             {SORTS.map((option) => (
               <option key={option.value} value={option.value}>
@@ -195,7 +195,7 @@ export default function Catalog() {
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="overflow-hidden border-t border-parchment-100/10"
+              className="overflow-hidden border-t border-chalk-100/10"
             >
               <div className="mx-auto grid max-w-7xl gap-6 px-6 py-6 sm:grid-cols-2 lg:grid-cols-4 lg:px-10">
                 <FilterSelect
@@ -222,7 +222,7 @@ export default function Catalog() {
                 <div>
                   <label
                     htmlFor="maxPrice"
-                    className="mb-2 block text-[0.66rem] uppercase tracking-[0.2em] text-parchment-300/70"
+                    className="mb-2 block text-[0.66rem] uppercase tracking-[0.2em] text-chalk-300/70"
                   >
                     Até R$ {params.get('maxPrice') ?? '1000'}
                   </label>
@@ -236,15 +236,15 @@ export default function Catalog() {
                     onChange={(event) =>
                       updateParam('maxPrice', event.target.value === '1000' ? undefined : event.target.value)
                     }
-                    className="w-full accent-[#c19434]"
+                    className="w-full accent-[var(--house-accent)]"
                   />
 
-                  <label className="mt-4 flex items-center gap-2 text-sm text-parchment-200/80">
+                  <label className="mt-4 flex items-center gap-2 text-sm text-chalk-200/80">
                     <input
                       type="checkbox"
                       checked={params.get('inStock') === 'true'}
                       onChange={(event) => updateParam('inStock', event.target.checked ? 'true' : undefined)}
-                      className="accent-[#c19434]"
+                      className="accent-[var(--house-accent)]"
                     />
                     Somente em estoque
                   </label>
@@ -254,7 +254,7 @@ export default function Catalog() {
                   <button
                     type="button"
                     onClick={() => setParams(new URLSearchParams(), { replace: true })}
-                    className="justify-self-start text-[0.7rem] uppercase tracking-[0.18em] text-gold-400 lg:col-span-4"
+                    className="justify-self-start text-[0.7rem] uppercase tracking-[0.18em] text-house-accent lg:col-span-4"
                   >
                     Limpar filtros
                   </button>
@@ -270,12 +270,12 @@ export default function Catalog() {
           <BookSkeletonGrid />
         ) : visible.length === 0 ? (
           <div className="py-24 text-center">
-            <p className="font-display text-3xl text-parchment-50">Nenhum livro com esse feitiço.</p>
-            <p className="mt-3 text-parchment-200/70">Tente outro termo ou limpe os filtros.</p>
+            <p className="font-display text-3xl text-chalk-50">Nenhum livro com esse feitiço.</p>
+            <p className="mt-3 text-chalk-200/70">Tente outro termo ou limpe os filtros.</p>
           </div>
         ) : (
           <>
-            <p className="mb-8 text-[0.68rem] uppercase tracking-[0.2em] text-parchment-300/60" aria-live="polite">
+            <p className="mb-8 text-[0.68rem] uppercase tracking-[0.2em] text-chalk-300/60" aria-live="polite">
               {visible.length} {visible.length === 1 ? 'livro' : 'livros'}
             </p>
 
@@ -303,13 +303,13 @@ interface FilterSelectProps {
 function FilterSelect({ label, value, onChange, options }: FilterSelectProps) {
   return (
     <div>
-      <label className="mb-2 block text-[0.66rem] uppercase tracking-[0.2em] text-parchment-300/70">
+      <label className="mb-2 block text-[0.66rem] uppercase tracking-[0.2em] text-chalk-300/70">
         {label}
       </label>
       <select
         value={value}
         onChange={(event) => onChange(event.target.value || undefined)}
-        className="w-full rounded-lg border border-parchment-100/15 bg-night-800 px-4 py-2.5 text-sm text-parchment-100 focus:border-gold-400 focus:outline-none"
+        className="w-full rounded-lg border border-chalk-100/15 bg-stone-800 px-4 py-2.5 text-sm text-chalk-100 focus:border-house-accent focus:outline-none"
       >
         <option value="">Todos</option>
         {options.map((option) => (

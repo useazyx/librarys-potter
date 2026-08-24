@@ -8,14 +8,14 @@ export default function NotFound() {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="font-display text-8xl text-burgundy-600"
+        className="font-display text-8xl text-house-deep"
       >
         404
       </motion.p>
 
       <h1 className="mt-6 font-display text-4xl">Esta página foi para a Seção Reservada</h1>
 
-      <p className="mt-4 text-night-700">
+      <p className="mt-4 text-stone-700">
         O endereço que você procurou não existe — mas a livraria continua aberta.
       </p>
 

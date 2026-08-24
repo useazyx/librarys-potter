@@ -77,7 +77,7 @@ export default function ResetPassword() {
           />
 
           {error && (
-            <p className="mt-5 text-sm text-burgundy-600" role="alert">
+            <p className="mt-5 text-sm text-house-deep" role="alert">
               {error}
             </p>
           )}
@@ -107,7 +107,7 @@ export default function ResetPassword() {
           />
 
           {error && (
-            <p className="mt-5 text-sm text-burgundy-600" role="alert">
+            <p className="mt-5 text-sm text-house-deep" role="alert">
               {error}
             </p>
           )}
@@ -118,9 +118,9 @@ export default function ResetPassword() {
         </form>
       )}
 
-      <p className="mt-8 text-center text-sm text-night-700">
+      <p className="mt-8 text-center text-sm text-stone-700">
         Lembrou da senha?{' '}
-        <Link to="/login" className="link-underline text-burgundy-600">
+        <Link to="/login" className="link-underline text-house-deep">
           Voltar ao login
         </Link>
       </p>

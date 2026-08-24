@@ -46,10 +46,10 @@ export function Shelf({ title, eyebrow, description, books }: ShelfProps) {
         <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
           <div>
             <p className="eyebrow mb-3">{eyebrow}</p>
-            <h2 id="shelf-title" className="font-display text-4xl text-parchment-50 sm:text-5xl">
+            <h2 id="shelf-title" className="font-display text-4xl text-chalk-50 sm:text-5xl">
               {title}
             </h2>
-            <p className="mt-4 max-w-xl text-parchment-200/70">{description}</p>
+            <p className="mt-4 max-w-xl text-chalk-200/70">{description}</p>
           </div>
 
           <div className="flex gap-3">
@@ -58,7 +58,7 @@ export function Shelf({ title, eyebrow, description, books }: ShelfProps) {
               onClick={() => emblaApi?.scrollPrev()}
               disabled={!canPrev}
               aria-label="Livros anteriores"
-              className="rounded-full border border-parchment-100/25 p-3 text-parchment-100 transition hover:border-gold-400 hover:text-gold-400 disabled:opacity-25"
+              className="rounded-full border border-chalk-100/25 p-3 text-chalk-100 transition hover:border-house-accent hover:text-house-accent disabled:opacity-25"
             >
               <ChevronLeft size={20} aria-hidden />
             </button>
@@ -67,7 +67,7 @@ export function Shelf({ title, eyebrow, description, books }: ShelfProps) {
               onClick={() => emblaApi?.scrollNext()}
               disabled={!canNext}
               aria-label="Próximos livros"
-              className="rounded-full border border-parchment-100/25 p-3 text-parchment-100 transition hover:border-gold-400 hover:text-gold-400 disabled:opacity-25"
+              className="rounded-full border border-chalk-100/25 p-3 text-chalk-100 transition hover:border-house-accent hover:text-house-accent disabled:opacity-25"
             >
               <ChevronRight size={20} aria-hidden />
             </button>
@@ -88,7 +88,7 @@ export function Shelf({ title, eyebrow, description, books }: ShelfProps) {
           <ButtonLink
             to="/catalogo"
             variant="secondary"
-            className="border-parchment-100/40 text-parchment-100 hover:border-gold-400 hover:text-gold-400"
+            className="border-chalk-100/40 text-chalk-100 hover:border-house-accent hover:text-house-accent"
           >
             Ver o catálogo completo
           </ButtonLink>

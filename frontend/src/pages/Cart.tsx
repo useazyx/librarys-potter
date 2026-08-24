@@ -21,7 +21,7 @@ export default function CartPage() {
         title="Entre para ver o seu carrinho"
         text="Sua conta guarda os livros escolhidos enquanto você continua navegando."
         action={
-          <ButtonLink to="/login" size="lg" variant="gold">
+          <ButtonLink to="/login" size="lg" variant="house">
             Entrar na minha conta
           </ButtonLink>
         }
@@ -35,7 +35,7 @@ export default function CartPage() {
         title="Seu carrinho está vazio"
         text="A estante está logo ali — e a primeira carta de Hogwarts também."
         action={
-          <ButtonLink to="/catalogo" size="lg" variant="gold">
+          <ButtonLink to="/catalogo" size="lg" variant="house">
             Ver o catálogo
           </ButtonLink>
         }
@@ -50,7 +50,7 @@ export default function CartPage() {
       <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow mb-3">Sua sacola</p>
-          <h1 className="font-display text-4xl text-parchment-50 sm:text-5xl">Carrinho de compras</h1>
+          <h1 className="font-display text-4xl text-chalk-50 sm:text-5xl">Carrinho de compras</h1>
         </div>
 
         <button
@@ -59,7 +59,7 @@ export default function CartPage() {
             await clear()
             notify('Carrinho esvaziado.', 'info')
           }}
-          className="text-[0.7rem] uppercase tracking-[0.18em] text-parchment-300/70 transition hover:text-gold-400"
+          className="text-[0.7rem] uppercase tracking-[0.18em] text-chalk-300/70 transition hover:text-house-accent"
         >
           Esvaziar carrinho
         </button>
@@ -76,7 +76,7 @@ export default function CartPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, x: -60, height: 0, marginBottom: 0 }}
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                className="flex gap-5 overflow-hidden rounded-2xl border border-parchment-100/10 bg-night-800/70 p-5"
+                className="flex gap-5 overflow-hidden rounded-2xl border border-chalk-100/10 bg-stone-800/70 p-5"
               >
                 <Link to={'/livro/' + line.book.slug} className="shrink-0">
                   <img
@@ -90,13 +90,13 @@ export default function CartPage() {
                 <div className="flex min-w-0 flex-1 flex-col">
                   <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0">
-                      <h2 className="font-display text-lg text-parchment-50">
+                      <h2 className="font-display text-lg text-chalk-50">
                         <Link to={'/livro/' + line.book.slug} className="link-underline">
                           {line.book.title}
                         </Link>
                       </h2>
-                      <p className="mt-1 text-sm text-parchment-300/70">{line.book.author}</p>
-                      <p className="mt-2 text-xs text-parchment-300/50">
+                      <p className="mt-1 text-sm text-chalk-300/70">{line.book.author}</p>
+                      <p className="mt-2 text-xs text-chalk-300/50">
                         {formatPrice(line.book.price)} a unidade
                       </p>
                     </div>
@@ -105,36 +105,36 @@ export default function CartPage() {
                       type="button"
                       onClick={() => remove(line.id)}
                       aria-label={'Remover ' + line.book.title}
-                      className="shrink-0 rounded-full p-2 text-parchment-300/60 transition hover:bg-burgundy-500/15 hover:text-burgundy-400"
+                      className="shrink-0 rounded-full p-2 text-chalk-300/60 transition hover:bg-house-mid/15 hover:text-house-mid"
                     >
                       <Trash2 size={17} aria-hidden />
                     </button>
                   </div>
 
                   <div className="mt-auto flex flex-wrap items-center justify-between gap-4 pt-4">
-                    <div className="flex items-center gap-1 rounded-full border border-parchment-100/15 p-1">
+                    <div className="flex items-center gap-1 rounded-full border border-chalk-100/15 p-1">
                       <button
                         type="button"
                         disabled={busy}
                         onClick={() => update(line.id, line.quantity - 1)}
                         aria-label="Diminuir quantidade"
-                        className="rounded-full p-1.5 text-parchment-100 transition hover:bg-parchment-100/10 disabled:opacity-40"
+                        className="rounded-full p-1.5 text-chalk-100 transition hover:bg-chalk-100/10 disabled:opacity-40"
                       >
                         <Minus size={14} aria-hidden />
                       </button>
-                      <span className="w-8 text-center text-sm text-parchment-100">{line.quantity}</span>
+                      <span className="w-8 text-center text-sm text-chalk-100">{line.quantity}</span>
                       <button
                         type="button"
                         disabled={busy || line.quantity >= line.book.stock}
                         onClick={() => update(line.id, line.quantity + 1)}
                         aria-label="Aumentar quantidade"
-                        className="rounded-full p-1.5 text-parchment-100 transition hover:bg-parchment-100/10 disabled:opacity-40"
+                        className="rounded-full p-1.5 text-chalk-100 transition hover:bg-chalk-100/10 disabled:opacity-40"
                       >
                         <Plus size={14} aria-hidden />
                       </button>
                     </div>
 
-                    <p className="font-display text-xl text-gold-400">{formatPrice(line.lineTotal)}</p>
+                    <p className="font-display text-xl text-house-accent">{formatPrice(line.lineTotal)}</p>
                   </div>
                 </div>
               </motion.li>
@@ -148,24 +148,24 @@ export default function CartPage() {
 
             <dl className="mt-6 space-y-3 text-sm">
               <div className="flex justify-between">
-                <dt className="text-night-800/70">Subtotal</dt>
+                <dt className="text-stone-800/70">Subtotal</dt>
                 <dd>{formatPrice(cart.subtotal)}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-night-800/70">Frete</dt>
+                <dt className="text-stone-800/70">Frete</dt>
                 <dd>{cart.shipping === 0 ? 'Grátis' : formatPrice(cart.shipping)}</dd>
               </div>
             </dl>
 
             {cart.missingForFreeShipping > 0 && (
               <div className="mt-6">
-                <p className="text-xs text-night-800/70">
-                  Faltam <strong className="text-burgundy-600">{formatPrice(cart.missingForFreeShipping)}</strong>{' '}
+                <p className="text-xs text-stone-800/70">
+                  Faltam <strong className="text-house-deep">{formatPrice(cart.missingForFreeShipping)}</strong>{' '}
                   para o frete sair por nossa conta.
                 </p>
-                <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-night-800/10">
+                <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-stone-800/10">
                   <motion.div
-                    className="h-full rounded-full bg-gold-500"
+                    className="h-full rounded-full bg-house-accent"
                     initial={{ width: 0 }}
                     animate={{ width: progress + '%' }}
                     transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -174,9 +174,9 @@ export default function CartPage() {
               </div>
             )}
 
-            <div className="mt-6 flex items-end justify-between border-t border-night-800/10 pt-6">
-              <span className="text-[0.68rem] uppercase tracking-[0.22em] text-night-800/60">Total</span>
-              <span className="font-display text-3xl text-burgundy-600">{formatPrice(cart.total)}</span>
+            <div className="mt-6 flex items-end justify-between border-t border-stone-800/10 pt-6">
+              <span className="text-[0.68rem] uppercase tracking-[0.22em] text-stone-800/60">Total</span>
+              <span className="font-display text-3xl text-house-deep">{formatPrice(cart.total)}</span>
             </div>
 
             <Button onClick={() => navigate('/checkout')} size="lg" className="mt-8 w-full">
@@ -185,7 +185,7 @@ export default function CartPage() {
 
             <Link
               to="/catalogo"
-              className="mt-4 block text-center text-[0.7rem] uppercase tracking-[0.18em] text-night-800/60 transition hover:text-burgundy-600"
+              className="mt-4 block text-center text-[0.7rem] uppercase tracking-[0.18em] text-stone-800/60 transition hover:text-house-deep"
             >
               Continuar comprando
             </Link>
@@ -199,11 +199,11 @@ export default function CartPage() {
 function EmptyState({ title, text, action }: { title: string; text: string; action: React.ReactNode }) {
   return (
     <section className="mx-auto flex min-h-[70vh] max-w-xl flex-col items-center justify-center px-6 py-32 text-center">
-      <div className="mb-8 rounded-full border border-parchment-100/15 p-6 text-parchment-200/70">
+      <div className="mb-8 rounded-full border border-chalk-100/15 p-6 text-chalk-200/70">
         <ShoppingBag size={44} aria-hidden />
       </div>
-      <h1 className="font-display text-4xl text-parchment-50">{title}</h1>
-      <p className="mt-4 text-parchment-200/70">{text}</p>
+      <h1 className="font-display text-4xl text-chalk-50">{title}</h1>
+      <p className="mt-4 text-chalk-200/70">{text}</p>
       <div className="mt-10">{action}</div>
     </section>
   )

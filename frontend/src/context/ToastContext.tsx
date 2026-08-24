@@ -23,9 +23,9 @@ const ICONS: Record<ToastTone, typeof CheckCircle2> = {
 }
 
 const TONES: Record<ToastTone, string> = {
-  success: 'border-sage-400/60 text-sage-600',
-  error: 'border-burgundy-500/50 text-burgundy-600',
-  info: 'border-gold-400/60 text-night-700',
+  success: 'border-mandrake-400/60 text-mandrake-600',
+  error: 'border-house-mid/50 text-house-deep',
+  info: 'border-house-accent/60 text-stone-700',
 }
 
 export function ToastProvider({ children }: { children: ReactNode }) {
@@ -62,12 +62,12 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 exit={{ opacity: 0, x: 40, scale: 0.96 }}
                 transition={{ type: 'spring', stiffness: 320, damping: 30 }}
                 className={
-                  'pointer-events-auto flex items-start gap-3 rounded-xl border bg-parchment-50/95 px-4 py-3 shadow-warm backdrop-blur ' +
+                  'pointer-events-auto flex items-start gap-3 rounded-xl border bg-chalk-50/95 px-4 py-3 shadow-stone backdrop-blur ' +
                   TONES[toast.tone]
                 }
               >
                 <Icon size={20} className="mt-0.5 shrink-0" aria-hidden />
-                <p className="text-sm leading-snug text-night-800">{toast.message}</p>
+                <p className="text-sm leading-snug text-stone-800">{toast.message}</p>
               </motion.div>
             )
           })}

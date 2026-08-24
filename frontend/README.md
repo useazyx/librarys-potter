@@ -53,9 +53,23 @@ chamados ou das próprias avaliações.
 
 ## Tema
 
-"Biblioteca à meia-noite": fundo `night-900`, cartões `surface-paper` (pergaminho), dourado de
-lombada (`gold-*`) e o bordô das capas da Rocco (`burgundy-*`). Os tokens ficam no bloco
-`@theme` de `src/index.css`. Fontes: Cinzel (títulos), EB Garamond (citações), Inter (texto).
+"As quatro casas". O castelo é a base e não tem cor própria: pedra (`stone-*`) para os fundos,
+giz (`chalk-*`) para o texto e a folha clara `surface-paper` para formulários e cartões. A cor
+vem da casa escolhida pelo leitor.
+
+Como funciona: `--house-deep`, `--house-mid`, `--house-accent` e `--house-ink` são variáveis de
+tempo de execução, redefinidas por `[data-house='...']`. Um bloco `@theme inline` as transforma
+em utilitários (`bg-house-mid`, `text-house-accent`, ...) que **apontam** para a variável em vez
+de resolvê-la, então trocar o atributo `data-house` no `<html>` reveste o site inteiro sem
+duplicar uma única classe. Quem escreve o atributo é o `HouseProvider`
+(`src/context/HouseContext.tsx`), que guarda a escolha em `localStorage`.
+
+O truque do contraste: dentro de `.surface-paper` o próprio `--house-accent` é reescrito para a
+cor *profunda* da casa. Como variável CSS cascateia, o mesmo `text-house-accent` sai dourado
+sobre a pedra e vermelho-escuro sobre o papel — nenhum componente precisa saber em que fundo
+está.
+
+Fontes: Cinzel (títulos), EB Garamond (citações), Inter (texto).
 
 Acessibilidade: foco de teclado sempre visível, `prefers-reduced-motion` desliga as animações,
 imagens abaixo da dobra com `loading="lazy"` e diálogos com foco preso e fechamento por `Esc`.
