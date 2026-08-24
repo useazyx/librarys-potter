@@ -1,0 +1,150 @@
+/* Resetando margens e paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Estilizando o corpo da página */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('fundo.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+/* Estilos para o formulário de consulta */
+.wrapper {
+    width: 420px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    padding: 30px 40px;
+    color: #fff;
+    backdrop-filter: blur(9px);
+}
+
+/* Título */
+.wrapper h1 {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Formulário de consulta */
+.form-consulta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Caixa de entrada */
+.input-box {
+    width: 100%;
+    margin: 20px 0;
+}
+
+.input-box input {
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .3);
+    border-radius: 40px;
+    font-size: 16px;
+    color: #fff;
+    padding: 0 20px;
+}
+
+.input-box input::placeholder {
+    color: #ddd;
+}
+
+/* Botões */
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.btn, .btn-reset {
+    width: 48%;
+    height: 45px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn:hover, .btn-reset:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.btn-reset {
+    background: #f44336;
+}
+
+.btn-reset:hover {
+    background-color: #d32f2f;
+}
+
+/* Estilo para a tabela */
+.tabela-consulta {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.tabela-consulta th, .tabela-consulta td {
+    padding: 10px;
+    border: 1px solid #fff;
+}
+
+.tabela-consulta th {
+    background-color: #333;
+}
+
+.tabela-consulta tr:nth-child(even) {
+    background-color: #444;
+}
+
+.tabela-consulta tr:hover {
+    background-color: #555;
+}
+
+/* Mensagem de erro */
+.no-records {
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+/* Estilo do link "Voltar" */
+.btn-back {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    background: #2e7d32;
+    border-radius: 40px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-back:hover {
+    background-color: #1b5e20;
+}
+

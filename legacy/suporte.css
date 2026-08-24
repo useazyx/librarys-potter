@@ -1,0 +1,93 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url(fundo.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+.wrapper {
+    width: 100%;
+    max-width: 960px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    padding: 40px 50px;
+    backdrop-filter: blur(9px);
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.wrapper h1 {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.table th {
+    background-color: #333;
+}
+
+.table tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.table td {
+    color: #ddd;
+}
+
+.table .btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.table .btn.resolve {
+    background-color: #f44336;
+}
+
+.table .btn:hover {
+    background-color: #333;
+}
+
+.no-issues {
+    text-align: center;
+    font-size: 18px;
+    color: #ddd;
+    margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        padding: 30px;
+    }
+
+    .table th, .table td {
+        padding: 10px;
+    }
+}

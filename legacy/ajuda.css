@@ -1,0 +1,85 @@
+/* Reset e base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url(fundo.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Wrapper (container do formulário) */
+.wrapper {
+    width: 420px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(9px);
+    color: #fff;
+    border-radius: 12px;
+    padding: 30px 40px;
+}
+
+/* Título */
+.wrapper h1 {
+    font-size: 36px;
+    text-align: center;
+}
+
+/* Estilos para os campos de entrada */
+.wrapper .input-box {
+    position: relative;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.wrapper .input-box input,
+.wrapper .input-box textarea {
+    width: 100%;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 40px;
+    font-size: 16px;
+    color: #fff;
+    padding: 15px 25px;
+    outline: none;
+}
+
+.wrapper .input-box input::placeholder,
+.wrapper .input-box textarea::placeholder {
+    color: #fff;
+}
+
+.wrapper .input-box textarea {
+    resize: vertical;
+    height: 120px;
+}
+
+/* Estilos para o botão */
+.wrapper .btn {
+    width: 100%;
+    height: 45px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Efeito hover no botão */
+.wrapper .btn:hover {
+    background-color: #000;
+    transition: 0.3s;
+    color: #fff;
+}

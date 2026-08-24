@@ -1,0 +1,114 @@
+/* Estilo base comum a todas as páginas */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url(fundo.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Estilo para a div wrapper */
+.wrapper {
+    width: 80%;
+    max-width: 900px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    padding: 30px;
+    color: #fff;
+    backdrop-filter: blur(9px);
+}
+
+/* Título da página */
+.wrapper h1 {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilo da tabela */
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table th, .table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #fff;
+}
+
+.table th {
+    background-color: #333;
+    color: #fff;
+    font-size: 18px;
+}
+
+.table td {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ddd;
+}
+
+.table tr:nth-child(even) td {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.table td {
+    font-size: 14px;
+}
+
+.no-records {
+    text-align: center;
+    font-size: 18px;
+    color: #ddd;
+    margin-top: 20px;
+}
+
+/* Link de Voltar */
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #333;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.3s ease;
+}
+
+.back-link:hover {
+    background-color: #555;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .wrapper {
+        padding: 20px;
+        width: 90%;
+    }
+
+    .table th, .table td {
+        font-size: 12px;
+    }
+
+    .table {
+        font-size: 12px;
+    }
+}

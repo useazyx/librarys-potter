@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajuda - Relatar Problema</title>
+    <link rel="stylesheet" href="ajuda.css">
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Relatar um Problema</h1>
+        <form action="cadastroproblema.php" method="POST">
+            <div class="input-box">
+                <input type="text" name="nome" placeholder="Seu Nome" required>
+            </div>
+            <div class="input-box">
+                <input type="email" name="email" placeholder="Seu Email" required>
+            </div>
+            <div class="input-box">
+                <textarea name="descricao" placeholder="Descreva o seu problema" required></textarea>
+            </div>
+            <div class="input-box">
+                <input type="text" name="urgencia" placeholder="Urgência (Baixa, Média, Alta)" required>
+            </div>
+            <button class="btn" type="submit">Cadastrar Problema</button>
+        </form>
+    </div>
+</body>
+</html>

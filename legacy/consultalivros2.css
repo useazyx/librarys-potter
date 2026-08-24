@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('fundo.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+.wrapper {
+    width: 90%;
+    max-width: 900px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    border-radius: 12px;
+    padding: 30px 40px;
+    text-align: center;
+    margin: 20px;
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    color: #fff;
+    text-align: center;
+}
+
+.table th,
+.table td {
+    padding: 12px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.table th {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.table tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.table tr:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.no-records {
+    color: #ff6b6b;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
