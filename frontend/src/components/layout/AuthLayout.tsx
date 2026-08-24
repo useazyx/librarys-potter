@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { useHouse } from '../../context/HouseContext'
 import { HouseCrest } from '../house/HouseCrest'
-import { Embers } from '../ui/Embers'
+import { EnchantedSky } from '../ui/EnchantedSky'
 
 interface AuthLayoutProps {
   title: string
@@ -23,15 +23,7 @@ export function AuthLayout({ title, subtitle, children }: AuthLayoutProps) {
   return (
     <section className="grid min-h-screen lg:grid-cols-[0.9fr_1.1fr]">
       <div className="relative hidden overflow-hidden bg-house-deep lg:flex lg:flex-col lg:justify-between">
-        <div
-          className="absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage:
-              'repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 54px),repeating-linear-gradient(90deg,#fff 0 1px,transparent 1px 108px)',
-          }}
-          aria-hidden
-        />
-        <Embers count={20} />
+        <EnchantedSky embers={20} />
 
         <div className="relative grid flex-1 place-items-center p-12">
           {house ? (

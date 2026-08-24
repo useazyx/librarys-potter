@@ -3,7 +3,7 @@ import { Search, SlidersHorizontal, X } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { BookCard } from '../components/catalog/BookCard'
-import { Embers } from '../components/ui/Embers'
+import { EnchantedSky } from '../components/ui/EnchantedSky'
 import { BookSkeletonGrid } from '../components/ui/Loaders'
 import { api, type BookFilters } from '../lib/api'
 import type { Author, Book, Publisher } from '../types/api'
@@ -98,15 +98,7 @@ export default function Catalog() {
         esmaecida atrás de um título centralizado.
       */}
       <header className="relative overflow-hidden bg-house-deep pb-14 pt-32 lg:pt-36">
-        <div
-          className="absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage:
-              'repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 54px),repeating-linear-gradient(90deg,#fff 0 1px,transparent 1px 108px)',
-          }}
-          aria-hidden
-        />
-        <Embers count={14} />
+        <EnchantedSky embers={14} />
 
         <div className="relative mx-auto flex max-w-7xl flex-wrap items-end justify-between gap-6 px-6 lg:px-10">
           <div>

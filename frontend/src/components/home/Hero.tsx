@@ -4,7 +4,7 @@ import { useHouse } from '../../context/HouseContext'
 import { formatPrice } from '../../lib/format'
 import type { Book } from '../../types/api'
 import { ButtonLink } from '../ui/Button'
-import { Embers } from '../ui/Embers'
+import { EnchantedSky } from '../ui/EnchantedSky'
 
 /**
  * Vitrine de abertura, assimétrica: a coluna de texto à esquerda e a capa do
@@ -19,17 +19,7 @@ export function Hero({ book }: { book?: Book }) {
 
   return (
     <section className="relative overflow-hidden bg-house-deep" aria-labelledby="hero-title">
-      {/* Cantaria do castelo ao fundo, bem discreta. */}
-      <div
-        className="absolute inset-0 opacity-[0.07]"
-        style={{
-          backgroundImage:
-            'repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 54px),repeating-linear-gradient(90deg,#fff 0 1px,transparent 1px 108px)',
-        }}
-        aria-hidden
-      />
-
-      <Embers count={22} />
+      <EnchantedSky embers={22} />
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 pb-20 pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 lg:px-10 lg:pb-28 lg:pt-40">
         <div>

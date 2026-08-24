@@ -3,7 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
 import { ButtonLink } from '../components/ui/Button'
-import { Embers } from '../components/ui/Embers'
+import { EnchantedSky } from '../components/ui/EnchantedSky'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -100,15 +100,7 @@ export default function Saga() {
         70vh atrás dele: mesma composição assimétrica do resto do site.
       */}
       <header className="relative overflow-hidden bg-house-deep pb-16 pt-32 lg:pt-36">
-        <div
-          className="absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage:
-              'repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 54px),repeating-linear-gradient(90deg,#fff 0 1px,transparent 1px 108px)',
-          }}
-          aria-hidden
-        />
-        <Embers count={18} />
+        <EnchantedSky embers={18} />
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-[1.15fr_0.85fr] lg:px-10">
           <div>

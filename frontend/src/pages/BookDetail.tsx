@@ -3,7 +3,7 @@ import { ArrowLeft, BookOpen, Building2, Globe, Minus, Package, Plus, Star } fro
 import { useEffect, useState, type FormEvent } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { BookCard } from '../components/catalog/BookCard'
-import { Embers } from '../components/ui/Embers'
+import { EnchantedSky } from '../components/ui/EnchantedSky'
 import { Button } from '../components/ui/Button'
 import { BrandLoader } from '../components/ui/Loaders'
 import { Stars, StarPicker } from '../components/ui/Stars'
@@ -102,15 +102,7 @@ export default function BookDetail() {
         fotografia esmaecida atrás do título.
       */}
       <section className="relative overflow-hidden bg-house-deep pb-16 pt-32 lg:pt-36">
-        <div
-          className="absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage:
-              'repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 54px),repeating-linear-gradient(90deg,#fff 0 1px,transparent 1px 108px)',
-          }}
-          aria-hidden
-        />
-        <Embers count={16} />
+        <EnchantedSky embers={16} />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
           <Link

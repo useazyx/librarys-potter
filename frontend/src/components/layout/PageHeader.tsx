@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { Embers } from '../ui/Embers'
+import { EnchantedSky } from '../ui/EnchantedSky'
 
 interface PageHeaderProps {
   eyebrow: string
@@ -15,21 +15,13 @@ interface PageHeaderProps {
  * título centralizado —, que era o mesmo do projeto de referência e se repetia
  * igual em cinco páginas.
  *
- * A entrada usa `.rise-in`, cujo estado de repouso é o visível; as brasas são
- * decoração e somem sozinhas sob movimento reduzido.
+ * A entrada usa `.rise-in`, cujo estado de repouso é o visível; o céu encantado
+ * atrás é decoração e fica atrás do conteúdo.
  */
 export function PageHeader({ eyebrow, title, description, aside }: PageHeaderProps) {
   return (
     <header className="relative overflow-hidden bg-house-deep pb-14 pt-32 lg:pt-36">
-      <div
-        className="absolute inset-0 opacity-[0.07]"
-        style={{
-          backgroundImage:
-            'repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 54px),repeating-linear-gradient(90deg,#fff 0 1px,transparent 1px 108px)',
-        }}
-        aria-hidden
-      />
-      <Embers count={14} />
+      <EnchantedSky embers={14} />
 
       <div className="relative mx-auto flex max-w-7xl flex-wrap items-end justify-between gap-6 px-6 lg:px-10">
         <div>

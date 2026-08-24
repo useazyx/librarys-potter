@@ -206,24 +206,17 @@
     color: var(--house-ink);
   }
 
-  /* A cantaria do castelo: fileiras de blocos atrás do conteúdo. */
+  /*
+    O teto encantado do Salão Principal: céu profundo na cor da casa, com
+    poeira de estrelas e uma névoa que anda devagar. Substituiu a "cantaria"
+    quadriculada, que em faixa grande lia como grade de planilha e quebrava a
+    imersão.
+  */
   .bg-masonry {
     background-color: var(--color-stone-800);
     background-image:
-      repeating-linear-gradient(
-        0deg,
-        rgb(255 255 255 / 0.035) 0px,
-        rgb(255 255 255 / 0.035) 1px,
-        transparent 1px,
-        transparent 46px
-      ),
-      repeating-linear-gradient(
-        90deg,
-        rgb(255 255 255 / 0.025) 0px,
-        rgb(255 255 255 / 0.025) 1px,
-        transparent 1px,
-        transparent 92px
-      );
+      radial-gradient(at 20% 0%, rgb(var(--house-glow) / 0.1), transparent 55%),
+      radial-gradient(at 80% 100%, rgb(var(--house-glow) / 0.07), transparent 50%);
   }
 
   .text-balance {
@@ -575,5 +568,85 @@
   .ember,
   .shimmer::after {
     display: none;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   O teto encantado.
+
+   O Salão Principal de Hogwarts tem o teto enfeitiçado para mostrar o céu. É
+   isso que está atrás das faixas coloridas do site: estrelas, uma névoa que
+   anda devagar e um brilho de vela. Tudo decorativo e atrás do conteúdo —
+   nada aqui pode esconder texto.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/*
+  Poeira de estrelas. São três camadas de pontos ladrilhados em tamanhos
+  diferentes (137, 199 e 271 px): como os períodos não são múltiplos entre si,
+  o padrão só se repetiria muito além de qualquer tela, e o olho não acha a
+  emenda.
+*/
+.sky-stars {
+  background-image:
+    radial-gradient(1.1px 1.1px at 23px 31px, rgb(255 255 255 / 0.75), transparent 100%),
+    radial-gradient(1px 1px at 96px 12px, rgb(255 255 255 / 0.55), transparent 100%),
+    radial-gradient(1.3px 1.3px at 61px 108px, rgb(255 255 255 / 0.65), transparent 100%),
+    radial-gradient(1px 1px at 148px 74px, rgb(var(--house-glow) / 0.8), transparent 100%),
+    radial-gradient(1.6px 1.6px at 33px 152px, rgb(255 255 255 / 0.5), transparent 100%),
+    radial-gradient(1px 1px at 182px 191px, rgb(255 255 255 / 0.6), transparent 100%),
+    radial-gradient(1.2px 1.2px at 213px 47px, rgb(var(--house-glow) / 0.7), transparent 100%),
+    radial-gradient(1px 1px at 118px 236px, rgb(255 255 255 / 0.45), transparent 100%);
+  background-size:
+    137px 137px,
+    137px 137px,
+    199px 199px,
+    199px 199px,
+    271px 271px,
+    271px 271px,
+    271px 271px,
+    199px 199px;
+}
+
+/* As estrelas maiores respiram fora de fase com a névoa. */
+@keyframes sky-twinkle {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.sky-twinkle {
+  animation: sky-twinkle 7s ease-in-out infinite;
+}
+
+/* Névoa de nebulosa: dois sopros que atravessam a faixa sem pressa. */
+@keyframes sky-drift {
+  0% {
+    transform: translate3d(-4%, 0, 0) scale(1.05);
+  }
+  50% {
+    transform: translate3d(4%, -2%, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(-4%, 0, 0) scale(1.05);
+  }
+}
+
+.sky-nebula {
+  background-image:
+    radial-gradient(38% 55% at 22% 30%, rgb(var(--house-glow) / 0.22), transparent 70%),
+    radial-gradient(45% 45% at 78% 70%, rgb(255 255 255 / 0.07), transparent 70%),
+    radial-gradient(30% 40% at 60% 12%, rgb(var(--house-glow) / 0.14), transparent 70%);
+  animation: sky-drift 42s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sky-twinkle,
+  .sky-nebula {
+    animation: none;
   }
 }
