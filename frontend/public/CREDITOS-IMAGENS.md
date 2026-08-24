@@ -10,24 +10,77 @@ brasileira publicada pela Rocco.
 ## Fotografia editorial (Wikimedia Commons)
 
 Usadas como cenário nas páginas de início, catálogo, saga, ajuda, perfil, painel, login,
-cadastro e redefinição de senha. Todas exigem crédito ao autor.
+cadastro e redefinição de senha.
 
-| Arquivo | Assunto | Autor | Licença |
-|---|---|---|---|
-| `img/scenes/salao-biblioteca.webp` | Long Room, Trinity College Dublin | Diliff | CC BY-SA 4.0 |
-| `img/scenes/arcos.webp` | Arcaria de biblioteca | antomoro | FAL (Free Art License) |
-| `img/scenes/estantes.webp` | Estantes de biblioteca | Thomas Quine | CC BY 2.0 |
-| `img/scenes/livros-antigos.webp` | Livros antigos | Liam Quin | Domínio público |
-| `img/scenes/poltrona.webp` | Poltrona de leitura | Michael Pardo | CC BY 2.0 |
-| `img/scenes/castelo.webp` | Castelo de Wawel, Cracóvia | Andrzej Barabasz | CC BY-SA 3.0 |
-| `img/scenes/coruja.webp` | Coruja | Tristan Chambers | CC BY-SA 2.0 |
+Todas as sete foram **redimensionadas e convertidas para WebP**; nenhuma outra alteração foi
+feita. As licenças CC BY e CC BY-SA exigem que essa modificação seja indicada, e é o que esta
+linha faz.
 
-As licenças CC BY, CC BY-SA e FAL exigem crédito ao autor e a indicação da licença; é isso que
-esta página registra. `livros-antigos.webp` está em domínio público e aparece aqui por cortesia.
+### `img/scenes/salao-biblioteca.webp`
 
-Se o site for publicado, mantenha este arquivo acessível (o rodapé já aponta para ele em
-`/CREDITOS-IMAGENS.md`) ou repita os créditos em uma página do próprio site.
+Long Room, Old Library do Trinity College, Dublin — vista do corredor central.
 
-> **A completar:** os permalinks das páginas de arquivo no Commons não ficaram registrados no
-> repositório. Autor e licença acima estão corretos; ao publicar, acrescente o link de cada
-> arquivo (`https://commons.wikimedia.org/wiki/File:...`) nesta tabela.
+- Autor: **Diliff**
+- Licença: **CC BY-SA 4.0** — <https://creativecommons.org/licenses/by-sa/4.0/>
+- Arquivo: <https://commons.wikimedia.org/wiki/File:Long_Room_Interior,_Trinity_College_Dublin,_Ireland_-_Diliff.jpg>
+
+### `img/scenes/arcos.webp`
+
+A mesma Long Room do Trinity College, em outro ângulo: a abóbada de berço vista de baixo.
+
+- Autor: **antomoro**
+- Licença: **Licence Art Libre (FAL 1.3)** — <https://artlibre.org/licence/lal/en/>
+- Arquivo: <https://commons.wikimedia.org/wiki/File:Dublin_Old_Library_Trinity_College_28.jpg>
+
+### `img/scenes/estantes.webp`
+
+Livros antigos de uma biblioteca portátil, atrás do vidro da estante.
+
+- Autor: **Thomas Quine**
+- Licença: **CC BY 2.0** — <https://creativecommons.org/licenses/by/2.0/>
+- Arquivo: <https://commons.wikimedia.org/wiki/File:Antique_books_from_a_portable_library_(26025643095).jpg>
+
+### `img/scenes/livros-antigos.webp`
+
+Livros antigos empilhados ao lado de um castiçal, com a folha de rosto de uma edição de Grose.
+
+- Autor: **Liam Quin**
+- Licença: **Domínio público** — o crédito aqui é cortesia, não exigência.
+- Arquivo: <https://commons.wikimedia.org/wiki/File:Grose-antique-books-with-candle.jpg>
+
+### `img/scenes/poltrona.webp`
+
+*The Reading Corner*: poltrona, abajur e um livro aberto sobre o pufe.
+
+- Autor: **Michael Pardo**
+- Licença: **CC BY 2.0** — <https://creativecommons.org/licenses/by/2.0/>
+- Arquivo: <https://commons.wikimedia.org/wiki/File:The_Reading_Corner_(16182380319).jpg>
+
+### `img/scenes/castelo.webp`
+
+Castelo de Wawel, em Cracóvia, iluminado à noite.
+
+- Autor: **Andrzej Barabasz (Chepry)**
+- Licença: **CC BY-SA 3.0** — <https://creativecommons.org/licenses/by-sa/3.0/>
+- Arquivo: <https://commons.wikimedia.org/wiki/File:Wawel_Castle_01_AB.jpg>
+
+### `img/scenes/coruja.webp`
+
+Coruja-barrada pousada num galho baixo.
+
+- Autor: **Tristan Chambers**
+- Licença: **CC BY-SA 2.0** — <https://creativecommons.org/licenses/by-sa/2.0/>
+- Arquivo: <https://commons.wikimedia.org/wiki/File:Barred_owl_perched_on_a_low_branch_-_Flickr_-_Tristan_Chambers.png>
+
+## Se o site for publicado
+
+Mantenha esta página acessível — o rodapé já aponta para ela em `/CREDITOS-IMAGENS.md` — ou
+repita os créditos numa página do próprio site.
+
+Atenção a quatro delas, que estão sob licenças *copyleft*: `salao-biblioteca` (CC BY-SA 4.0),
+`castelo` (CC BY-SA 3.0) e `coruja` (CC BY-SA 2.0), mais `arcos`, que é FAL. Redimensionar e
+converter para WebP já é obra derivada, então a versão publicada **desses arquivos** fica sob a
+mesma licença do original. Isso não contamina o resto do site, só as imagens em si.
+
+As outras três são livres desse compromisso: `estantes` e `poltrona` são CC BY 2.0 (basta o
+crédito) e `livros-antigos` é domínio público.
