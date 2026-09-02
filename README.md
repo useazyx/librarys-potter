@@ -19,9 +19,9 @@ g2/
 
 | Requisito     | Onde está                                                                          |
 |---------------|------------------------------------------------------------------------------------|
-| API           | `backend/src/routes/` — 45 endpoints REST em 8 grupos, servidos em `/api`           |
-| Banco de dados| PostgreSQL modelado em `backend/prisma/schema.prisma` — 11 tabelas com relações      |
-| Interface     | `frontend/src/pages/` — 18 telas em React, consumindo a API                          |
+| API           | `backend/src/routes/`: 44 endpoints REST em 8 grupos, mais `/health`      |
+| Banco de dados| PostgreSQL modelado em `backend/prisma/schema.prisma`: 11 tabelas com relações      |
+| Interface     | `frontend/src/pages/`: 18 telas em React, consumindo a API                          |
 | Arquitetura   | MVC: modelo no Prisma, controllers no backend, views no frontend (detalhado abaixo) |
 
 ## Como rodar
