@@ -13,10 +13,8 @@ import {
   UpdatePublisherController,
 } from '../controllers/admin-controller.js'
 
-/**
- * The back office of the original site. A fornecedor keeps the catalogue and
- * sees the sales; only o suporte can delete records or list the readers.
- */
+// Painel administrativo. O fornecedor cuida do catálogo e vê as vendas.
+// Só o suporte apaga registro e lista os usuários.
 export async function adminRoutes(app: FastifyInstance) {
   const staff = { onRequest: [app.authorize(['SUPPLIER', 'SUPPORT'])] }
   const supportOnly = { onRequest: [app.authorize(['SUPPORT'])] }

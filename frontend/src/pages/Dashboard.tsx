@@ -79,7 +79,7 @@ export default function Dashboard() {
   const isSupport = user?.role === 'SUPPORT'
   const tabs = useMemo(() => TABS.filter((tab) => !tab.supportOnly || isSupport), [isSupport])
 
-  // The open section lives in the URL: the fila de chamados is a link worth sharing.
+  // A seção aberta vai para a URL, para dar para mandar o link da fila de chamados.
   const [params, setParams] = useSearchParams()
   const requested = params.get('aba') as TabId | null
   const tab: TabId = tabs.some((item) => item.id === requested) ? requested! : 'catalogo'
@@ -182,7 +182,7 @@ export default function Dashboard() {
       coverUrl: form.coverUrl,
       language: form.language,
       featured: form.featured,
-      // The schema rejects empty strings, so optional fields go out only when filled.
+      // O schema rejeita string vazia, então campo opcional só vai quando preenchido.
       ...(form.excerpt ? { excerpt: form.excerpt } : {}),
       ...(form.pages ? { pages: Number(form.pages) } : {}),
       ...(form.publishedAt ? { publishedAt: form.publishedAt } : {}),
@@ -255,7 +255,7 @@ export default function Dashboard() {
         title="Os bastidores da livraria"
         description={
           isSupport
-            ? 'Catálogo, vendas, fila de chamados e cadastro de usuários — tudo o que o antigo menu de administração fazia, em uma tela só.'
+            ? 'Catálogo, vendas, fila de chamados e cadastro de usuários: tudo o que o antigo menu de administração fazia, em uma tela só.'
             : 'Cuide do catálogo e acompanhe como as vendas estão indo. Apagar registros é atribuição do suporte.'
         }
       />
@@ -358,8 +358,8 @@ export default function Dashboard() {
                               </span>
                             </div>
                           </td>
-                          <td className="px-6 py-4 text-stone-700">{(book.author?.name ?? '—')}</td>
-                          <td className="px-6 py-4 text-stone-700">{(book.publisher?.name ?? '—')}</td>
+                          <td className="px-6 py-4 text-stone-700">{(book.author?.name ?? '-')}</td>
+                          <td className="px-6 py-4 text-stone-700">{(book.publisher?.name ?? '-')}</td>
                           <td className="px-6 py-4 text-right font-medium">{formatPrice(book.price)}</td>
                           <td className="px-6 py-4 text-right">
                             <span

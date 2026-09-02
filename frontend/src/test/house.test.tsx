@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import type { ReactNode } from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { HousePicker } from '../components/house/HousePicker'
+import { HouseInvite } from '../components/house/HouseInvite'
 import { HouseSwitch } from '../components/house/HouseSwitch'
 import { HouseProvider } from '../context/HouseContext'
 
@@ -22,13 +22,13 @@ describe('sistema de casas', () => {
   })
 
   it('começa no castelo neutro, sem casa no <html>', () => {
-    renderWithHouse(<HousePicker />)
+    renderWithHouse(<HouseInvite />)
     expect(document.documentElement.hasAttribute('data-house')).toBe(false)
   })
 
   it('veste o site inteiro ao escolher uma casa', async () => {
     const user = userEvent.setup()
-    renderWithHouse(<HousePicker />)
+    renderWithHouse(<HouseInvite />)
 
     await user.click(screen.getByRole('button', { name: /Grifinória/ }))
 
@@ -39,7 +39,7 @@ describe('sistema de casas', () => {
 
   it('despe a livraria quando a casa escolhida é tocada de novo', async () => {
     const user = userEvent.setup()
-    renderWithHouse(<HousePicker />)
+    renderWithHouse(<HouseInvite />)
 
     const gryffindor = screen.getByRole('button', { name: /Grifinória/ })
     await user.click(gryffindor)
@@ -51,13 +51,13 @@ describe('sistema de casas', () => {
 
   it('retoma a casa guardada da visita anterior', () => {
     window.localStorage.setItem('librarys-potter:casa', 'corvinal')
-    renderWithHouse(<HousePicker />)
+    renderWithHouse(<HouseInvite />)
     expect(document.documentElement.getAttribute('data-house')).toBe('corvinal')
   })
 
   it('ignora um valor inválido no armazenamento', () => {
     window.localStorage.setItem('librarys-potter:casa', 'grifinoria-falsa')
-    renderWithHouse(<HousePicker />)
+    renderWithHouse(<HouseInvite />)
     expect(document.documentElement.hasAttribute('data-house')).toBe(false)
   })
 

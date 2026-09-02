@@ -1,10 +1,7 @@
 import { motion } from 'framer-motion'
 
-/**
- * Brand loading screen: a quill traces a circle of ink while the monogram
- * fades in, like a letter being written before it is sent.
- */
-export function BrandLoader({ label = 'Abrindo a biblioteca…' }: { label?: string }) {
+// Tela de carregamento: uma pena desenha um círculo enquanto o monograma aparece.
+export function BrandLoader({ label = 'Abrindo a biblioteca...' }: { label?: string }) {
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center gap-8 bg-castle">
       <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden>

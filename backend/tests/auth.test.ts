@@ -109,9 +109,10 @@ describe('autenticação', () => {
 
     expect(user.name).toBe('Agostinho Carrara')
     expect(user.stats.orders).toBe(1)
-    expect(user.stats.reviews).toBe(1)
+    // Agostinho avalia A Câmara Secreta ("um lixo", do banco antigo) e o manto.
+    expect(user.stats.reviews).toBe(2)
     expect(user.stats.tickets).toBe(1)
-    expect(user.stats.totalSpent).toBe(300)
+    expect(user.stats.totalSpent).toBe(44.9)
   })
 
   it('redefine a senha pelo fluxo de token e recusa reutilizar o link', async () => {

@@ -78,7 +78,7 @@ export class AddCartItemService {
 
     const desired = (existing?.quantity ?? 0) + quantity
 
-    // The cart never holds more copies than the shelf has.
+    // Não deixa o carrinho passar do estoque.
     if (desired > book.stock) {
       throw new BadRequestError('Temos apenas ' + book.stock + ' exemplar(es) em estoque.')
     }

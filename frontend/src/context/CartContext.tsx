@@ -34,7 +34,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     void refresh()
   }, [refresh])
 
-  /** Every mutation returns the whole cart, so totals never drift from the server. */
+  /** Toda alteração devolve o carrinho inteiro, então os totais não divergem da API. */
   const run = useCallback(async (operation: () => Promise<Cart>) => {
     setBusy(true)
     try {

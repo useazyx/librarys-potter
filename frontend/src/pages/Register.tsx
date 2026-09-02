@@ -10,7 +10,7 @@ import { useToast } from '../context/ToastContext'
 import { ApiError } from '../lib/api'
 import type { Role } from '../types/api'
 
-/** The three doors of the old menu_registrar.html, now a single form. */
+// Os três cadastros do menu_registrar.html antigo, agora num formulário só.
 const ROLES: Array<{ id: Role; label: string; description: string; icon: typeof BookOpen }> = [
   {
     id: 'CUSTOMER',

@@ -19,8 +19,33 @@ export interface Publisher {
   bookCount: number
 }
 
-/** O que a livraria vende. Livro é o centro; o resto orbita. */
-export type ProductKind = 'BOOK' | 'BOX_SET' | 'SPECIAL_EDITION' | 'COLLECTIBLE'
+/** Os tipos de produto que a loja vende. */
+export type ProductKind =
+  | 'BOOK'
+  | 'BOX_SET'
+  | 'SPECIAL_EDITION'
+  | 'COLLECTIBLE'
+  | 'WAND'
+  | 'FIGURE'
+  | 'APPAREL'
+  | 'ACCESSORY'
+  | 'STATIONERY'
+  | 'GAME'
+  | 'HOME'
+
+/** As quatro casas, com os nomes que o HouseContext usa. */
+export type HouseId = 'grifinoria' | 'sonserina' | 'corvinal' | 'lufa-lufa'
+
+/** Departamento da loja: o agrupamento de tipos que o backend resolve. */
+export interface Department {
+  slug: string
+  name: string
+  tagline: string
+  kinds: ProductKind[]
+  count: number
+  minPrice: number
+  maxPrice: number
+}
 
 export interface Book {
   kind: ProductKind
@@ -30,6 +55,10 @@ export interface Book {
   /** Nulo em artigo de fã. */
   isbn: string | null
   price: number
+  /** Preço de tabela, quando o produto está em promoção. */
+  compareAtPrice: number | null
+  /** Desconto em pontos percentuais, já calculado pelo servidor. */
+  discount: number
   stock: number
   genre: string
   synopsis: string
@@ -39,7 +68,15 @@ export interface Book {
   language: string
   featured: boolean
   publishedAt: string | null
-  /** Nulos em artigo de fã: uma varinha não tem autor nem editora. */
+  /** Departamento a que o produto pertence. */
+  department: string
+  /** Marca ou fabricante: Rocco, LEGO, Noble Collection. */
+  brand: string | null
+  /** Casa do produto, quando ele tem uma. */
+  house: HouseId | null
+  character: string | null
+  tags: string[]
+  /** Nulos em artigo de fã: varinha não tem autor nem editora. */
   author: { id: string; slug: string; name: string; nationality: string } | null
   publisher: { id: string; slug: string; name: string; city: string } | null
   rating: { average: number; count: number }

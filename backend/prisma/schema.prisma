@@ -1,7 +1,7 @@
-// Library's Potter — data model.
-// Mirrors the tables of the original MySQL script (autores, editoras, livros,
-// usuarios, vendas, avaliacoes, problemas) with the relationships made explicit
-// and the parts the PHP version kept in the PHP session moved into the database.
+// Modelo de dados da Library's Potter.
+// Segue as tabelas do script MySQL antigo (autores, editoras, livros, usuarios,
+// vendas, avaliacoes e problemas), com os relacionamentos declarados e o que o
+// PHP guardava na sessão passado para o banco.
 
 generator client {
   provider = "prisma-client-js"
@@ -12,14 +12,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/// The three account types of the original site: comum, fornecedor and suporte.
+/// Os três tipos de conta do site antigo: comum, fornecedor e suporte.
 enum Role {
   CUSTOMER
   SUPPLIER
   SUPPORT
 }
 
-/// O que a livraria vende. Livro continua sendo o centro; o resto orbita.
+/// O que a loja vende. Os quatro primeiros valores vieram do site antigo e não
+/// podem ser renomeados sem migração. Os outros entraram quando a livraria
+/// passou a vender também artigos de fã.
 enum ProductKind {
   /// Um volume avulso da saga.
   BOOK
@@ -27,8 +29,22 @@ enum ProductKind {
   BOX_SET
   /// Edição comemorativa, ilustrada ou de casa.
   SPECIAL_EDITION
-  /// Artigo de fã: varinha, colecionável, caneca.
+  /// Réplica de objeto do filme: vira-tempo, medalhão, taça.
   COLLECTIBLE
+  /// Varinha: tem madeira, núcleo e comprimento próprios.
+  WAND
+  /// Boneco, miniatura ou estatueta.
+  FIGURE
+  /// Roupa: manto, cachecol, suéter, uniforme.
+  APPAREL
+  /// Acessório de vestir ou carregar: mochila, joia, chapéu.
+  ACCESSORY
+  /// Papelaria: caderno, pena, agenda, marcador.
+  STATIONERY
+  /// Brinquedo ou jogo: blocos de montar, tabuleiro, quebra-cabeça.
+  GAME
+  /// Casa e decoração: caneca, luminária, estandarte, almofada.
+  HOME
 }
 
 enum OrderStatus {
@@ -117,14 +133,14 @@ model Book {
   slug        String      @unique
   title       String
   kind        ProductKind @default(BOOK)
-  /// Nulo em artigos de fã, que não têm ISBN.
+  /// Nulo em artigo de fã, que não tem ISBN.
   isbn        String?     @unique
-  /// Nulos em artigos de fã: uma varinha não tem autor nem editora.
+  /// Nulos em artigo de fã: varinha não tem autor nem editora.
   authorId    String?
   publisherId String?
   publishedAt DateTime?   @db.Date
   price       Decimal     @db.Decimal(10, 2)
-  /// Stock is decremented inside the checkout transaction, never by hand.
+  /// O estoque baixa dentro da transação do checkout, nunca na mão.
   stock       Int         @default(0)
   genre       String
   synopsis    String
@@ -134,6 +150,18 @@ model Book {
   language    String      @default("Português")
   featured    Boolean     @default(false)
   position    Int         @default(0)
+
+  /// Marca do produto (Rocco, LEGO, Noble Collection). Vira filtro no catálogo.
+  brand       String?
+  /// Preço de tabela. Quando existe e é maior que price, o card mostra desconto.
+  /// O total do pedido sai sempre de price, nunca daqui.
+  compareAtPrice Decimal? @db.Decimal(10, 2)
+  /// Casa do produto, quando tem uma. Alimenta o filtro por casa.
+  house       String?
+  /// Personagem ligado ao produto, quando tem. Vira filtro.
+  character   String?
+  /// Etiquetas livres (novidade, mais vendido, presente), sem precisar de tabela.
+  tags        String[]    @default([])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -148,6 +176,8 @@ model Book {
   @@index([publisherId])
   @@index([genre])
   @@index([kind])
+  @@index([house])
+  @@index([brand])
   @@map("books")
 }
 
@@ -163,7 +193,7 @@ model Review {
   book Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  /// One review per reader per book: a second one edits the first.
+  /// Uma avaliação por pessoa por produto: a segunda edita a primeira.
   @@unique([bookId, userId])
   @@index([bookId])
   @@map("reviews")
@@ -204,7 +234,7 @@ model Order {
   subtotal  Decimal     @db.Decimal(10, 2)
   shipping  Decimal     @default(0) @db.Decimal(10, 2)
   total     Decimal     @db.Decimal(10, 2)
-  /// Delivery details are stored flat: the original site had no address book.
+  /// Endereço gravado direto no pedido: o site antigo não tinha agenda de endereços.
   recipient String
   address   String
   city      String
@@ -224,8 +254,8 @@ model OrderItem {
   id        String  @id @default(uuid())
   orderId   String
   bookId    String?
-  /// Title, price and cover are snapshotted so editing the catalogue never
-  /// rewrites what a reader actually bought.
+  /// Título, preço e capa ficam copiados aqui para que editar o catálogo não
+  /// mude o que a pessoa comprou.
   title     String
   coverUrl  String
   unitPrice Decimal @db.Decimal(10, 2)
@@ -238,7 +268,7 @@ model OrderItem {
   @@map("order_items")
 }
 
-/// The "problemas" table of the original project, with the support agent tracked.
+/// A tabela problemas do projeto antigo, agora guardando quem atendeu.
 model SupportTicket {
   id          String        @id @default(uuid())
   code        String        @unique

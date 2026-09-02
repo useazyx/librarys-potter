@@ -50,7 +50,7 @@ const TICKET_TONES: Record<string, string> = {
   RESOLVED: 'bg-mandrake-600/20 text-mandrake-600',
 }
 
-/** Orders that have not shipped yet are the only ones the reader may cancel. */
+// Só dá para cancelar pedido que ainda não foi enviado.
 const CANCELLABLE = new Set(['PENDING', 'PAID'])
 
 export default function Profile() {
@@ -58,7 +58,7 @@ export default function Profile() {
   const { notify } = useToast()
   const navigate = useNavigate()
 
-  // The open tab lives in the URL, so a reader can bookmark "meus chamados".
+  // A aba aberta vai para a URL, para dar para salvar o link de "meus chamados".
   const [params, setParams] = useSearchParams()
   const requested = params.get('aba') as TabId | null
   const tab: TabId = TABS.some((item) => item.id === requested) ? requested! : 'pedidos'
@@ -135,7 +135,7 @@ export default function Profile() {
         }
       />
 
-      {/* Os números do leitor, agora abaixo da faixa em vez de dentro dela. */}
+      {/* resumo da conta */}
       <div className="mx-auto max-w-7xl px-6 pt-10 lg:px-10">
         <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Stat label="Pedidos feitos" value={String(user.stats.orders)} />
@@ -268,7 +268,7 @@ export default function Profile() {
                     key={review.id}
                     className="surface-paper flex gap-5 rounded-2xl p-6 shadow-stone"
                   >
-                    <Link to={'/livro/' + review.book.slug} className="shrink-0">
+                    <Link to={'/produto/' + review.book.slug} className="shrink-0">
                       <img
                         src={review.book.coverUrl}
                         alt={'Capa de ' + review.book.title}
@@ -280,7 +280,7 @@ export default function Profile() {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-start justify-between gap-3">
                         <Link
-                          to={'/livro/' + review.book.slug}
+                          to={'/produto/' + review.book.slug}
                           className="link-underline font-display text-xl leading-snug"
                         >
                           {review.book.title}
@@ -316,7 +316,7 @@ export default function Profile() {
             {tab === 'chamados' && (
               <div className="space-y-5">
                 {tickets.length === 0 && (
-                  <Empty text="Nenhum chamado aberto — esperamos que continue assim." to="/ajuda" action="Central de ajuda" />
+                  <Empty text="Nenhum chamado aberto, esperamos que continue assim." to="/ajuda" action="Central de ajuda" />
                 )}
 
                 {tickets.map((ticket) => (
@@ -421,7 +421,7 @@ function AccountTab() {
       <form onSubmit={saveName} className="surface-paper rounded-2xl p-8 shadow-stone" noValidate>
         <h2 className="font-display text-2xl">Seus dados</h2>
         <p className="mt-2 text-sm text-stone-700/80">
-          O e-mail e o papel de acesso são fixos — fale com o suporte se precisar mudar.
+          O e-mail e o papel de acesso são fixos. Fale com o suporte se precisar mudar.
         </p>
 
         <Input

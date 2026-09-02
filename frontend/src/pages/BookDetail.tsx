@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion'
-import { ArrowLeft, BookOpen, Building2, Globe, Minus, Package, Plus, Star } from 'lucide-react'
+import { ArrowLeft, BookOpen, Building2, ChevronRight, Globe, Minus, Package, Plus, Star, Tag } from 'lucide-react'
 import { useEffect, useState, type FormEvent } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { BookCard } from '../components/catalog/BookCard'
+import { ProductCard } from '../components/catalog/ProductCard'
 import { EnchantedSky } from '../components/ui/EnchantedSky'
 import { Button } from '../components/ui/Button'
 import { BrandLoader } from '../components/ui/Loaders'
@@ -11,7 +11,9 @@ import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
 import { useToast } from '../context/ToastContext'
 import { ApiError, api } from '../lib/api'
+import { HOUSE_INFO } from '../context/HouseContext'
 import { formatDate, formatPrice } from '../lib/format'
+import type { HouseId } from '../types/api'
 import type { BookDetail as BookDetailType } from '../types/api'
 
 export default function BookDetail() {
@@ -39,7 +41,7 @@ export default function BookDetail() {
       .catch(() => navigate('/catalogo', { replace: true }))
   }, [slug, navigate])
 
-  if (!book) return <BrandLoader label="Procurando na estante…" />
+  if (!book) return <BrandLoader label="Procurando na estante..." />
 
   const soldOut = book.stock <= 0
 
@@ -48,7 +50,7 @@ export default function BookDetail() {
 
     if (!user) {
       notify('Entre na sua conta para comprar.', 'info')
-      navigate('/login', { state: { from: '/livro/' + book.slug } })
+      navigate('/login', { state: { from: '/produto/' + book.slug } })
       return
     }
 
@@ -67,7 +69,7 @@ export default function BookDetail() {
 
     if (!user) {
       notify('Entre na sua conta para avaliar.', 'info')
-      navigate('/login', { state: { from: '/livro/' + book.slug } })
+      navigate('/login', { state: { from: '/produto/' + book.slug } })
       return
     }
 
@@ -97,19 +99,37 @@ export default function BookDetail() {
 
   return (
     <>
-      {/*
-        Faixa cheia na cor da casa, como nas outras páginas — não mais a
-        fotografia esmaecida atrás do título.
-      */}
+      {/* Faixa na cor da casa, igual às outras páginas. */}
       <section className="relative overflow-hidden bg-house-deep pb-16 pt-32 lg:pt-36">
         <EnchantedSky embers={16} />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+          {/* Breadcrumb em vez de um botão "voltar" solto: com sete
+              departamentos, é preciso saber em qual deles se está. */}
+          <nav
+            aria-label="Você está aqui"
+            className="mb-10 flex flex-wrap items-center gap-2 text-[0.68rem] uppercase tracking-[0.18em] text-white/55"
+          >
+            <Link to="/" className="hover:text-house-accent">
+              Início
+            </Link>
+            <ChevronRight size={12} aria-hidden />
+            <Link to="/catalogo" className="hover:text-house-accent">
+              Loja
+            </Link>
+            <ChevronRight size={12} aria-hidden />
+            <Link to={'/catalogo?departamento=' + book.department} className="hover:text-house-accent">
+              {book.genre}
+            </Link>
+            <ChevronRight size={12} aria-hidden />
+            <span className="normal-case tracking-normal text-white/80">{book.title}</span>
+          </nav>
+
           <Link
             to="/catalogo"
-            className="mb-10 inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.2em] text-white/65 transition hover:text-house-accent"
+            className="mb-8 inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.2em] text-white/65 transition hover:text-house-accent lg:hidden"
           >
-            <ArrowLeft size={15} aria-hidden /> Voltar ao catálogo
+            <ArrowLeft size={15} aria-hidden /> Voltar à loja
           </Link>
 
           <div className="grid gap-12 lg:grid-cols-[minmax(0,22rem)_1fr]">
@@ -124,12 +144,32 @@ export default function BookDetail() {
             </div>
 
             <div>
-              <p className="eyebrow mb-3">{book.genre}</p>
+              <div className="mb-3 flex flex-wrap items-center gap-3">
+                <p className="eyebrow">{book.brand ?? book.genre}</p>
+
+                {book.house && (
+                  <Link
+                    to={'/catalogo?house=' + book.house}
+                    className="rounded-full border border-white/25 px-3 py-1 text-[0.6rem] uppercase tracking-[0.14em] text-white/75 transition hover:border-house-accent hover:text-house-accent"
+                  >
+                    {HOUSE_INFO[book.house as HouseId].name}
+                  </Link>
+                )}
+
+                {book.discount > 0 && (
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-ember-600 px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-white">
+                    <Tag size={11} aria-hidden />
+                    {book.discount}% de desconto
+                  </span>
+                )}
+              </div>
 
               <h1 className="rise-in font-display text-4xl text-white sm:text-5xl">{book.title}</h1>
 
               <p className="mt-3 text-white/70">
-                {[book.author?.name, book.publisher?.name].filter(Boolean).join(' · ') || 'Artigo de fã da livraria'}
+                {[book.author?.name, book.publisher?.name].filter(Boolean).join(' · ') ||
+                  [book.brand, book.character].filter(Boolean).join(' · ') ||
+                  'Artigo do mundo bruxo'}
               </p>
 
               <div className="mt-5 flex flex-wrap items-center gap-3">
@@ -153,9 +193,24 @@ export default function BookDetail() {
               )}
 
               <dl className="mt-8 grid max-w-2xl grid-cols-2 gap-5 border-t border-white/15 pt-8 sm:grid-cols-4">
-                <Detail icon={BookOpen} label="Páginas" value={book.pages ? String(book.pages) : '—'} />
-                <Detail icon={Globe} label="Idioma" value={book.language} />
-                <Detail icon={Building2} label="Editora" value={book.publisher?.name ?? "—"} />
+                {/* A ficha muda conforme o produto. Varinha não tem página nem
+                    idioma, então esses campos simplesmente não aparecem. */}
+                {book.pages ? (
+                  <Detail icon={BookOpen} label="Páginas" value={String(book.pages)} />
+                ) : (
+                  <Detail icon={Tag} label="Tipo" value={book.genre} />
+                )}
+
+                {book.publisher ? (
+                  <Detail icon={Globe} label="Idioma" value={book.language} />
+                ) : (
+                  <Detail icon={Star} label="Personagem" value={book.character ?? '-'} />
+                )}
+                <Detail
+                  icon={Building2}
+                  label={book.publisher ? 'Editora' : 'Marca'}
+                  value={book.publisher?.name ?? book.brand ?? '-'}
+                />
                 <Detail
                   icon={Package}
                   label="Estoque"
@@ -166,11 +221,27 @@ export default function BookDetail() {
               <div className="mt-10 flex flex-wrap items-center gap-6 rounded-2xl border border-white/15 bg-black/25 p-6">
                 <div>
                   <p className="text-[0.66rem] uppercase tracking-[0.2em] text-white/50">Preço</p>
-                  <p className="font-display text-4xl text-house-accent">{formatPrice(book.price * quantity)}</p>
-                  {book.publishedAt && (
-                    <p className="mt-1 text-xs text-white/45">
-                      Publicado em {formatDate(book.publishedAt)}
+
+                  <div className="flex flex-wrap items-baseline gap-3">
+                    <p className="font-display text-4xl text-house-accent">{formatPrice(book.price * quantity)}</p>
+                    {book.compareAtPrice && book.compareAtPrice > book.price && (
+                      <p className="text-sm text-white/50 line-through">
+                        {formatPrice(book.compareAtPrice * quantity)}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* parcelamento */}
+                  {book.price * quantity >= 60 && (
+                    <p className="mt-1 text-xs text-white/60">
+                      ou {Math.min(6, Math.floor((book.price * quantity) / 30))}x de{' '}
+                      {formatPrice((book.price * quantity) / Math.min(6, Math.floor((book.price * quantity) / 30)))}{' '}
+                      sem juros
                     </p>
+                  )}
+
+                  {book.publishedAt && (
+                    <p className="mt-1 text-xs text-white/45">Publicado em {formatDate(book.publishedAt)}</p>
                   )}
                 </div>
 
@@ -211,12 +282,12 @@ export default function BookDetail() {
         <div className="grid gap-12 lg:grid-cols-[1fr_minmax(0,22rem)]">
           <div>
             <h2 id="reviews-title" className="font-display text-3xl text-chalk-50">
-              O que os leitores acharam
+              {book.publisher ? 'O que os leitores acharam' : 'O que os clientes acharam'}
             </h2>
 
             {book.reviews.length === 0 ? (
               <p className="mt-6 text-chalk-200/85">
-                Ninguém avaliou ainda. Se você já leu, seja o primeiro a contar.
+                Ninguém avaliou ainda. Se você já levou este, seja o primeiro a contar.
               </p>
             ) : (
               <ul className="mt-8 space-y-5">
@@ -312,7 +383,7 @@ export default function BookDetail() {
 
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {book.related.map((related, index) => (
-              <BookCard key={related.id} book={related} index={index} />
+              <ProductCard key={related.id} book={related} index={index} compact />
             ))}
           </div>
         </section>

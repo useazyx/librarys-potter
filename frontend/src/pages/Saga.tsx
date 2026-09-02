@@ -11,7 +11,7 @@ const CHAPTERS = [
   {
     year: '1997',
     title: 'A carta que mudou tudo',
-    text: 'Um armário sob a escada, onze anos sem festa de aniversário e uma coruja com um convite. A Pedra Filosofal apresentou Hogwarts ao mundo — e vendeu 500 exemplares na primeira tiragem.',
+    text: 'Um armário sob a escada, onze anos sem festa de aniversário e uma coruja com um convite. A Pedra Filosofal apresentou Hogwarts ao mundo e vendeu 500 exemplares na primeira tiragem.',
     image: '/img/books/pedra-filosofal.webp',
   },
   {
@@ -29,7 +29,7 @@ const CHAPTERS = [
   {
     year: '2000',
     title: 'O torneio e o fim da infância',
-    text: 'O Cálice de Fogo cospe um quarto nome. Entre dragões e labirintos, a saga escolhe entre o que é certo e o que é fácil — e nada volta a ser como antes.',
+    text: 'O Cálice de Fogo cospe um quarto nome. Entre dragões e labirintos, a saga escolhe entre o que é certo e o que é fácil, e nada volta a ser como antes.',
     image: '/img/books/calice-de-fogo.webp',
   },
   {
@@ -54,7 +54,7 @@ export default function Saga() {
     if (prefersReduced || !timelineRef.current) return
 
     const context = gsap.context(() => {
-      // The gold rule is drawn as the reader walks down the saga.
+      // A linha dourada vai sendo desenhada conforme a página rola.
       gsap.fromTo(
         '.saga-progress',
         { scaleY: 0 },
@@ -67,15 +67,14 @@ export default function Saga() {
       )
 
       gsap.utils.toArray<HTMLElement>('.saga-entry').forEach((entry) => {
-        // A entrada desliza, mas **não** desaparece: nada de `opacity` neste
-        // tween. O GSAP roda no próprio ticker, e um ticker que trave no meio
-        // deixaria a entrada congelada em opacidade fracionária — medido: 0,12,
-        // ilegível. Animando só o deslocamento, o pior caso é um texto alguns
-        // pixels fora do lugar, nunca um texto invisível.
+        // A entrada só desliza, sem mexer em opacity. O GSAP roda no ticker
+        // dele; se o ticker travar no meio, o texto fica congelado numa
+        // opacidade fracionária (medi 0,12, ilegível). Animando só o
+        // deslocamento, o pior caso é o texto alguns pixels fora do lugar.
         //
-        // `immediateRender: false` continua necessário para o outro caso: sem
-        // ele o estado inicial é aplicado já no carregamento, mesmo em entradas
-        // cujo gatilho ainda não chegou.
+        // O immediateRender: false resolve o outro caso: sem ele o estado
+        // inicial é aplicado já no carregamento, mesmo nas entradas cujo
+        // gatilho ainda não chegou.
         gsap.fromTo(
           entry,
           { y: 60 },
@@ -95,10 +94,7 @@ export default function Saga() {
 
   return (
     <>
-      {/*
-        A saga abre com a coruja ao lado do título, e não como fotografia de
-        70vh atrás dele: mesma composição assimétrica do resto do site.
-      */}
+      {/* Abertura com a foto ao lado do título, e não atrás dele. */}
       <header className="relative overflow-hidden bg-house-deep pb-16 pt-32 lg:pt-36">
         <EnchantedSky embers={18} />
 
@@ -114,7 +110,7 @@ export default function Saga() {
             </h1>
 
             <p className="rise-in mt-6 max-w-xl text-white/70" style={{ animationDelay: '0.2s' }}>
-              J. K. Rowling criou a aventura que se tornou o maior fenômeno editorial de todos os tempos — e que ainda chega a cada leitor pela primeira vez.
+              J. K. Rowling criou a aventura que se tornou o maior fenômeno editorial de todos os tempos, e que ainda chega a cada leitor pela primeira vez.
             </p>
           </div>
 
@@ -204,7 +200,7 @@ export default function Saga() {
             &ldquo;Ajuda sempre será dada em Hogwarts a quem pedir.&rdquo;
           </p>
           <p className="mt-6 text-chalk-200/90">
-            Comece — ou recomece — a leitura pela edição que estava faltando na sua estante.
+            Comece (ou recomece) a leitura pela edição que estava faltando na sua estante.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <ButtonLink to="/catalogo" size="lg" variant="house">

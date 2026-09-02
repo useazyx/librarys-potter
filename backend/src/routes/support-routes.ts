@@ -8,7 +8,7 @@ import {
 } from '../controllers/support-controller.js'
 
 export async function supportRoutes(app: FastifyInstance) {
-  // Anyone can report a problem, exactly like the old "Ajuda" page.
+  // Qualquer um pode abrir chamado, igual à página de ajuda antiga.
   app.post('/tickets', (request, reply) => new CreateTicketController().handle(request, reply))
 
   app.get('/tickets/me', { onRequest: [app.authenticate] }, (request, reply) =>

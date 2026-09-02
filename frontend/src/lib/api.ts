@@ -1,6 +1,7 @@
 import type {
   ProductKind,
   Author,
+  Department,
   Book,
   BookDetail,
   Cart,
@@ -32,7 +33,7 @@ export class ApiError extends Error {
     this.issues = issues
   }
 
-  /** First validation message for a field, ready to sit under an input. */
+  /** Primeira mensagem de validação de um campo, para mostrar embaixo do input. */
   issueFor(field: string): string | undefined {
     return this.issues?.[field]?.[0]
   }
@@ -80,9 +81,17 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   return payload as T
 }
 
+export type BookSort = 'relevance' | 'price-asc' | 'price-desc' | 'title' | 'newest' | 'rating' | 'discount'
+
 export type BookFilters = {
   search?: string
   kind?: ProductKind
+  /** Departamento da loja: livros, varinhas, vestuario e por aí. */
+  department?: string
+  brand?: string
+  house?: string
+  character?: string
+  tag?: string
   genre?: string
   author?: string
   publisher?: string
@@ -90,7 +99,9 @@ export type BookFilters = {
   maxPrice?: number
   featured?: boolean
   inStock?: boolean
-  sort?: 'relevance' | 'price-asc' | 'price-desc' | 'title' | 'newest' | 'rating'
+  onSale?: boolean
+  limit?: number
+  sort?: BookSort
 }
 
 function toQuery(filters: Record<string, unknown>): string {
@@ -113,6 +124,10 @@ export const api = {
     publishers: () => request<{ publishers: Publisher[] }>('/catalog/publishers').then((r) => r.publishers),
     genres: () =>
       request<{ genres: Array<{ genre: string; count: number }> }>('/catalog/genres').then((r) => r.genres),
+    brands: () =>
+      request<{ brands: Array<{ brand: string; count: number }> }>('/catalog/brands').then((r) => r.brands),
+    departments: (signal?: AbortSignal) =>
+      request<{ departments: Department[] }>('/catalog/departments', { signal }).then((r) => r.departments),
   },
 
   auth: {

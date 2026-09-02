@@ -2,7 +2,7 @@ import { prisma } from '../config/prisma.js'
 import { ConflictError, NotFoundError } from '../errors/index.js'
 import { round2, toMoney } from '../utils/money.js'
 
-/** Turns a title into the url slug the catalogue uses. */
+// Monta o slug que vai na URL do produto.
 export function slugify(value: string): string {
   return value
     .normalize('NFD')
@@ -52,7 +52,7 @@ export class CreateBookService {
   }
 }
 
-/** Two books can share a title; their slugs cannot. */
+// Dois produtos podem ter o mesmo título, mas não o mesmo slug.
 async function uniqueBookSlug(title: string): Promise<string> {
   const base = slugify(title)
   let candidate = base
@@ -96,7 +96,7 @@ export class DeleteBookService {
 
     if (!book) throw new NotFoundError('Livro')
 
-    // A sold book stays in the catalogue: removing it would break the history.
+    // Produto já vendido não sai do banco, senão quebra o histórico dos pedidos.
     if (book._count.orderItems > 0) {
       await prisma.book.update({ where: { id: book.id }, data: { stock: 0 } })
       return { success: true, softDeleted: true }
@@ -198,7 +198,7 @@ export class DeletePublisherService {
 }
 
 export class SalesReportService {
-  /** What the "consultavendas" screen showed, plus the numbers it did not. */
+  // Relatório de vendas. É a tela consultavendas do site antigo, com mais números.
   async execute() {
     const orders = await prisma.order.findMany({
       where: { status: { not: 'CANCELLED' } },
@@ -255,7 +255,7 @@ export class SalesReportService {
 }
 
 export class ListUsersService {
-  /** Support only: the "consultauser" screen. Never returns password hashes. */
+  // Lista de usuários, só para o suporte. Nunca devolve o hash da senha.
   async execute() {
     const users = await prisma.user.findMany({
       orderBy: { createdAt: 'asc' },

@@ -2,7 +2,7 @@ import useEmblaCarousel from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import type { Book } from '../../types/api'
-import { BookCard } from '../catalog/BookCard'
+import { ProductCard } from '../catalog/ProductCard'
 import { ButtonLink } from '../ui/Button'
 
 interface ShelfProps {
@@ -10,10 +10,16 @@ interface ShelfProps {
   eyebrow: string
   description: string
   books: Book[]
+  /** Destino do botão no fim da faixa. Por padrão vai para o catálogo. */
+  to?: string
+  /** Texto desse botão. */
+  cta?: string
+  /** Identificador do título, para o `aria-labelledby` da seção. */
+  id?: string
 }
 
-/** Drag-and-flick shelf: the vitrine of the original home page, now with inertia. */
-export function Shelf({ title, eyebrow, description, books }: ShelfProps) {
+// Prateleira que arrasta com o mouse ou o dedo, com inércia.
+export function Shelf({ title, eyebrow, description, books, to = '/catalogo', cta = 'Ver o catálogo completo', id = 'shelf-title' }: ShelfProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     loop: false,
@@ -41,12 +47,12 @@ export function Shelf({ title, eyebrow, description, books }: ShelfProps) {
   if (books.length === 0) return null
 
   return (
-    <section className="py-20 lg:py-24" aria-labelledby="shelf-title">
+    <section className="py-20 lg:py-24" aria-labelledby={id}>
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
           <div>
             <p className="eyebrow mb-3">{eyebrow}</p>
-            <h2 id="shelf-title" className="font-display text-4xl text-chalk-50 sm:text-5xl">
+            <h2 id={id} className="font-display text-4xl text-chalk-50 sm:text-5xl">
               {title}
             </h2>
             <p className="mt-4 max-w-xl text-chalk-200/85">{description}</p>
@@ -78,7 +84,7 @@ export function Shelf({ title, eyebrow, description, books }: ShelfProps) {
           <div className="-ml-6 flex touch-pan-y">
             {books.map((book, index) => (
               <div key={book.id} className="min-w-0 flex-[0_0_78%] pl-6 sm:flex-[0_0_46%] lg:flex-[0_0_30%] xl:flex-[0_0_24%]">
-                <BookCard book={book} index={index} />
+                <ProductCard book={book} index={index} compact />
               </div>
             ))}
           </div>
@@ -86,11 +92,11 @@ export function Shelf({ title, eyebrow, description, books }: ShelfProps) {
 
         <div className="mt-10 text-center">
           <ButtonLink
-            to="/catalogo"
+            to={to}
             variant="secondary"
             className="border-chalk-100/40 text-chalk-100 hover:border-house-accent hover:text-house-accent"
           >
-            Ver o catálogo completo
+            {cta}
           </ButtonLink>
         </div>
       </div>

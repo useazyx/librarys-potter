@@ -5,21 +5,26 @@ import App from './App'
 import { AuthProvider } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
 import { HouseProvider } from './context/HouseContext'
+import { SettingsProvider } from './context/SettingsContext'
 import { ToastProvider } from './context/ToastContext'
 import './index.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <HouseProvider>
-        <ToastProvider>
-          <AuthProvider>
-            <CartProvider>
-              <App />
-            </CartProvider>
-          </AuthProvider>
-        </ToastProvider>
-      </HouseProvider>
+      {/* O SettingsProvider fica por fora do HouseProvider: a paleta para
+          daltonismo precisa valer antes de existir uma casa escolhida. */}
+      <SettingsProvider>
+        <HouseProvider>
+          <ToastProvider>
+            <AuthProvider>
+              <CartProvider>
+                <App />
+              </CartProvider>
+            </AuthProvider>
+          </ToastProvider>
+        </HouseProvider>
+      </SettingsProvider>
     </BrowserRouter>
   </StrictMode>,
 )

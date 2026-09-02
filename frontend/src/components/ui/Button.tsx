@@ -22,7 +22,7 @@ const SIZES: Record<Size, string> = {
 const BASE =
   'inline-flex items-center justify-center gap-2 rounded-full font-medium uppercase transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-60'
 
-/** Buttons "breathe" on hover — the microinteraction asked for in the brief. */
+// Os botões crescem um pouco no hover.
 const MOTION = {
   whileHover: { scale: 1.03 },
   whileTap: { scale: 0.97 },

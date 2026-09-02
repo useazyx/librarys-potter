@@ -7,9 +7,7 @@ import { env } from './config/env.js'
 import authPlugin from './plugins/auth.js'
 import { registerRoutes } from './routes/index.js'
 
-/**
- * Builds the API without listening, so tests can drive it through app.inject().
- */
+// Monta a app sem subir servidor, assim os testes usam app.inject().
 export async function buildApp(): Promise<FastifyInstance> {
   const app = fastify({
     logger:

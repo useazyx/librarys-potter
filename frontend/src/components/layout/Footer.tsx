@@ -1,21 +1,33 @@
 import { BookOpen, Clock, Mail, MapPin } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-/** Store details, carried over from the original footer of the PHP site. */
+// Dados da loja, os mesmos do rodapé do site em PHP.
 export const STORE = {
   email: 'contato@libraryspotter.com.br',
-  address: 'Rua da Travessa do Tranco, 9 — Centro',
+  address: 'Rua da Travessa do Tranco, 9, Centro',
   hours: 'Entregas para todo o Brasil · Seg a Sáb',
   since: 2024,
 }
 
 const SECTIONS = [
   {
-    title: 'A livraria',
+    title: 'A loja',
     links: [
-      { to: '/catalogo', label: 'Todos os livros' },
+      { to: '/catalogo', label: 'Todos os produtos' },
+      { to: '/catalogo?departamento=livros', label: 'Livros' },
+      { to: '/catalogo?departamento=varinhas', label: 'Varinhas' },
       { to: '/saga', label: 'A saga' },
       { to: '/ajuda', label: 'Central de ajuda' },
+    ],
+  },
+  {
+    title: 'Magia',
+    links: [
+      { to: '/chapeu-seletor', label: 'O Chapéu Seletor' },
+      { to: '/oficina-de-varinhas', label: 'Oficina de varinhas' },
+      { to: '/biblioteca', label: 'Biblioteca animada' },
+      { to: '/feiticos', label: 'Feitiços' },
+      { to: '/configuracoes', label: 'Acessibilidade' },
     ],
   },
   {
@@ -32,7 +44,7 @@ const SECTIONS = [
 export function Footer() {
   return (
     <footer className="border-t border-chalk-100/15 bg-house-surface">
-      <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-[1.6fr_1fr_1fr_1.2fr] lg:px-10">
+      <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-[1.5fr_1fr_1fr_1fr_1.1fr] lg:px-10">
         <div>
           <div className="mb-5 flex items-center gap-3">
             <span className="grid h-12 w-12 place-items-center rounded-full border border-house-accent/50 font-display text-sm text-house-accent">
@@ -43,7 +55,7 @@ export function Footer() {
 
           <p className="max-w-sm text-sm leading-relaxed text-chalk-200/85">
             Uma livraria dedicada à maior saga bruxa de todos os tempos: sete livros, 450 milhões de exemplares
-            vendidos, 78 idiomas — e uma prateleira sempre reservada para quem está começando agora.
+            vendidos, 78 idiomas e uma prateleira sempre reservada para quem está começando agora.
           </p>
 
           <p className="mt-6 font-serif text-2xl italic text-house-accent">
@@ -94,7 +106,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-chalk-100/15 py-6 text-center text-xs text-chalk-300/80">
-        © {STORE.since}–{new Date().getFullYear()} Library&apos;s Potter · Todos os direitos reservados ·{' '}
+        © {STORE.since}-{new Date().getFullYear()} Library&apos;s Potter · Todos os direitos reservados ·{' '}
         <a href="/CREDITOS-IMAGENS.md" className="link-underline">
           créditos das imagens
         </a>

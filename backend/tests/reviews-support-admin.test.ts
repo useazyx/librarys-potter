@@ -34,6 +34,11 @@ afterAll(async () => {
 
 describe('avaliações', () => {
   it('cria a avaliação de um leitor e depois a edita em vez de duplicar', async () => {
+    const url = '/catalog/books/harry-potter-e-o-calice-de-fogo'
+    // O livro já chega semeado com avaliações de outros leitores, então o teste
+    // compara com o que havia antes em vez de fixar um número.
+    const antes = (await app.inject({ method: 'GET', url })).json().book.rating.count
+
     const created = await app.inject({
       method: 'POST',
       url: '/reviews/books/harry-potter-e-o-calice-de-fogo',
@@ -53,10 +58,13 @@ describe('avaliações', () => {
 
     expect(edited.statusCode).toBe(201)
 
-    const book = (await app.inject({ method: 'GET', url: '/catalog/books/harry-potter-e-o-calice-de-fogo' })).json().book
+    const book = (await app.inject({ method: 'GET', url })).json().book
+    const minhas = book.reviews.filter((entry: { user: { name: string } }) => entry.user.name === 'Caio Nogueira')
 
-    expect(book.rating.count).toBe(1)
-    expect(book.rating.average).toBe(5)
+    // A segunda avaliação editou a primeira: entrou uma linha só, com a nota nova.
+    expect(book.rating.count).toBe(antes + 1)
+    expect(minhas).toHaveLength(1)
+    expect(minhas[0].rating).toBe(5)
   })
 
   it('recusa nota fora da escala de estrelas', async () => {
@@ -190,7 +198,7 @@ describe('bastidores', () => {
       url: '/admin/books',
       headers: bearer(supplierToken),
       payload: {
-        title: 'Animais Fantásticos e Onde Habitam',
+        title: 'Bichos e Feras do Norte Gelado',
         isbn: '9780000000001',
         authorId: authors[0].id,
         publisherId: publishers[0].id,
@@ -203,7 +211,7 @@ describe('bastidores', () => {
     })
 
     expect(created.statusCode).toBe(201)
-    expect(created.json().book.slug).toBe('animais-fantasticos-e-onde-habitam')
+    expect(created.json().book.slug).toBe('bichos-e-feras-do-norte-gelado')
 
     const updated = await app.inject({
       method: 'PATCH',
@@ -226,7 +234,8 @@ describe('bastidores', () => {
       headers: bearer(supplierToken),
       payload: {
         title: 'Cópia com ISBN repetido',
-        isbn: '9781234567890',
+        // O ISBN da Pedra Filosofal, que já está no acervo semeado.
+        isbn: '9788532530783',
         authorId: authors[0].id,
         publisherId: publishers[0].id,
         price: 10,

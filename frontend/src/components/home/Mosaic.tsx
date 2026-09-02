@@ -7,7 +7,7 @@ interface Tile {
   label: string
   text: string
   image: string
-  /** Mosaicos maiores ocupam duas colunas: é o que quebra a grade regular. */
+  /** Ocupa duas colunas, para a grade não ficar toda igual. */
   wide?: boolean
 }
 
@@ -15,7 +15,7 @@ const TILES: Tile[] = [
   {
     to: '/catalogo',
     label: 'O acervo',
-    text: 'Os sete livros, filtráveis por autor, editora, preço e estoque.',
+    text: 'Cento e quarenta produtos em sete corredores, filtráveis por casa, marca e preço.',
     image: '/img/scenes/estantes.webp',
     wide: true,
   },
@@ -32,9 +32,9 @@ const TILES: Tile[] = [
     image: '/img/scenes/poltrona.webp',
   },
   {
-    to: '/cadastro',
-    label: 'Sua conta',
-    text: 'Guarde pedidos e avalie o que já leu.',
+    to: '/configuracoes',
+    label: 'Acessibilidade',
+    text: 'Paletas para daltonismo, alto contraste, texto grande e menos movimento.',
     image: '/img/scenes/livros-antigos.webp',
   },
   {
@@ -46,18 +46,15 @@ const TILES: Tile[] = [
   },
 ]
 
-/**
- * Grade de mosaicos em paisagem, com a imagem recortada por baixo e o texto
- * por cima — inspirada na grade "Discover" do site oficial. Dois dos cinco
- * ocupam duas colunas, e é essa irregularidade que dá o ritmo da seção.
- */
+// Grade de blocos em paisagem, com a foto por baixo e o texto por cima. Dois
+// dos cinco ocupam duas colunas.
 export function Mosaic() {
   const onPointerGlow = usePointerGlow()
 
   return (
     <section className="bg-house-bg py-20 lg:py-28" aria-labelledby="mosaico-title">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        {/* Cabeçalho alinhado à esquerda, com a régua da casa ao lado do título. */}
+        {/* cabeçalho da seção */}
         <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
           <div>
             <p className="eyebrow mb-3">Por onde começar</p>

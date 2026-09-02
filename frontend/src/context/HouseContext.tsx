@@ -7,9 +7,9 @@ export type House = (typeof HOUSES)[number]
 export interface HouseInfo {
   id: House
   name: string
-  /** Traço que a casa valoriza, usado como convite de leitura. */
+  /** Traço que a casa valoriza. */
   trait: string
-  /** Como a livraria traduz a casa em prateleira. */
+  /** O tipo de leitura que a loja associa à casa. */
   shelf: string
   founder: string
 }
@@ -52,14 +52,14 @@ function isHouse(value: unknown): value is House {
 }
 
 interface HouseContextValue {
-  /** `null` é o castelo neutro: quem ainda não escolheu casa. */
+  /** null é o tema neutro, de quem ainda não escolheu casa. */
   house: House | null
   info: HouseInfo | null
   setHouse: (house: House | null) => void
   /**
-   * Sobe a cada seleção de casa. O `Layout` observa para tocar a cerimônia do
-   * Chapéu Seletor — fica aqui, e não no seletor, para que a cerimônia aconteça
-   * venha a escolha do cabeçalho ou da faixa da home.
+   * Sobe a cada escolha de casa. O Layout observa esse número para tocar a
+   * cerimônia. Fica aqui e não no seletor para a cerimônia rodar venha a
+   * escolha do cabeçalho ou da home.
    */
   ceremony: { house: House; id: number } | null
 }
@@ -68,8 +68,8 @@ const HouseContext = createContext<HouseContextValue | undefined>(undefined)
 
 export function HouseProvider({ children }: { children: ReactNode }) {
   const [house, setHouseState] = useState<House | null>(() => {
-    // A escolha é lida no primeiro render para o site já nascer vestido: ler
-    // depois pintaria o castelo neutro por um quadro antes de trocar de cor.
+    // Lê a escolha já no primeiro render. Se lesse depois, o site apareceria
+    // um quadro com o tema neutro antes de trocar de cor.
     try {
       const stored = window.localStorage.getItem(STORAGE_KEY)
       return isHouse(stored) ? stored : null
@@ -78,8 +78,8 @@ export function HouseProvider({ children }: { children: ReactNode }) {
     }
   })
 
-  // O atributo mora no <html>: o CSS inteiro pende dele, inclusive as páginas
-  // que ainda nem foram baixadas.
+  // O atributo vai no <html> porque o CSS inteiro pende dele, inclusive o das
+  // páginas que ainda nem foram baixadas.
   useEffect(() => {
     const root = document.documentElement
 
@@ -91,14 +91,14 @@ export function HouseProvider({ children }: { children: ReactNode }) {
 
   const setHouse = useCallback((next: House | null) => {
     setHouseState(next)
-    // Voltar ao castelo neutro não é uma seleção: não há cerimônia.
+    // Voltar para o tema neutro não conta como escolha, então não tem cerimônia.
     if (next) setCeremony((current) => ({ house: next, id: (current?.id ?? 0) + 1 }))
 
     try {
       if (next) window.localStorage.setItem(STORAGE_KEY, next)
       else window.localStorage.removeItem(STORAGE_KEY)
     } catch {
-      // Navegação privada bloqueia o armazenamento; a escolha vale pela sessão.
+      // Aba anônima bloqueia o localStorage. A escolha vale só pela sessão.
     }
   }, [])
 

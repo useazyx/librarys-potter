@@ -1,10 +1,8 @@
 import Lenis from 'lenis'
 import { useEffect } from 'react'
 
-/**
- * Inertial scrolling for the whole document — the "fluidez moderna" of the brief.
- * Disabled outright when the visitor asks for reduced motion.
- */
+// Rolagem com inércia no documento inteiro. Fica desligada quando o visitante
+// pede movimento reduzido.
 export function useSmoothScroll() {
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches

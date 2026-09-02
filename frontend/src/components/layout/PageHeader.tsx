@@ -5,19 +5,13 @@ interface PageHeaderProps {
   eyebrow: string
   title: string
   description?: string
-  /** Canto direito: uma contagem, um selo, um botão de ação. */
+  /** Canto direito: uma contagem, um selo ou um botão. */
   aside?: ReactNode
 }
 
-/**
- * Cabeçalho de página: faixa cheia na cor da casa, texto à esquerda e um canto
- * livre à direita. Substitui o padrão antigo — fotografia esmaecida atrás de um
- * título centralizado —, que era o mesmo do projeto de referência e se repetia
- * igual em cinco páginas.
- *
- * A entrada usa `.rise-in`, cujo estado de repouso é o visível; o céu encantado
- * atrás é decoração e fica atrás do conteúdo.
- */
+// Cabeçalho das páginas internas: faixa na cor da casa, texto à esquerda e um
+// canto livre à direita. Antes era uma foto esmaecida com o título no meio,
+// repetida igual em cinco páginas.
 export function PageHeader({ eyebrow, title, description, aside }: PageHeaderProps) {
   return (
     <header className="relative overflow-hidden bg-house-deep pb-14 pt-32 lg:pt-36">

@@ -2,14 +2,13 @@ import { useEffect, useRef } from 'react'
 
 interface RevealOptions {
   threshold?: number
-  /** Stagger between children carrying data-reveal, in milliseconds. */
+  /** Atraso entre os filhos com data-reveal, em ms. */
   stagger?: number
 }
 
-/**
- * Reveals an element (and any data-reveal children) once it enters the viewport.
- * Uses IntersectionObserver instead of a scroll listener so it costs nothing while idle.
- */
+// Revela o elemento (e os filhos com data-reveal) quando ele entra na tela.
+// Usa IntersectionObserver em vez de listener de scroll, que custaria a cada
+// quadro.
 export function useReveal<T extends HTMLElement = HTMLDivElement>({
   threshold = 0.15,
   stagger = 0,

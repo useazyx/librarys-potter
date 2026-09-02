@@ -9,10 +9,7 @@ interface UpsertReviewInput {
 }
 
 export class UpsertReviewService {
-  /**
-   * A reader has one review per book: sending a second one edits the first,
-   * which is what the star widget of the original site implied.
-   */
+  // Uma avaliação por pessoa por produto. Mandar a segunda edita a primeira.
   async execute({ userId, bookSlug, rating, comment }: UpsertReviewInput) {
     if (rating < 1 || rating > 5) throw new BadRequestError('A nota vai de 1 a 5 estrelas.')
 

@@ -5,6 +5,8 @@ import {
   GetBookService,
   ListAuthorsService,
   ListBooksService,
+  ListBrandsService,
+  ListDepartmentsService,
   ListGenresService,
   ListPublishersService,
 } from '../services/catalog-service.js'
@@ -12,14 +14,35 @@ import {
 const listBooksQuerySchema = z.object({
   search: z.string().min(1).max(120).optional(),
   genre: z.string().min(1).optional(),
-  kind: z.enum(['BOOK', 'BOX_SET', 'SPECIAL_EDITION', 'COLLECTIBLE']).optional(),
+  kind: z
+    .enum([
+      'BOOK',
+      'BOX_SET',
+      'SPECIAL_EDITION',
+      'COLLECTIBLE',
+      'WAND',
+      'FIGURE',
+      'APPAREL',
+      'ACCESSORY',
+      'STATIONERY',
+      'GAME',
+      'HOME',
+    ])
+    .optional(),
+  department: z.string().min(1).optional(),
+  brand: z.string().min(1).optional(),
+  house: z.enum(['grifinoria', 'sonserina', 'corvinal', 'lufa-lufa']).optional(),
+  character: z.string().min(1).optional(),
+  tag: z.string().min(1).optional(),
   author: z.string().min(1).optional(),
   publisher: z.string().min(1).optional(),
   minPrice: z.coerce.number().nonnegative().optional(),
   maxPrice: z.coerce.number().positive().optional(),
   featured: z.coerce.boolean().optional(),
   inStock: z.coerce.boolean().optional(),
-  sort: z.enum(['relevance', 'price-asc', 'price-desc', 'title', 'newest', 'rating']).optional(),
+  onSale: z.coerce.boolean().optional(),
+  limit: z.coerce.number().int().positive().max(200).optional(),
+  sort: z.enum(['relevance', 'price-asc', 'price-desc', 'title', 'newest', 'rating', 'discount']).optional(),
 })
 
 export class ListBooksController {
@@ -72,6 +95,26 @@ export class ListGenresController {
       return reply.status(200).send({ genres: await new ListGenresService().execute() })
     } catch (error) {
       return handleError(error, reply, 'list-genres')
+    }
+  }
+}
+
+export class ListBrandsController {
+  async handle(_request: FastifyRequest, reply: FastifyReply) {
+    try {
+      return reply.status(200).send({ brands: await new ListBrandsService().execute() })
+    } catch (error) {
+      return handleError(error, reply, 'list-brands')
+    }
+  }
+}
+
+export class ListDepartmentsController {
+  async handle(_request: FastifyRequest, reply: FastifyReply) {
+    try {
+      return reply.status(200).send({ departments: await new ListDepartmentsService().execute() })
+    } catch (error) {
+      return handleError(error, reply, 'list-departments')
     }
   }
 }

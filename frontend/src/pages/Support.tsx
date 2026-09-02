@@ -153,7 +153,7 @@ export default function Support() {
             value={form.description}
             onChange={(event) => setForm({ ...form, description: event.target.value })}
             error={errors.description}
-            placeholder="Conte com detalhes: número do pedido, título do livro, o que deu errado…"
+            placeholder="Conte com detalhes: número do pedido, título do livro, o que deu errado..."
             className="mt-5"
             required
           />

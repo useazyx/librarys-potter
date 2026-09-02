@@ -32,7 +32,7 @@ export class CreateTicketController {
     try {
       const data = createTicketSchema.parse(request.body)
 
-      // Visitors may open a ticket; a signed in reader gets it linked to the account.
+      // Visitante também abre chamado. Se estiver logado, o chamado fica ligado à conta.
       let userId: string | undefined
       try {
         await request.jwtVerify()

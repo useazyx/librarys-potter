@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client'
 
-/** Prisma Decimal values must never reach the client as objects. */
+// O Decimal do Prisma não pode chegar no cliente como objeto.
 export function toMoney(value: Prisma.Decimal | number | string): number {
   return Number(value)
 }

@@ -9,10 +9,7 @@ interface ModalProps {
   children: ReactNode
 }
 
-/**
- * Dialog with a focus trap, Escape handling and a body scroll lock.
- * The panel rises from the table like a plate being set down.
- */
+// Modal com o foco preso dentro, fecha no Escape e trava a rolagem do body.
 export function Modal({ open, onClose, labelledBy, children }: ModalProps) {
   const panelRef = useRef<HTMLDivElement>(null)
   const previouslyFocused = useRef<HTMLElement | null>(null)
@@ -51,7 +48,7 @@ export function Modal({ open, onClose, labelledBy, children }: ModalProps) {
     }
 
     document.addEventListener('keydown', onKeyDown)
-    // Focus lands inside the dialog on the next frame, after the entrance animation starts.
+    // O foco entra no diálogo no quadro seguinte, depois da animação começar.
     const timer = window.setTimeout(() => panelRef.current?.focus(), 40)
 
     return () => {

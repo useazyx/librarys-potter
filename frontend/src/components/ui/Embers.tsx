@@ -1,24 +1,16 @@
 import { useMemo } from 'react'
 
-/**
- * Espalhamento determinístico: devolve um número em [0,1) a partir do índice da
- * brasa e de um canal. `Math.random()` durante o render seria impuro — as duas
- * passagens do StrictMode divergiriam —, e as brasas não precisam de acaso
- * verdadeiro, só de posições que não pareçam alinhadas.
- */
+// Devolve um número entre 0 e 1 a partir do índice da brasa. Não usa
+// Math.random() porque sortear no render dá resultado diferente nas duas
+// passagens do StrictMode, e aqui basta que as posições não fiquem alinhadas.
 function espalha(index: number, canal: number) {
   const x = Math.sin((index + 1) * 12.9898 + canal * 78.233) * 43758.5453
   return x - Math.floor(x)
 }
 
-/**
- * Brasas do salão: motes de luz na cor da casa que sobem devagar e se apagam.
- *
- * São `<span>` animados só por CSS — nenhum quadro é calculado em JS, então as
- * brasas não travam quando uma rota suspende e não custam nada quando o leitor
- * pede movimento reduzido (o `index.css` some com elas). Decoração pura: o
- * elemento é `aria-hidden` e nunca carrega conteúdo.
- */
+// Brasas na cor da casa, que sobem devagar e apagam. São spans animados só por
+// CSS, então não travam quando uma rota suspende e somem sozinhas com movimento
+// reduzido. É decoração: aria-hidden e sem conteúdo.
 export function Embers({ count = 18, className = '' }: { count?: number; className?: string }) {
   const motes = useMemo(
     () =>

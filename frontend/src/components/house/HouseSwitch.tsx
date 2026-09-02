@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 import { HOUSES, HOUSE_INFO, useHouse } from '../../context/HouseContext'
 import { HouseCrest } from './HouseCrest'
 
-/** Cor fixa de cada casa no menu: ali as quatro aparecem lado a lado. */
+// Cor fixa de cada casa. Aqui as quatro aparecem juntas, então não dá para usar
+// os tokens house-*.
 const SWATCH: Record<(typeof HOUSES)[number], string> = {
   grifinoria: 'text-gryffindor-accent',
   sonserina: 'text-slytherin-accent',
@@ -11,10 +12,8 @@ const SWATCH: Record<(typeof HOUSES)[number], string> = {
   'lufa-lufa': 'text-hufflepuff-accent',
 }
 
-/**
- * O Chapéu Seletor em miniatura, no cabeçalho. Trocar a casa reveste o site
- * inteiro — o `HouseProvider` escreve `data-house` no `<html>` e o CSS pende dali.
- */
+// Seletor de casa do cabeçalho. Trocar a casa muda o site inteiro: o
+// HouseProvider escreve data-house no <html> e o CSS pende desse atributo.
 export function HouseSwitch() {
   const { house, info, setHouse } = useHouse()
   const [open, setOpen] = useState(false)

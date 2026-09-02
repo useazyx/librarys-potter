@@ -2,34 +2,38 @@ import { Suspense, useEffect, useRef, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { useSmoothScroll } from '../../hooks/useSmoothScroll'
 import { SortingCeremony } from '../house/SortingCeremony'
+import { MagicLayer } from '../magic/MagicLayer'
+import { SettingsDrawer } from '../settings/SettingsDrawer'
 import { BrandLoader } from '../ui/Loaders'
 import { Footer } from './Footer'
 import { Header } from './Header'
 
-/** Time the sweep is allowed on screen, in ms. Must match `.page-turn` in index.css. */
+// Tempo que a folha da transição fica na tela, em ms. Tem que bater com
+// .page-turn no index.css.
 const SWEEP_MS = 600
 
 export function Layout() {
   const location = useLocation()
   const previousPath = useRef(location.pathname)
   const [sweepKey, setSweepKey] = useState<string | null>(null)
+  const [settingsOpen, setSettingsOpen] = useState(false)
   useSmoothScroll()
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' })
 
-    // StrictMode runs this effect twice on mount with the same pathname, so the
-    // guard compares paths instead of burning a "first render" flag — a flag got
-    // consumed by the discarded first run and let the sweep cover the first paint.
-    // There is also nothing to turn away from when the site loads.
+    // O StrictMode roda este efeito duas vezes no mount com o mesmo pathname,
+    // então a comparação é de caminho e não de uma flag de "primeiro render":
+    // a flag era consumida pela primeira passagem e a folha cobria a tela
+    // inicial. E, ao abrir o site, não tem página anterior para virar.
     if (previousPath.current === location.pathname) return
     previousPath.current = location.pathname
 
     setSweepKey(location.pathname)
 
-    // The sheet is taken down by this timer, never by the animation finishing.
-    // A stalled animation — a route chunk suspending mid-flight, a throttled tab —
-    // used to leave an opaque panel over the whole viewport with no way back.
+    // Quem tira a folha é este timer, nunca o fim da animação. Animação travada
+    // (rota suspendendo no meio, aba em segundo plano) deixava um painel opaco
+    // cobrindo a tela inteira sem volta.
     const timer = window.setTimeout(() => setSweepKey(null), SWEEP_MS)
     return () => window.clearTimeout(timer)
   }, [location.pathname])
@@ -43,17 +47,23 @@ export function Layout() {
         Pular para o conteúdo
       </a>
 
-      <Header />
+      <Header onOpenSettings={() => setSettingsOpen(true)} />
 
-      {/* Page change reads like a sheet being turned. See `.page-turn`: it rests
-          uncovered, so it can only ever hide the page while the sweep is running. */}
+      {/* Troca de página parece uma folha virando. Ver .page-turn: o estado de
+          repouso é descoberto, então ela só cobre enquanto a animação roda. */}
       {sweepKey && <div key={sweepKey} className="page-turn" aria-hidden />}
 
       <SortingCeremony />
 
+      {/* Faíscas, feitiços digitados e a trilha do castelo. Nada aqui captura
+          clique nem carrega conteúdo: se falhar, some o encanto, não a loja. */}
+      <MagicLayer onOpenSettings={() => setSettingsOpen(true)} />
+
+      <SettingsDrawer open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+
       <main id="conteudo" className="flex-1">
-        {/* Suspense sits inside the Layout: a lazily loaded route must not tear
-            down the header, the footer and the smooth scrolling around it. */}
+        {/* O Suspense fica dentro do Layout para a rota em lazy não derrubar o
+            cabeçalho, o rodapé e a rolagem suave em volta. */}
         <Suspense fallback={<BrandLoader />}>
           <div key={location.pathname} className="page-enter">
             <Outlet />

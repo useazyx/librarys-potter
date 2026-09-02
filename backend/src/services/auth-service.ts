@@ -12,10 +12,8 @@ interface RegisterInput {
 }
 
 export class RegisterUserService {
-  /**
-   * The original site had three separate sign up pages — usuário, fornecedor
-   * and suporte — so the role travels with the registration.
-   */
+  // O site antigo tinha uma página de cadastro para cada papel (usuário,
+  // fornecedor e suporte), então o papel vem junto no cadastro.
   async execute({ name, email, password, role }: RegisterInput) {
     const existing = await prisma.user.findUnique({ where: { email } })
 
@@ -64,10 +62,8 @@ export class AuthenticateUserService {
 }
 
 export class RequestPasswordResetService {
-  /**
-   * Always resolves, even for unknown e-mails: answering differently would turn
-   * this endpoint into a way of discovering who has an account.
-   */
+  // Responde igual mesmo quando o e-mail não existe. Se respondesse diferente,
+  // daria para usar essa rota para descobrir quem tem conta.
   async execute(email: string) {
     const user = await prisma.user.findUnique({ where: { email } })
 

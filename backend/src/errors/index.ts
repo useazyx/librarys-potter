@@ -42,10 +42,8 @@ export class ConflictError extends AppError {
   }
 }
 
-/**
- * Maps every failure a route can produce onto an HTTP response.
- * Zod issues come back field-by-field so the frontend can highlight inputs.
- */
+// Converte os erros das rotas em resposta HTTP. Os erros do zod voltam campo a
+// campo para o frontend marcar o input errado.
 export function handleError(error: unknown, reply: FastifyReply, context: string) {
   if (error instanceof ZodError) {
     return reply.status(400).send({

@@ -2,18 +2,13 @@ import { useEffect, useState } from 'react'
 import { HOUSE_INFO, useHouse } from '../../context/HouseContext'
 import { HouseCrest } from './HouseCrest'
 
-/** Quanto tempo o véu fica na tela, em ms. Deve casar com `.sorting-veil`. */
+// Tempo que o véu fica na tela, em ms. Tem que bater com .sorting-veil.
 const VEIL_MS = 1600
 
-/**
- * A cerimônia do Chapéu Seletor: ao escolher uma casa, a cor toma a tela por um
- * instante com o brasão e o nome, e some.
- *
- * Vale aqui a mesma disciplina da transição de página: o véu é retirado por um
- * `setTimeout`, nunca pelo fim da animação, e a regra CSS usa `forwards`, cujo
- * estado de repouso é invisível. Uma animação que trave não deixa a livraria
- * atrás de uma cortina.
- */
+// Ao escolher uma casa, a cor toma a tela por um instante com o brasão e o nome.
+//
+// Mesma regra da transição de página: quem tira o véu é o setTimeout, nunca o
+// fim da animação. Se a animação travar, a tela não fica coberta.
 export function SortingCeremony() {
   const { ceremony } = useHouse()
   const [visible, setVisible] = useState<typeof ceremony>(null)

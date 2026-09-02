@@ -10,13 +10,9 @@ interface AuthLayoutProps {
   children: ReactNode
 }
 
-/**
- * Tela dividida de login, cadastro e redefinição de senha.
- *
- * O painel da esquerda deixou de ser uma fotografia esmaecida: agora é o campo
- * da casa, com o brasão ao centro. Quem já escolheu casa entra na livraria pela
- * porta dela; quem não escolheu vê a pedra neutra do castelo.
- */
+// Tela dividida usada no login, no cadastro e na redefinição de senha. O painel
+// da esquerda mostra o brasão da casa escolhida, ou o fundo neutro para quem
+// ainda não escolheu.
 export function AuthLayout({ title, subtitle, children }: AuthLayoutProps) {
   const { house, info } = useHouse()
 

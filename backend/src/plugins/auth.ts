@@ -4,10 +4,8 @@ import fp from 'fastify-plugin'
 import type { Role } from '@prisma/client'
 import { env } from '../config/env.js'
 
-/**
- * Registers JWT support plus the two guards used by the routes.
- * Wrapped in fastify-plugin so the decorators escape this plugin's scope.
- */
+// Registra o JWT e os dois guards usados nas rotas. Precisa do fastify-plugin,
+// senão os decorators não saem do escopo daqui.
 async function authPlugin(app: FastifyInstance) {
   app.register(fastifyJwt, {
     secret: env.JWT_SECRET,

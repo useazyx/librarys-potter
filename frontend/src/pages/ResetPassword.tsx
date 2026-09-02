@@ -27,8 +27,8 @@ export default function ResetPassword() {
 
       notify(response.message, 'info')
 
-      // Outside production the API hands back the token so the flow can be
-      // completed without a mail provider wired up.
+      // Fora de produção a API devolve o token, senão não dá para completar o
+      // fluxo sem serviço de e-mail.
       if (response.token) setToken(response.token)
 
       setStage('reset')

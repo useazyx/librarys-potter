@@ -6,14 +6,9 @@ import type { Book } from '../../types/api'
 import { ButtonLink } from '../ui/Button'
 import { EnchantedSky } from '../ui/EnchantedSky'
 
-/**
- * Vitrine de abertura, assimétrica: a coluna de texto à esquerda e a capa do
- * livro em destaque à direita, sobre uma faixa na cor da casa. Não é uma
- * fotografia de tela cheia com o título centralizado — a loja começa mostrando
- * um livro, que é o que ela vende.
- *
- * Toda a entrada usa `.rise-in`, cujo estado de repouso é o visível.
- */
+// Abertura da home: texto à esquerda e a capa em destaque à direita, sobre a
+// faixa na cor da casa. A entrada usa .rise-in, que fica visível quando a
+// animação não roda.
 export function Hero({ book }: { book?: Book }) {
   const { info } = useHouse()
 
@@ -24,7 +19,7 @@ export function Hero({ book }: { book?: Book }) {
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 pb-20 pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 lg:px-10 lg:pb-28 lg:pt-40">
         <div>
           <p className="rise-in text-[0.66rem] uppercase tracking-[0.4em] text-house-accent" style={{ animationDelay: '0.05s' }}>
-            {info ? 'Livraria da ' + info.name : 'A livraria da saga'} · desde 1997
+            {info ? 'Loja da ' + info.name : 'Livraria e loja do mundo bruxo'} · desde 1997
           </p>
 
           <h1
@@ -34,22 +29,22 @@ export function Hero({ book }: { book?: Book }) {
           >
             Sete livros.
             <br />
-            Uma geração
+            Sete corredores.
             <br />
-            <span className="text-house-accent">inteira.</span>
+            <span className="text-house-accent">Um mundo.</span>
           </h1>
 
           <p
             className="rise-in mt-8 max-w-md text-lg leading-relaxed text-white/70"
             style={{ animationDelay: '0.28s' }}
           >
-            As edições brasileiras da Rocco, as capas que você reconhece de longe e as avaliações de
-            quem já leu — inclusive as sinceras demais.
+            As edições brasileiras da Rocco e tudo o que orbita a saga: varinhas em caixa de colecionador,
+            réplicas, mantos, papelaria, blocos de montar e a casa vestida com as cores da sua.
           </p>
 
           <div className="rise-in mt-10 flex flex-wrap items-center gap-4" style={{ animationDelay: '0.4s' }}>
             <ButtonLink to="/catalogo" size="lg" variant="house">
-              Ver o acervo
+              Ver a loja
             </ButtonLink>
             <Link
               to="/saga"
@@ -61,13 +56,13 @@ export function Hero({ book }: { book?: Book }) {
           </div>
         </div>
 
-        {/* A capa em destaque, apoiada como um livro numa mesa. */}
+        {/* capa em destaque */}
         {book && (
           <div
             className="rise-in relative mx-auto w-full max-w-[17rem] lg:max-w-[20rem]"
             style={{ animationDelay: '0.32s' }}
           >
-            <Link to={'/livro/' + book.slug} className="group block">
+            <Link to={'/produto/' + book.slug} className="group block">
               <div className="relative">
                 <div
                   className="absolute -inset-6 rounded-full bg-house-accent/20 blur-3xl"

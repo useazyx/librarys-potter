@@ -7,7 +7,7 @@ interface StarsProps {
   className?: string
 }
 
-/** Read-only rating, with half stars rendered by clipping the filled layer. */
+// Nota só de leitura. A meia estrela sai recortando a camada preenchida.
 export function Stars({ value, size = 16, className = '' }: StarsProps) {
   const percentage = Math.max(0, Math.min(100, (value / 5) * 100))
 
@@ -42,7 +42,7 @@ interface StarPickerProps {
   size?: number
 }
 
-/** The interactive widget the old finalizar_compra.php drew with spans. */
+// Versão clicável, para dar nota. No site antigo isso era um monte de span.
 export function StarPicker({ value, onChange, size = 30 }: StarPickerProps) {
   const [hovered, setHovered] = useState(0)
   const shown = hovered || value

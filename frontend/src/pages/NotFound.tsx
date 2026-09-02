@@ -16,7 +16,7 @@ export default function NotFound() {
       <h1 className="mt-6 font-display text-4xl">Esta página foi para a Seção Reservada</h1>
 
       <p className="mt-4 text-stone-700">
-        O endereço que você procurou não existe — mas a livraria continua aberta.
+        O endereço que você procurou não existe, mas a livraria continua aberta.
       </p>
 
       <div className="mt-10 flex flex-wrap justify-center gap-4">

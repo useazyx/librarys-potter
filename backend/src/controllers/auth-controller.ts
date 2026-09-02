@@ -19,7 +19,7 @@ const registerSchema = z.object({
   name: z.string().min(3, 'Informe seu nome completo.').max(120),
   email: z.string().email('E-mail inválido.').toLowerCase(),
   password: passwordSchema,
-  // The three sign up doors of the original site.
+  // Os três cadastros do site antigo, um para cada papel.
   role: z.enum(['CUSTOMER', 'SUPPLIER', 'SUPPORT']).default('CUSTOMER'),
 })
 
@@ -101,8 +101,8 @@ export class ForgotPasswordController {
 
       const { token } = await new RequestPasswordResetService().execute(email)
 
-      // No mail provider is wired up: outside production the token comes back so
-      // the flow can be finished end to end.
+      // Não existe serviço de e-mail aqui. Fora de produção o token volta na
+      // resposta, senão não dá para testar o fluxo inteiro.
       return reply.status(200).send({
         message: 'Se o e-mail estiver cadastrado, enviaremos o link de redefinição.',
         ...(env.NODE_ENV === 'production' ? {} : { token }),

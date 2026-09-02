@@ -57,7 +57,7 @@ export class CreateOrderService {
       throw new BadRequestError('Seu carrinho está vazio.')
     }
 
-    // Prices come from the catalogue, never from the client payload.
+    // O preço vem sempre do banco, nunca do que o cliente mandou.
     const subtotal = round2(
       cart.items.reduce((sum, item) => sum + toMoney(item.book.price) * item.quantity, 0),
     )
@@ -66,8 +66,8 @@ export class CreateOrderService {
     const total = round2(subtotal + shipping)
 
     const order = await prisma.$transaction(async (tx) => {
-      // Stock is re-checked and decremented inside the transaction so two
-      // simultaneous checkouts cannot sell the same last copy twice.
+      // Confere e baixa o estoque dentro da transação. Sem isso, dois pedidos ao
+      // mesmo tempo vendem o mesmo último exemplar.
       for (const item of cart.items) {
         const updated = await tx.book.updateMany({
           where: { id: item.bookId, stock: { gte: item.quantity } },
@@ -151,7 +151,7 @@ export class CancelOrderService {
     }
 
     const cancelled = await prisma.$transaction(async (tx) => {
-      // Cancelling puts every copy back on the shelf.
+      // Cancelar devolve os itens para o estoque.
       for (const item of order.items) {
         if (item.bookId) {
           await tx.book.update({

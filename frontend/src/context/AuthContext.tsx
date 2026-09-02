@@ -27,7 +27,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       setUser(await api.auth.me())
     } catch {
-      // An expired token is not an error worth showing: just sign the visitor out.
+      // Token vencido não vira mensagem de erro: só desloga.
       tokenStorage.clear()
       setUser(null)
     } finally {

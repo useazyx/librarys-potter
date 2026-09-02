@@ -34,7 +34,7 @@ export default function CartPage() {
     return (
       <EmptyState
         title="Seu carrinho está vazio"
-        text="A estante está logo ali — e a primeira carta de Hogwarts também."
+        text="A estante está logo ali, e a primeira carta de Hogwarts também."
         action={
           <ButtonLink to="/catalogo" size="lg" variant="house">
             Ver o catálogo
@@ -79,7 +79,7 @@ export default function CartPage() {
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                 className="flex gap-5 overflow-hidden rounded-2xl border border-chalk-100/15 bg-house-surface p-5"
               >
-                <Link to={'/livro/' + line.book.slug} className="shrink-0">
+                <Link to={'/produto/' + line.book.slug} className="shrink-0">
                   <img
                     src={line.book.coverUrl}
                     alt={line.book.title}
@@ -92,7 +92,7 @@ export default function CartPage() {
                   <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0">
                       <h2 className="font-display text-lg text-chalk-50">
-                        <Link to={'/livro/' + line.book.slug} className="link-underline">
+                        <Link to={'/produto/' + line.book.slug} className="link-underline">
                           {line.book.title}
                         </Link>
                       </h2>

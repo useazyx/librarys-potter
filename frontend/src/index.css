@@ -1,20 +1,16 @@
 @import 'tailwindcss';
 
 /*
-  Library's Potter — sistema de design "as quatro casas".
+  Sistema de design das quatro casas.
 
-  A base do site é o castelo: pedra fria, quase sem cor. A cor entra pela casa
-  escolhida pelo leitor, e é isso que dá a identidade — o site se veste de
-  Grifinória, Sonserina, Corvinal ou Lufa-Lufa sem trocar uma única classe.
-
-  Como funciona: `--house-*` são variáveis de tempo de execução, redefinidas por
-  `[data-house='...']` mais abaixo. O bloco `@theme inline` transforma cada uma
-  numa família de utilitários do Tailwind (`bg-house-mid`, `text-house-accent`,
-  `border-house-accent`, ...) que aponta para a variável em vez de resolvê-la.
-  Trocar o atributo `data-house` no `<html>` reveste o site inteiro.
+  A base do site é neutra, cinza de pedra. A cor vem da casa que o visitante
+  escolhe: as variáveis --house-* são redefinidas por [data-house='...'] mais
+  abaixo, e o bloco @theme inline expõe cada uma como utilitário do Tailwind
+  (bg-house-mid, text-house-accent e por aí). Trocar o data-house no <html>
+  repinta o site inteiro sem mexer em classe de componente.
 */
 @theme {
-  /* O castelo: cinzas frios, sem o marrom quente de uma taverna. */
+  /* cinzas frios da base */
   --color-stone-950: #08080b;
   --color-stone-900: #0d0d12;
   --color-stone-800: #16161d;
@@ -22,14 +18,14 @@
   --color-stone-600: #2f2f3c;
   --color-stone-500: #454556;
 
-  /* Giz sobre a pedra: o texto. */
+  /* tons do texto */
   --color-chalk-50: #f7f8fa;
   --color-chalk-100: #e9ebf0;
   --color-chalk-200: #ccd1dc;
   --color-chalk-300: #a3abbb;
   --color-chalk-400: #767e90;
 
-  /* As quatro casas, fixas — usadas nos seletores e nos brasões. */
+  /* As quatro casas em cor fixa, para os lugares onde as quatro aparecem juntas. */
   --color-gryffindor-deep: #4a0604;
   --color-gryffindor-mid: #7f0909;
   --color-gryffindor-accent: #d3a625;
@@ -46,7 +42,7 @@
   --color-hufflepuff-mid: #6b5308;
   --color-hufflepuff-accent: #ecb939;
 
-  /* Sinais de estado, fora do sistema de casas para não mudarem de sentido. */
+  /* Cores de estado, fora do sistema de casas para não mudarem de sentido. */
   --color-mandrake-400: #7f9d6b;
   --color-mandrake-600: #4e6640;
   --color-ember-400: #d97757;
@@ -62,22 +58,16 @@
   --ease-castle: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/*
-  A casa em vigor. O padrão é o castelo neutro: quem ainda não escolheu casa vê
-  pedra e estanho, e a cor chega quando ele escolhe.
-*/
+/* A casa atual. O padrão é o tema neutro, de quem ainda não escolheu casa. */
 :root {
   --house-deep: #101018;
   --house-mid: #23232f;
   --house-accent: #aab6c3;
   --house-ink: #f7f8fa;
-  /* Trio RGB do acento, para lavagens com transparência. */
+  /* o acento em RGB solto, para usar com transparência */
   --house-glow: 170 182 195;
-  /*
-    Fundo da página e superfície dos cartões. É aqui que a casa deixa de ser um
-    detalhe e passa a pintar o site inteiro: o `body` e todo painel elevado saem
-    destes dois tokens, não de um cinza fixo.
-  */
+  /* Fundo da página e cor dos painéis. O body e todo painel saem daqui, não de
+     um cinza fixo, e é por isso que a casa pinta o site inteiro. */
   --house-bg: #101116;
   --house-surface: #1b1d24;
 }
@@ -122,7 +112,7 @@
   --house-surface: #221a08;
 }
 
-/* `inline` mantém a referência à variável, em vez de congelar o valor atual. */
+/* O inline mantém a referência à variável em vez de congelar o valor atual. */
 @theme inline {
   --color-house-deep: var(--house-deep);
   --color-house-mid: var(--house-mid);
@@ -162,14 +152,14 @@
     color: var(--color-stone-950);
   }
 
-  /* Keyboard users must always see where they are. */
+  /* Quem navega por teclado precisa sempre ver onde está. */
   :focus-visible {
     outline: 2px solid var(--house-accent);
     outline-offset: 3px;
     border-radius: 4px;
   }
 
-  /* Every entrance and scroll animation stands down when the system asks. */
+  /* Toda animação para quando o sistema pede movimento reduzido. */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -183,10 +173,8 @@
 }
 
 @layer components {
-  /*
-    O salão do castelo: pedra escura com duas lavagens na cor da casa. Como as
-    lavagens saem de `--house-glow`, o fundo inteiro muda com a casa escolhida.
-  */
+  /* Fundo geral: escuro, com duas lavagens na cor da casa. Como elas saem de
+     --house-glow, o fundo muda junto com a casa. */
   .bg-castle {
     background-color: var(--house-bg);
     background-image:
@@ -195,26 +183,19 @@
     transition: background-image 0.9s var(--ease-castle);
   }
 
-  /* Bloco de pedra encaixado: usado por cartões e painéis. */
-  /*
-    Painel elevado. Sai de `--house-surface`, então o cartão da Sonserina é
-    esverdeado e o da Corvinal é azulado — a casa não fica só na borda.
-    A borda é mais clara que antes: os painéis estavam sumindo no fundo.
-  */
+  /* Painel elevado, usado por cartões e caixas. Sai de --house-surface, então
+     o cartão da Sonserina é esverdeado e o da Corvinal, azulado. */
   .surface-stone {
     background-color: var(--house-surface);
     border: 1px solid rgb(255 255 255 / 0.10);
     color: var(--color-chalk-100);
   }
 
-  /*
-    Uma folha clara pousada sobre a pedra — cartões, formulários e painéis.
+  /* Cartão claro, usado em formulários e painéis sobre fundo escuro.
 
-    Aqui dentro a casa é reescrita: `--house-accent` passa a valer a cor
-    *profunda* da casa. Como variável CSS cascateia, todo `text-house-accent`
-    dentro de um cartão claro escurece sozinho e continua legível, sem que
-    nenhum componente precise saber em que fundo está.
-  */
+     Aqui dentro o --house-accent é reescrito para a cor profunda da casa. Como
+     variável CSS cascateia, todo text-house-accent dentro do cartão escurece
+     sozinho e continua legível, sem o componente saber onde está. */
   .surface-paper {
     background-color: #f6f7fa;
     color: var(--color-stone-800);
@@ -223,18 +204,14 @@
     --house-ink: var(--color-stone-800);
   }
 
-  /* Painel na cor da casa, para as faixas que assumem uma casa por inteiro. */
+  /* Painel na cor cheia da casa, para as faixas. */
   .surface-house {
     background-color: var(--house-deep);
     color: var(--house-ink);
   }
 
-  /*
-    O teto encantado do Salão Principal: céu profundo na cor da casa, com
-    poeira de estrelas e uma névoa que anda devagar. Substituiu a "cantaria"
-    quadriculada, que em faixa grande lia como grade de planilha e quebrava a
-    imersão.
-  */
+  /* Fundo das faixas: céu na cor da casa. Antes aqui tinha um quadriculado,
+     mas em faixa grande ele parecia grade de planilha. */
   .bg-masonry {
     background-color: var(--house-surface);
     background-image:
@@ -278,7 +255,7 @@
     transform-origin: left;
   }
 
-  /* A book turning on the shelf when the reader looks at it. */
+  /* O livro gira um pouco quando o ponteiro passa por cima. */
   .book-3d {
     transform-style: preserve-3d;
     transition: transform 0.9s var(--ease-castle);
@@ -289,7 +266,7 @@
   }
 }
 
-/* Reveal-on-scroll primitive used by the useReveal hook. */
+/* Base do reveal por scroll, usada pelo hook useReveal. */
 [data-reveal] {
   opacity: 0;
   transform: translateY(28px);
@@ -313,11 +290,10 @@
 /*
   Transição de página.
 
-  A regra deste projeto: um elemento que começa invisível e precisa de JS para
-  aparecer tem de aparecer mesmo se a animação não rodar. As duas regras abaixo
-  mantêm o estado de **repouso no visível** e deixam a metade escondida por conta
-  do preenchimento `backwards` do keyframe. Sem animação, sem suporte a animação
-  ou com animação travada, o leitor vê a página.
+  Regra deste projeto: elemento que começa invisível e depende de JS para
+  aparecer tem que aparecer mesmo quando a animação não roda. Por isso o estado
+  de repouso das regras abaixo é o visível, e a metade escondida vem do
+  preenchimento do keyframe. Sem animação, ou com ela travada, a página aparece.
 */
 @keyframes page-in {
   from {
@@ -331,20 +307,15 @@
 }
 
 .page-enter {
-  /*
-    `forwards`, e não `both`, de propósito. `both` inclui `backwards`, que aplica
-    o quadro inicial — invisível — a uma animação que ainda não começou; se ela
-    nunca começar, a página fica escondida para sempre. Com `forwards` o estado
-    de partida é o do próprio elemento (visível) e o de chegada também. Como não
-    há `animation-delay` aqui, a entrada continua idêntica na tela.
-  */
+  /* forwards e não both, de propósito. O both inclui backwards, que aplica o
+     quadro inicial (invisível) a uma animação que ainda não começou; se ela
+     nunca começar, a página fica escondida. Como não tem animation-delay aqui,
+     a entrada fica igual na tela de qualquer jeito. */
   animation: page-in 0.5s var(--ease-castle) forwards;
 }
 
-/*
-  Entrada escalonada de qualquer elemento. Mesmo contrato do `.page-enter`: o
-  repouso é o visível, e o atraso vai por `style={{ animationDelay }}`.
-*/
+/* Entrada escalonada. Mesmo contrato do .page-enter, e o atraso vai por
+   style={{ animationDelay }} no componente. */
 @keyframes rise-in {
   from {
     opacity: 0;
@@ -357,13 +328,10 @@
 }
 
 .rise-in {
-  /*
-    Aqui `both` é necessário: o escalonamento vem de `animation-delay`, e sem
-    `backwards` cada elemento apareceria antes da sua vez e sumiria ao começar.
-    É seguro porque animação CSS, ao contrário do framer-motion, não é
-    interrompida quando uma rota suspende — foi o framer-motion que travou no
-    bug de 23/08, não o CSS.
-  */
+  /* Aqui o both é necessário: o escalonamento vem do animation-delay e, sem
+     backwards, cada elemento apareceria antes da sua vez e sumiria ao começar.
+     Dá para usar porque animação CSS não trava quando uma rota suspende, ao
+     contrário do framer-motion. */
   animation: rise-in 0.9s var(--ease-castle) both;
 }
 
@@ -383,18 +351,15 @@
   pointer-events: none;
   background-color: var(--house-deep);
   transform-origin: left;
-  /* Estado de repouso descoberto: a folha só existe enquanto a varredura roda. */
+  /* Repouso descoberto: a folha só existe enquanto a animação roda. */
   transform: scaleX(0);
-  /* `forwards` pelo mesmo motivo do `.page-enter`, e aqui o risco é maior: com
-     `backwards`, uma varredura que não começasse seguraria `scaleX(1)` — a folha
-     opaca cobrindo a tela inteira, que foi exatamente o bug corrigido em 23/08. */
+  /* forwards pelo mesmo motivo do .page-enter, e aqui o risco é maior: com
+     backwards, uma animação que não começasse seguraria scaleX(1), ou seja, a
+     folha opaca cobrindo a tela inteira. */
   animation: page-turn-sweep 0.6s var(--ease-castle) forwards;
 }
 
-/*
-  Entrada do brasão: sobe e assenta. Puramente decorativa — o escudo é uma
-  imagem, e o estado de repouso da regra já é o visível.
-*/
+/* Entrada do brasão: sobe e assenta. É decoração, e o repouso já é o visível. */
 @keyframes crest-rise {
   from {
     opacity: 0;
@@ -411,10 +376,7 @@
 }
 
 
-/*
-  A vela do salão: um brilho que respira. Puramente decorativo — nunca carrega
-  conteúdo, então pode depender da animação sem risco.
-*/
+/* Brilho de vela, que respira. É decoração e nunca carrega conteúdo. */
 @keyframes candle-breathe {
   0%,
   100% {
@@ -431,15 +393,14 @@
   animation: candle-breathe 4.5s ease-in-out infinite;
 }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   Camada de magia.
+/* ---------------------------------------------------------------------------
+   Camada de magia: brasas, brilhos e reflexos.
 
-   Regra que vale para tudo aqui: nada nesta seção pode ser a única coisa que
-   torna conteúdo visível. São brasas, brilhos e reflexos — decoração pura. Se
-   nenhuma animação rodar, o leitor perde o encanto e não perde a página.
-   ══════════════════════════════════════════════════════════════════════════ */
+   Regra para tudo o que está aqui: nada pode ser a única coisa que torna algum
+   conteúdo visível. Se nenhuma animação rodar, some o efeito e não a página.
+   --------------------------------------------------------------------------- */
 
-/* Brasas do salão: motes de luz que sobem devagar e se apagam. */
+/* Brasas: pontos de luz que sobem devagar e apagam. */
 @keyframes ember-float {
   0% {
     opacity: 0;
@@ -467,7 +428,7 @@
   will-change: transform, opacity;
 }
 
-/* Reflexo que atravessa um título ou um filete, como luz de vela passando. */
+/* Reflexo que atravessa um título ou um filete. */
 @keyframes shimmer-sweep {
   from {
     background-position: -150% 0;
@@ -477,12 +438,9 @@
   }
 }
 
-/*
-  O reflexo é uma camada *sobre* o elemento, não o fundo dele. Assim o elemento
-  conserva a própria cor: se o reflexo não rodar — ou for desligado por
-  movimento reduzido — não some nada. Um `.shimmer` que pintasse o fundo exigiria
-  texto transparente, e aí o texto dependeria da animação para existir.
-*/
+/* O reflexo é uma camada ::after sobre o elemento, e não o background dele.
+   Se pintasse o fundo, o texto teria que ser transparente e sumiria quando o
+   reflexo fosse desligado por movimento reduzido. */
 .shimmer {
   position: relative;
   overflow: hidden;
@@ -504,11 +462,8 @@
   animation: shimmer-sweep 6s ease-in-out infinite;
 }
 
-/*
-  Brilho que segue o ponteiro dentro de um cartão. As coordenadas chegam por
-  `--mx`/`--my`, escritas no evento de mouse; sem JS, o padrão deixa o brilho
-  centralizado e imóvel, que é um estado perfeitamente apresentável.
-*/
+/* Brilho que segue o ponteiro dentro do cartão. As coordenadas chegam em --mx
+   e --my. Sem JS o brilho fica parado no centro, que já serve. */
 .glow-follow {
   position: relative;
   isolation: isolate;
@@ -534,7 +489,7 @@
   opacity: 1;
 }
 
-/* A cerimônia do Chapéu Seletor: a cor da casa toma a tela e some. */
+/* Cerimônia do Chapéu Seletor: a cor da casa toma a tela e some. */
 @keyframes sorting-flash {
   0% {
     opacity: 0;
@@ -561,8 +516,8 @@
   display: grid;
   place-items: center;
   background: radial-gradient(circle at 50% 45%, var(--house-mid), var(--house-deep) 70%);
-  /* Repouso invisível — e é o `forwards` que garante que uma animação que não
-     comece deixe a tela livre, em vez de segurar o quadro que a cobre. */
+  /* Repouso invisível. O forwards garante que uma animação que não comece
+     deixe a tela livre em vez de segurar o quadro que a cobre. */
   opacity: 0;
   animation: sorting-flash 1.6s var(--ease-castle) forwards;
 }
@@ -586,7 +541,7 @@
   animation: crest-burst 1.1s var(--ease-castle) both;
 }
 
-/* Sob movimento reduzido, brasas e reflexos simplesmente não existem. */
+/* Com movimento reduzido, brasas e reflexos nem existem. */
 @media (prefers-reduced-motion: reduce) {
   .ember,
   .shimmer::after {
@@ -594,21 +549,15 @@
   }
 }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   O teto encantado.
+/* ---------------------------------------------------------------------------
+   O teto encantado, que é o que fica atrás das faixas na cor da casa:
+   estrelas, uma névoa que anda devagar e brasas de vela. Tudo decorativo e
+   atrás do conteúdo.
+   --------------------------------------------------------------------------- */
 
-   O Salão Principal de Hogwarts tem o teto enfeitiçado para mostrar o céu. É
-   isso que está atrás das faixas coloridas do site: estrelas, uma névoa que
-   anda devagar e um brilho de vela. Tudo decorativo e atrás do conteúdo —
-   nada aqui pode esconder texto.
-   ══════════════════════════════════════════════════════════════════════════ */
-
-/*
-  Poeira de estrelas. São três camadas de pontos ladrilhados em tamanhos
-  diferentes (137, 199 e 271 px): como os períodos não são múltiplos entre si,
-  o padrão só se repetiria muito além de qualquer tela, e o olho não acha a
-  emenda.
-*/
+/* Poeira de estrelas: três camadas de pontos ladrilhados em 137, 199 e 271 px.
+   Como os períodos não são múltiplos entre si, a emenda do padrão cai muito
+   além da tela. */
 .sky-stars {
   background-image:
     radial-gradient(1.1px 1.1px at 23px 31px, rgb(255 255 255 / 0.75), transparent 100%),
@@ -645,7 +594,7 @@
   animation: sky-twinkle 7s ease-in-out infinite;
 }
 
-/* Névoa de nebulosa: dois sopros que atravessam a faixa sem pressa. */
+/* Névoa: dois sopros que atravessam a faixa devagar. */
 @keyframes sky-drift {
   0% {
     transform: translate3d(-4%, 0, 0) scale(1.05);
@@ -672,4 +621,533 @@
   .sky-nebula {
     animation: none;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Acessibilidade.
+
+   Tudo aqui pende de um atributo no <html>, escrito pelo SettingsProvider.
+   Mesma ideia do sistema de casas: em vez de cada componente saber que existe
+   daltonismo, alto contraste ou fonte grande, os tokens mudam e o site muda
+   junto. Nenhum componente ganha classe condicional.
+   --------------------------------------------------------------------------- */
+
+/* Tamanho do texto. O body usa 16px; aqui a raiz é reescrita e todo rem
+   acompanha. */
+html[data-text='pequeno'] { font-size: 15px; }
+html[data-text='grande'] { font-size: 18px; }
+html[data-text='enorme'] { font-size: 20px; }
+
+html[data-text='grande'] body,
+html[data-text='enorme'] body {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+/* Fonte de leitura fácil.
+   Não instala fonte nova: troca as três famílias por pilhas do sistema com
+   letras bem diferenciadas e abre o espaçamento, que é o que mais ajuda quem
+   tem dislexia. Cinzel é bonita e é exatamente o tipo de fonte que atrapalha. */
+html[data-font='legivel'] {
+  --font-display: Verdana, Tahoma, 'Trebuchet MS', sans-serif;
+  --font-serif: Verdana, Tahoma, sans-serif;
+  --font-sans: Verdana, Tahoma, 'Segoe UI', sans-serif;
+}
+
+html[data-font='legivel'] body {
+  letter-spacing: 0.02em;
+  word-spacing: 0.08em;
+  line-height: 1.8;
+}
+
+html[data-font='legivel'] h1,
+html[data-font='legivel'] h2,
+html[data-font='legivel'] h3,
+html[data-font='legivel'] .eyebrow {
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+/* Links sempre sublinhados.
+   Cor sozinha não é pista suficiente: quem não distingue a cor da casa do
+   texto ao redor precisa do sublinhado para saber que ali há um link. */
+html[data-links='sublinhado'] main a,
+html[data-links='sublinhado'] footer a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Realce de foco reforçado.
+   O anel padrão já existe; este é para quem navega só de teclado e precisa
+   achar o cursor sem procurar. */
+html[data-focus='reforcado'] :focus-visible {
+  outline: 4px solid #ffd400;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 8px rgb(0 0 0 / 0.65);
+}
+
+/* Movimento reduzido por escolha.
+   Repete o bloco de `prefers-reduced-motion`, mas por decisão do leitor e não
+   do sistema. Continua valendo a regra do projeto: nada aqui esconde conteúdo,
+   porque toda animação de entrada repousa no estado visível. */
+html[data-motion='reduzido'] *,
+html[data-motion='reduzido'] *::before,
+html[data-motion='reduzido'] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+html[data-motion='reduzido'] .ember,
+html[data-motion='reduzido'] .shimmer::after,
+html[data-motion='reduzido'] .sky-twinkle,
+html[data-motion='reduzido'] .sky-nebula {
+  display: none;
+}
+
+html[data-motion='reduzido'] [data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Alto contraste. O site normal usa bastante texto em opacidade reduzida sobre
+   fundo escuro, que é justamente o que some para quem tem baixa visão. Aqui o
+   texto volta a ser opaco, as bordas endurecem e o fundo perde as lavagens. */
+html[data-contrast='alto'] {
+  --color-chalk-200: #ffffff;
+  --color-chalk-300: #f2f4f8;
+  --color-chalk-400: #dfe3ea;
+  --house-bg: #000000;
+  --house-surface: #101014;
+  --house-deep: #000000;
+}
+
+html[data-contrast='alto'] .bg-castle,
+html[data-contrast='alto'] .bg-masonry {
+  background-image: none;
+}
+
+html[data-contrast='alto'] .surface-stone,
+html[data-contrast='alto'] .glow-follow {
+  border-color: rgb(255 255 255 / 0.55);
+}
+
+html[data-contrast='alto'] .sky-stars,
+html[data-contrast='alto'] .sky-nebula,
+html[data-contrast='alto'] .ember {
+  display: none;
+}
+
+/* Tema claro. Como chalk-* é a família do texto e é variável, basta reescrever
+   os cinco tons: nenhum componente precisa saber que existe tema claro. A cor
+   da casa continua vindo do data-house. */
+html[data-mode='claro'] {
+  --color-chalk-50: #14110c;
+  --color-chalk-100: #241f17;
+  --color-chalk-200: #3d3629;
+  --color-chalk-300: #5c5343;
+  --color-chalk-400: #7b7160;
+
+  --color-stone-950: #f6f2e8;
+  --color-stone-900: #efeadd;
+  --color-stone-800: #e5dece;
+
+  --house-bg: #f6f2e8;
+  --house-surface: #fffdf7;
+  --house-ink: #14110c;
+}
+
+html[data-mode='claro'][data-house='grifinoria'] {
+  --house-bg: #f9f0e9;
+  --house-surface: #fffaf5;
+  --house-accent: #8a1409;
+  --house-deep: #7f0909;
+}
+
+html[data-mode='claro'][data-house='sonserina'] {
+  --house-bg: #edf3ee;
+  --house-surface: #f9fdfa;
+  --house-accent: #14532d;
+  --house-deep: #1a472a;
+}
+
+html[data-mode='claro'][data-house='corvinal'] {
+  --house-bg: #eceff8;
+  --house-surface: #f9fafe;
+  --house-accent: #16265e;
+  --house-deep: #0e1a40;
+}
+
+html[data-mode='claro'][data-house='lufa-lufa'] {
+  --house-bg: #f8f2df;
+  --house-surface: #fffdf3;
+  --house-accent: #6b5308;
+  --house-deep: #6b5308;
+}
+
+/* No claro o cartão de papel já é o fundo: o realce vira a cor cheia da casa. */
+html[data-mode='claro'] .surface-paper {
+  background-color: #fffdf7;
+  border-top-color: var(--house-deep);
+}
+
+html[data-mode='claro'] .bg-castle {
+  background-image:
+    radial-gradient(at 15% 0%, rgb(var(--house-glow) / 0.1), transparent 55%),
+    radial-gradient(at 85% 90%, rgb(var(--house-glow) / 0.06), transparent 50%);
+}
+
+/* As faixas cheias da casa continuam escuras mesmo no tema claro. */
+html[data-mode='claro'] .bg-house-deep,
+html[data-mode='claro'] .surface-house {
+  color: #fffaf0;
+}
+
+/* ---------------------------------------------------------------------------
+   Modos de visão de cores.
+
+   Grifinória é vermelha e Sonserina é verde, que é justamente o par que some na
+   deficiência de cor mais comum. Como a casa pinta o site inteiro, quem não
+   distingue as duas cores não distingue as duas versões do site.
+
+   Cada modo abaixo redefine as quatro paletas escolhendo um eixo que aquela
+   visão preserva, e afasta as quatro também em luminosidade, para funcionarem
+   até em preto e branco.
+   --------------------------------------------------------------------------- */
+
+/* Protanopia e deuteranopia: some o eixo vermelho-verde, então as casas passam
+   a se distinguir no eixo azul-amarelo. */
+html[data-vision='protanopia'][data-house='grifinoria'],
+html[data-vision='deuteranopia'][data-house='grifinoria'] {
+  --house-deep: #4a2a00;
+  --house-mid: #8a5200;
+  --house-accent: #ffb020;
+  --house-glow: 255 176 32;
+  --house-bg: #1a1000;
+  --house-surface: #2b1c02;
+}
+
+html[data-vision='protanopia'][data-house='sonserina'],
+html[data-vision='deuteranopia'][data-house='sonserina'] {
+  --house-deep: #04252e;
+  --house-mid: #0b4a5c;
+  --house-accent: #6fd6ef;
+  --house-glow: 111 214 239;
+  --house-bg: #04161c;
+  --house-surface: #072831;
+}
+
+html[data-vision='protanopia'][data-house='corvinal'],
+html[data-vision='deuteranopia'][data-house='corvinal'] {
+  --house-deep: #14103d;
+  --house-mid: #2a2380;
+  --house-accent: #b7b0ff;
+  --house-glow: 183 176 255;
+  --house-bg: #0b0920;
+  --house-surface: #16123c;
+}
+
+html[data-vision='protanopia'][data-house='lufa-lufa'],
+html[data-vision='deuteranopia'][data-house='lufa-lufa'] {
+  --house-deep: #2e2a00;
+  --house-mid: #6e6600;
+  --house-accent: #f4ec5a;
+  --house-glow: 244 236 90;
+  --house-bg: #171500;
+  --house-surface: #262200;
+}
+
+/* Tritanopia: some o eixo azul-amarelo. Aqui o par que sobra é o
+   vermelho-verde, então quem muda são Corvinal e Lufa-Lufa. */
+html[data-vision='tritanopia'][data-house='grifinoria'] {
+  --house-deep: #4a0604;
+  --house-mid: #9d1010;
+  --house-accent: #ff8b8b;
+  --house-glow: 255 139 139;
+  --house-bg: #170807;
+  --house-surface: #2a0f0d;
+}
+
+html[data-vision='tritanopia'][data-house='sonserina'] {
+  --house-deep: #07281a;
+  --house-mid: #14663a;
+  --house-accent: #6ee7a5;
+  --house-glow: 110 231 165;
+  --house-bg: #05150e;
+  --house-surface: #0a2718;
+}
+
+html[data-vision='tritanopia'][data-house='corvinal'] {
+  --house-deep: #2d0730;
+  --house-mid: #6b1170;
+  --house-accent: #f0a6f5;
+  --house-glow: 240 166 245;
+  --house-bg: #150416;
+  --house-surface: #260828;
+}
+
+html[data-vision='tritanopia'][data-house='lufa-lufa'] {
+  --house-deep: #3b2a06;
+  --house-mid: #8a6b0d;
+  --house-accent: #ffe9b0;
+  --house-glow: 255 233 176;
+  --house-bg: #191203;
+  --house-surface: #2b2007;
+}
+
+/* Monocromático: sem cor nenhuma. As casas se separam só por claridade, o que
+   também serve para quem imprime a página. */
+html[data-vision='monocromatico'] {
+  --house-accent: #e8e8e8;
+  --house-glow: 232 232 232;
+}
+
+html[data-vision='monocromatico'][data-house='grifinoria'] {
+  --house-deep: #2a2a2a;
+  --house-mid: #4d4d4d;
+  --house-accent: #f2f2f2;
+  --house-bg: #0e0e0e;
+  --house-surface: #1e1e1e;
+}
+
+html[data-vision='monocromatico'][data-house='sonserina'] {
+  --house-deep: #1c1c1c;
+  --house-mid: #3a3a3a;
+  --house-accent: #d6d6d6;
+  --house-bg: #090909;
+  --house-surface: #171717;
+}
+
+html[data-vision='monocromatico'][data-house='corvinal'] {
+  --house-deep: #232323;
+  --house-mid: #444444;
+  --house-accent: #e4e4e4;
+  --house-bg: #0c0c0c;
+  --house-surface: #1b1b1b;
+}
+
+html[data-vision='monocromatico'][data-house='lufa-lufa'] {
+  --house-deep: #333333;
+  --house-mid: #585858;
+  --house-accent: #fafafa;
+  --house-bg: #111111;
+  --house-surface: #222222;
+}
+
+/* O seletor de casas e os brasões usam as cores fixas e não passam pelos
+   tokens acima, então aqui eles são dessaturados por filtro. É o único lugar
+   do site onde a cor não vem de --house-*. */
+html[data-vision='monocromatico'] .house-swatch,
+html[data-vision='monocromatico'] .house-crest {
+  filter: grayscale(1) contrast(1.15);
+}
+
+/* ---------------------------------------------------------------------------
+   Magia interativa: a varinha do ponteiro, o feitiço e a estante. Como no resto
+   da camada de magia, nada aqui é a única coisa que torna conteúdo visível.
+   --------------------------------------------------------------------------- */
+
+/* O rastro que o ponteiro deixa. Some sozinho por opacidade. */
+@keyframes spark-fade {
+  from {
+    opacity: 0.9;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(var(--spark-drift, 0px), 26px, 0) scale(0.2);
+  }
+}
+
+.spark {
+  position: fixed;
+  z-index: 70;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: rgb(var(--house-glow) / 0.95);
+  box-shadow: 0 0 10px 3px rgb(var(--house-glow) / 0.5);
+  animation: spark-fade 750ms ease-out forwards;
+}
+
+/* O feitiço digitado: a faixa que confirma o que foi conjurado. */
+@keyframes spell-toast {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 14px);
+  }
+  12%,
+  78% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+}
+
+.spell-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 3.5rem;
+  z-index: 95;
+  opacity: 0;
+  animation: spell-toast 2.6s var(--ease-castle) forwards;
+}
+
+/* Lumos: o castelo inteiro clareia por um instante. Puramente decorativo. */
+@keyframes lumos-flash {
+  0% { opacity: 0; }
+  18% { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+
+.lumos-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 88;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle at 50% 45%, rgb(255 250 230 / 0.9), transparent 65%);
+  animation: lumos-flash 1.4s ease-out forwards;
+}
+
+/* A estante da biblioteca animada: profundidade de verdade, em CSS. */
+.shelf-scene {
+  perspective: 1600px;
+  perspective-origin: 50% 45%;
+}
+
+.shelf-rail {
+  transform-style: preserve-3d;
+}
+
+/* Um volume na estante, de lombada para o leitor. Ao passar o ponteiro, ele
+   sai da fileira como se fosse puxado da prateleira. */
+.shelf-book {
+  transform-style: preserve-3d;
+  transition:
+    transform 0.55s var(--ease-castle),
+    filter 0.55s var(--ease-castle);
+  will-change: transform;
+}
+
+.shelf-book:hover,
+.shelf-book:focus-visible {
+  transform: translateZ(58px) translateY(-14px) rotateY(-16deg);
+  filter: brightness(1.18);
+}
+
+/* O modelo tridimensional de um volume: capa, lombada e miolo. */
+.book-model {
+  transform-style: preserve-3d;
+  transition: transform 0.9s var(--ease-castle);
+}
+
+.book-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 3px 6px 6px 3px;
+  overflow: hidden;
+}
+
+/* As folhas: um empilhado de linhas finas na lateral direita do volume. */
+.book-pages {
+  background-image: repeating-linear-gradient(
+    to right,
+    #f4efe2 0px,
+    #f4efe2 1px,
+    #d9d2c0 1px,
+    #d9d2c0 2px
+  );
+}
+
+/* A varinha da oficina: uma peça só, com o veio da madeira em gradiente. */
+.wand-body {
+  border-radius: 999px;
+  background-image: linear-gradient(
+    100deg,
+    var(--wand-dark, #2f1d10) 0%,
+    var(--wand-light, #8a6136) 28%,
+    var(--wand-mid, #5c3d20) 52%,
+    var(--wand-light, #8a6136) 74%,
+    var(--wand-dark, #2f1d10) 100%
+  );
+  box-shadow:
+    0 10px 30px -12px rgb(0 0 0 / 0.8),
+    inset 0 1px 0 rgb(255 255 255 / 0.25);
+}
+
+@keyframes wand-tip {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.wand-tip {
+  animation: wand-tip 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spark,
+  .lumos-veil {
+    display: none;
+  }
+
+  .wand-tip {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+html[data-motion='reduzido'] .spark,
+html[data-motion='reduzido'] .lumos-veil {
+  display: none;
+}
+
+/*
+  As faixas cheias da casa continuam escuras mesmo no modo pergaminho. É o que
+  dá o contraste da página. Só que, no claro, `--house-accent` foi reescrito
+  para a versão escura da cor, feita para papel: dentro de uma faixa escura ela
+  some. Aqui o realce volta a ser a cor clara, por casa.
+
+  É o mesmo truque que `.surface-paper` usa no tema escuro, na direção oposta:
+  o token é reescrito no contexto, e nenhum componente precisa saber onde está.
+*/
+html[data-mode='claro'] .bg-house-deep,
+html[data-mode='claro'] .surface-house,
+html[data-mode='claro'] .bg-house-mid {
+  --house-accent: #cbd3dc;
+}
+
+html[data-mode='claro'][data-house='grifinoria'] .bg-house-deep,
+html[data-mode='claro'][data-house='grifinoria'] .surface-house,
+html[data-mode='claro'][data-house='grifinoria'] .bg-house-mid {
+  --house-accent: #f0c24a;
+}
+
+html[data-mode='claro'][data-house='sonserina'] .bg-house-deep,
+html[data-mode='claro'][data-house='sonserina'] .surface-house,
+html[data-mode='claro'][data-house='sonserina'] .bg-house-mid {
+  --house-accent: #bcd4d9;
+}
+
+html[data-mode='claro'][data-house='corvinal'] .bg-house-deep,
+html[data-mode='claro'][data-house='corvinal'] .surface-house,
+html[data-mode='claro'][data-house='corvinal'] .bg-house-mid {
+  --house-accent: #d1ab6a;
+}
+
+html[data-mode='claro'][data-house='lufa-lufa'] .bg-house-deep,
+html[data-mode='claro'][data-house='lufa-lufa'] .surface-house,
+html[data-mode='claro'][data-house='lufa-lufa'] .bg-house-mid {
+  --house-accent: #ffd75e;
 }

@@ -6,6 +6,12 @@ let app: FastifyInstance
 let token: string
 let pedraId: string
 let azkabanId: string
+let varinhaId: string
+
+// Preços lidos do catálogo, para não ter número mágico no teste.
+let pedraPrice: number
+let azkabanPrice: number
+let varinhaStock: number
 
 async function register() {
   const response = await app.inject({
@@ -35,6 +41,15 @@ beforeAll(async () => {
 
   pedraId = books.find((book: { slug: string }) => book.slug === 'harry-potter-e-a-pedra-filosofal').id
   azkabanId = books.find((book: { slug: string }) => book.slug === 'harry-potter-e-o-prisioneiro-de-azkaban').id
+
+  const pedra = books.find((book: { slug: string }) => book.slug === 'harry-potter-e-a-pedra-filosofal')
+  const azkaban = books.find((book: { slug: string }) => book.slug === 'harry-potter-e-o-prisioneiro-de-azkaban')
+  const varinha = books.find((book: { slug: string }) => book.slug === 'varinha-de-harry-potter')
+
+  pedraPrice = pedra.price
+  azkabanPrice = azkaban.price
+  varinhaId = varinha.id
+  varinhaStock = varinha.stock
 })
 
 afterAll(async () => {
@@ -56,7 +71,7 @@ describe('carrinho', () => {
     expect(cart.shipping).toBe(0)
   })
 
-  it('adiciona um livro e zera o frete acima do limite', async () => {
+  it('adiciona um livro e cobra o frete abaixo do limite', async () => {
     const response = await app.inject({
       method: 'POST',
       url: '/cart/items',
@@ -67,30 +82,32 @@ describe('carrinho', () => {
     const { cart } = response.json()
 
     expect(response.statusCode).toBe(201)
-    expect(cart.subtotal).toBe(200)
+    expect(cart.subtotal).toBe(pedraPrice)
     expect(cart.shipping).toBe(12.9)
-    expect(cart.missingForFreeShipping).toBe(50)
+    expect(cart.missingForFreeShipping).toBe(Number((cart.freeShippingThreshold - pedraPrice).toFixed(2)))
   })
 
-  it('soma o mesmo livro na mesma linha', async () => {
+  it('soma o mesmo livro na mesma linha e zera o frete acima do limite', async () => {
     const { cart } = (
       await app.inject({
         method: 'POST',
         url: '/cart/items',
         headers: authed(),
-        payload: { bookId: pedraId, quantity: 1 },
+        payload: { bookId: pedraId, quantity: 5 },
       })
     ).json()
 
     expect(cart.items).toHaveLength(1)
-    expect(cart.items[0].quantity).toBe(2)
-    expect(cart.subtotal).toBe(400)
+    expect(cart.items[0].quantity).toBe(6)
+    expect(cart.subtotal).toBe(Number((pedraPrice * 6).toFixed(2)))
+    // Seis exemplares passam do limite de frete grátis; a soma é a mesma linha.
+    expect(cart.subtotal).toBeGreaterThanOrEqual(cart.freeShippingThreshold)
     expect(cart.shipping).toBe(0)
   })
 
   it('não deixa passar do estoque disponível', async () => {
-    // A Pedra Filosofal tem 50 exemplares e cada requisição soma no máximo 20,
-    // então o limite só aparece na terceira tentativa — que é justamente o caso
+    // A varinha do Harry tem 55 exemplares e cada requisição soma no máximo 20,
+    // então o limite só aparece na terceira tentativa, que é justamente o caso
     // que o carrinho precisa barrar.
     const freshToken = await register()
     const headers = { authorization: 'Bearer ' + freshToken }
@@ -99,27 +116,27 @@ describe('carrinho', () => {
       method: 'POST',
       url: '/cart/items',
       headers,
-      payload: { bookId: pedraId, quantity: 20 },
+      payload: { bookId: varinhaId, quantity: 20 },
     })
 
     const second = await app.inject({
       method: 'POST',
       url: '/cart/items',
       headers,
-      payload: { bookId: pedraId, quantity: 20 },
+      payload: { bookId: varinhaId, quantity: 20 },
     })
 
     const third = await app.inject({
       method: 'POST',
       url: '/cart/items',
       headers,
-      payload: { bookId: pedraId, quantity: 20 },
+      payload: { bookId: varinhaId, quantity: 20 },
     })
 
     expect(first.statusCode).toBe(201)
     expect(second.json().cart.items[0].quantity).toBe(40)
     expect(third.statusCode).toBe(400)
-    expect(third.json().error).toContain('50 exemplar')
+    expect(third.json().error).toContain(varinhaStock + ' exemplar')
   })
 
   it('atualiza e remove linhas', async () => {
@@ -168,7 +185,7 @@ describe('pedidos', () => {
       method: 'POST',
       url: '/cart/items',
       headers: authed(),
-      payload: { bookId: azkabanId, quantity: 2 },
+      payload: { bookId: azkabanId, quantity: 6 },
     })
 
     const response = await app.inject({ method: 'POST', url: '/orders', headers: authed(), payload: delivery })
@@ -176,14 +193,14 @@ describe('pedidos', () => {
 
     expect(response.statusCode).toBe(201)
     expect(order.code).toMatch(/^LP-[A-Z2-9]{6}$/)
-    expect(order.subtotal).toBe(800)
+    expect(order.subtotal).toBe(Number((azkabanPrice * 6).toFixed(2)))
     expect(order.shipping).toBe(0)
     expect(order.delivery.city).toBe('Little Whinging')
 
     const after = (await app.inject({ method: 'GET', url: '/catalog/books/harry-potter-e-o-prisioneiro-de-azkaban' })).json()
       .book.stock
 
-    expect(after).toBe(before - 2)
+    expect(after).toBe(before - 6)
 
     const cart = (await app.inject({ method: 'GET', url: '/cart', headers: authed() })).json().cart
     expect(cart.items).toHaveLength(0)
@@ -212,6 +229,12 @@ describe('pedidos', () => {
     const orders = (await app.inject({ method: 'GET', url: '/orders', headers: authed() })).json().orders
     const target = orders[0]
 
+    // Quantos exemplares voltam para o estoque é o que o próprio pedido diz. O
+    // teste não repete o número escolhido no checkout.
+    const devolvidos = target.items
+      .filter((item: { title: string }) => item.title === 'Harry Potter e o Prisioneiro de Azkaban')
+      .reduce((total: number, item: { quantity: number }) => total + item.quantity, 0)
+
     const before = (await app.inject({ method: 'GET', url: '/catalog/books/harry-potter-e-o-prisioneiro-de-azkaban' })).json()
       .book.stock
 
@@ -227,7 +250,7 @@ describe('pedidos', () => {
     const after = (await app.inject({ method: 'GET', url: '/catalog/books/harry-potter-e-o-prisioneiro-de-azkaban' })).json()
       .book.stock
 
-    expect(after).toBe(before + 2)
+    expect(after).toBe(before + devolvidos)
 
     const again = await app.inject({
       method: 'PATCH',

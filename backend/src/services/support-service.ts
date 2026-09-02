@@ -36,7 +36,7 @@ interface CreateTicketInput {
 }
 
 export class CreateTicketService {
-  /** Open to visitors, exactly like the "Relatar um Problema" page used to be. */
+  // Aberto para visitante, como era a página de relatar problema.
   async execute(input: CreateTicketInput) {
     const ticket = await prisma.supportTicket.create({
       data: { ...input, code: generateTicketCode() },
@@ -65,7 +65,7 @@ interface ListTicketsInput {
 }
 
 export class ListTicketsService {
-  /** The support queue: open first, then by urgency, then oldest first. */
+  // Fila do suporte: abertos primeiro, depois por urgência, depois os mais antigos.
   async execute({ status, urgency }: ListTicketsInput) {
     const tickets = await prisma.supportTicket.findMany({
       where: {
@@ -119,7 +119,7 @@ export class UpdateTicketService {
 }
 
 export class SupportSummaryService {
-  /** Counters for the badge and the header of the support desk. */
+  // Contadores do topo do painel de suporte.
   async execute() {
     const rows = await prisma.supportTicket.groupBy({ by: ['status'], _count: { status: true } })
 
