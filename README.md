@@ -187,9 +187,3 @@ As capas dos cinco primeiros livros vieram do material do projeto antigo, conver
 resto veio do Open Library (capas), do Rebrickable (caixas de LEGO) e do Wikimedia Commons (fotos
 de produto, brasões e cenários). Os créditos e as licenças estão em
 `frontend/public/CREDITOS-IMAGENS.md`, que o rodapé do site linka.
-
-## Detalhe herdado do site antigo
-
-O `legacy/bd.sql` traz A Câmara Secreta a R$ 900, com estoque 900 e uma venda de quantidade 999.
-Parece dado de teste do trabalho antigo, alguém batendo dígito no formulário. O arquivo antigo fica
-como está, e a loja nova usa preço de livraria brasileira.
