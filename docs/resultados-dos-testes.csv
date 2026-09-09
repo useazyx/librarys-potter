@@ -1,0 +1,132 @@
+﻿PLANILHA DE RESULTADOS DOS TESTES - LIBRARY'S POTTER
+Autores: Arthur Roberto Weege Pontes, Guilherme Silveira, Lucas Alves
+Execucao: 08/09/2026;Ambiente: Windows 10, Node 22.15.0, PostgreSQL 17.11
+
+CASOS DE TESTE
+ID;Categoria;Area;Caso de teste;Resultado esperado;Resultado obtido;Status;Origem
+CT-01;Funcional;Cadastro e login;Criar conta nova com nome, e-mail e senha validos;201, token devolvido e cookie de sessao gravado;201, token recebido, Set-Cookie token HttpOnly SameSite=Lax;Passou;Roteiro
+CT-02;Funcional;Cadastro e login;Cadastrar com e-mail ja existente;409 com mensagem clara;"409 ""Ja existe uma conta com este e-mail.""";Passou;Roteiro
+CT-03;Funcional;Cadastro e login;Cadastrar com e-mail invalido e senha de 3 caracteres;400 apontando o campo errado;400 VALIDATION_ERROR com issues por campo;Passou;Roteiro
+CT-04;Funcional;Cadastro e login;Cadastrar nos tres papeis (leitor, fornecedor, suporte);201 nos tres;201 nos tres;Passou;Automatizado
+CT-05;Funcional;Cadastro e login;Cadastrar com um papel inventado;400;400;Passou;Automatizado
+LG-01;Funcional;Cadastro e login;Entrar com e-mail e senha corretos;200 com token;200, token recebido;Passou;Roteiro
+LG-02;Funcional;Cadastro e login;Entrar com a senha errada;401 sem dizer qual campo falhou;"401 ""E-mail ou senha incorretos.""";Passou;Roteiro
+LG-03;Funcional;Cadastro e login;Acessar o painel do cliente com sessao valida;200 com o perfil;200 com perfil e estatisticas;Passou;Roteiro
+LG-04;Funcional;Cadastro e login;Acessar o painel do cliente sem token;401;"401 ""Sessao expirada ou invalida.""";Passou;Roteiro
+LG-05;Funcional;Cadastro e login;Painel traz pedidos, avaliacoes e chamados do leitor;Contagens batem com o seed;Confere;Passou;Automatizado
+LG-06;Funcional;Cadastro e login;Sair da conta;200 e cookie apagado;200, token= Max-Age=0 Expires=1970;Passou;Roteiro
+RS-01;Funcional;Cadastro e login;Pedir link de redefinicao para e-mail cadastrado;200 e token valido por 30 minutos;200, token gerado;Passou;Roteiro
+RS-02;Funcional;Cadastro e login;Pedir link para e-mail NAO cadastrado;Mesma resposta, para nao revelar quem tem conta;Mesma mensagem e mesmo status;Passou;Roteiro
+RS-03;Funcional;Cadastro e login;Redefinir a senha usando o token;200;200;Passou;Roteiro
+RS-04;Funcional;Cadastro e login;Usar o mesmo link uma segunda vez;Recusa;"400 ""Este link ja foi utilizado.""";Passou;Roteiro
+RS-05;Funcional;Cadastro e login;Entrar com a senha nova;200;200;Passou;Roteiro
+BF-01;Funcional;Busca e filtros;Listar o catalogo inteiro;Todos os produtos, com preco numerico;142 produtos;Passou;Roteiro
+BF-02;Funcional;Busca e filtros;"Buscar por nome (""pedra filosofal"")";Traz o livro certo em primeiro;"8 resultados, o primeiro e ""Harry Potter e a Pedra Filosofal""";Passou;Roteiro
+BF-03;Funcional;Busca e filtros;Buscar por ISBN (9788532530783);Exatamente um resultado;1 resultado;Passou;Roteiro
+BF-04;Funcional;Busca e filtros;Filtrar por departamento (varinhas);So varinhas;11 produtos, igual a contagem do departamento;Passou;Roteiro
+BF-05;Funcional;Busca e filtros;Filtrar por faixa de preco R$ 50-100 e ordenar por preco;Nada fora da faixa, em ordem crescente;30 itens, de R$ 52,90 a R$ 99,90, ordem conferida item a item;Passou;Roteiro
+BF-06;Funcional;Busca e filtros;Enviar valor inexistente no filtro de tipo;400, e nao uma lista vazia silenciosa;400 VALIDATION_ERROR;Passou;Roteiro
+BF-07;Funcional;Busca e filtros;Buscar por algo que nao existe;200 com lista vazia;200, 0 produtos;Passou;Roteiro
+BF-08;Funcional;Busca e filtros;Abrir a pagina de um produto pelo slug;200 com sinopse, notas e recomendacoes;200;Passou;Roteiro
+BF-09;Funcional;Busca e filtros;Abrir um slug que nao existe;404;404;Passou;Roteiro
+BF-10;Funcional;Busca e filtros;Listar os departamentos com contagem;Soma das contagens = total do catalogo;livros 37, varinhas 11, colecionaveis 35, vestuario 20, papelaria 10, jogos 15, casa 14 = 142;Passou;Roteiro
+BF-11;Funcional;Busca e filtros;Filtrar por casa e por marca;Resultados coerentes com o filtro;Confere;Passou;Automatizado
+BF-12;Funcional;Busca e filtros;Filtro na URL sobrevive ao recarregamento;A tela abre ja filtrada;Confere;Passou;Automatizado
+CR-01;Funcional;Carrinho;Abrir o carrinho sem estar logado;401;401;Passou;Roteiro
+CR-02;Funcional;Carrinho;Carrinho de uma conta nova;Vazio, sem frete;0 itens, frete R$ 0,00;Passou;Roteiro
+CR-03;Funcional;Carrinho;Adicionar 1 item (R$ 44,90);Subtotal 44,90, frete 12,90, total 57,80;Exatamente isso;Passou;Roteiro
+CR-04;Funcional;Carrinho;Adicionar o mesmo produto de novo;Soma na mesma linha, nao cria outra;1 linha, quantidade 3;Passou;Roteiro
+CR-05;Funcional;Carrinho;Alterar a quantidade para 8 (passa de R$ 250);Subtotal 359,20 e frete zerado;Subtotal R$ 359,20, frete R$ 0,00;Passou;Roteiro
+CR-06;Funcional;Carrinho;Pedir 7 unidades de um produto com estoque 6;Recusa dizendo quanto ha;"400 ""Temos apenas 6 exemplar(es) em estoque.""";Passou;Roteiro
+CR-07;Funcional;Carrinho;Pedir 99.999 unidades;Recusa pela quantidade maxima (20);400 com issues.quantity;Passou;Roteiro
+CR-08;Funcional;Carrinho;Remover o item;Carrinho volta a zero;200, 0 itens;Passou;Roteiro
+CK-01;Funcional;Checkout;Fechar pedido com o carrinho vazio;Recusa;"400 ""Seu carrinho esta vazio.""";Passou;Roteiro
+CK-02;Funcional;Checkout;Fechar pedido sem endereco completo;400 apontando cada campo faltando;400 com issues em address, city, state e zipCode;Passou;Roteiro
+CK-03;Funcional;Checkout;Fechar a compra do inicio ao fim;201 com codigo legivel e total correto;201, pedido LP-F4ZCH2, status PAID, total R$ 102,70 (2 x 44,90 + 12,90);Passou;Roteiro
+CK-04;Funcional;Checkout;O estoque baixa no fechamento;120 -> 118;120 -> 118;Passou;Roteiro
+CK-05;Funcional;Checkout;O carrinho esvazia no fechamento;0 itens;0 itens;Passou;Roteiro
+CK-06;Funcional;Checkout;O pedido aparece no historico;1 pedido;1 pedido;Passou;Roteiro
+CK-07;Funcional;Checkout;Cancelar o pedido;Status vira CANCELLED;CANCELLED;Passou;Roteiro
+CK-08;Funcional;Checkout;O cancelamento devolve o estoque;118 -> 120;118 -> 120;Passou;Roteiro
+CK-09;Funcional;Checkout;Tentar abrir o pedido de outro leitor;404, sem confirmar que o pedido existe;404;Passou;Automatizado
+CK-10;Funcional;Checkout;Dois pedidos disputando o ultimo exemplar;So um passa, e o estoque nao fica errado;Confere;Passou;Automatizado
+AV-01;Funcional;Avaliacoes;Avaliar um produto e avaliar de novo;A segunda edita a primeira, nao duplica;Confere;Passou;Automatizado
+AV-02;Funcional;Avaliacoes;Dar nota fora da escala de 1 a 5;400;400;Passou;Automatizado
+AV-03;Funcional;Avaliacoes;Selo de compra verificada;So para quem tem pedido com o produto;Confere;Passou;Automatizado
+AV-04;Funcional;Avaliacoes;Listar e apagar as proprias avaliacoes;Funciona so nas proprias;Confere;Passou;Automatizado
+SP-01;Funcional;Suporte;Abrir chamado sem ter conta;Aceito, como na ajuda do site antigo;Confere;Passou;Automatizado
+SP-02;Funcional;Suporte;Abrir chamado com descricao curta demais;400;400;Passou;Automatizado
+SP-03;Funcional;Suporte;Abrir chamado logado;Chamado fica ligado a conta;Confere;Passou;Automatizado
+SP-04;Funcional;Suporte;Ver e resolver a fila de chamados;So o suporte consegue;Confere;Passou;Automatizado
+AD-01;Funcional;Painel;Leitor comum tentando entrar no painel;403;403;Passou;Roteiro
+AD-02;Funcional;Painel;Fornecedor cadastra e atualiza um produto;201 e 200;Confere;Passou;Automatizado
+AD-03;Funcional;Painel;Cadastrar produto com ISBN repetido;409;409;Passou;Automatizado
+AD-04;Funcional;Painel;Fornecedor tentando apagar um registro;403, so o suporte apaga;Confere;Passou;Automatizado
+AD-05;Funcional;Painel;Apagar autor ou editora que ainda tem livros;Recusa;Confere;Passou;Automatizado
+AD-06;Funcional;Painel;Relatorio de vendas;Faturamento, ticket medio, mais vendidos e estoque baixo;Confere;Passou;Automatizado
+AD-07;Funcional;Painel;Lista de usuarios;So para o suporte, e sem hash de senha;Confere;Passou;Automatizado
+IN-01;Integracao;Frete;Frete abaixo do limite de frete gratis;R$ 12,90;R$ 12,90 no subtotal de R$ 44,90;Passou;Roteiro
+IN-02;Integracao;Frete;Frete acima de R$ 250;R$ 0,00;R$ 0,00 no subtotal de R$ 359,20;Passou;Roteiro
+IN-03;Integracao;Frete;Informar CEPs diferentes e ver valor e prazo mudarem;Valor e prazo por regiao;O sistema nao calcula frete por CEP. A regra e fixa: R$ 12,90, gratis acima de R$ 250;Nao implementado;Roteiro
+IN-04;Integracao;Frete;O CEP informado e gravado no pedido;Endereco completo no pedido;"recipient, address, city, state ""RJ"", zipCode ""22220-000""";Passou;Roteiro
+IN-05;Integracao;Pagamento;Transacao em gateway com cartao de teste ou PIX;Pedido aprovado pelo gateway;"Nao ha gateway. O pedido nasce PAID; o checkout avisa em texto que o pagamento e simulado";Nao implementado;Roteiro
+IN-06;Integracao;Pagamento;Webhook de atualizacao de status do gateway;Status do pedido muda sozinho;Rota nao existe. O status so muda por acao no painel ou por cancelamento;Nao implementado;Roteiro
+IN-07;Integracao;E-mail;E-mail de confirmacao de compra;E-mail enviado ao fechar o pedido;Nao ha envio de e-mail;Nao implementado;Roteiro
+IN-08;Integracao;E-mail;E-mail de alteracao de senha;Link chega por e-mail;Token gerado, expira em 30 min, funciona uma vez so e foi validado ponta a ponta. Falta a entrega por e-mail;Parcial;Roteiro
+IN-09;Integracao;Banco de dados;Baixa de estoque e criacao do pedido na mesma transacao;Desfeitas juntas se algo falhar;Confere;Passou;Automatizado
+IN-10;Integracao;Frontend e API;As telas consomem a API sem erro de contrato;Paginas carregam com dado real;6 paginas do build de producao contra a API real, sem erro;Passou;Medicao
+SG-01;Seguranca;Autenticacao;Acessar /cart e /orders sem token;401 nos dois;401 nos dois;Passou;Roteiro
+SG-02;Seguranca;Autorizacao;Leitor comum acessando /admin/users e /admin/books;403 nos dois;403 nos dois;Passou;Roteiro
+SG-03;Seguranca;Autenticacao;Usar um token adulterado;401;401;Passou;Roteiro
+SG-04;Seguranca;Dados sensiveis;Procurar o hash da senha nas respostas;Nunca aparece;Nenhuma resposta de cadastro, login, perfil ou lista de usuarios contem o hash;Passou;Roteiro
+SG-05;Seguranca;Dados sensiveis;Conferir como a senha esta guardada no banco;Hash forte, nunca texto puro;bcrypt $2a$10$, custo 10, 60 caracteres;Passou;Roteiro
+SG-06;Seguranca;Injecao;Injecao de SQL no campo de busca (' OR 1=1 --);Tratado como texto, sem erro e sem vazamento;200 com 0 resultados. O Prisma parametriza toda consulta;Passou;Roteiro
+SG-07;Seguranca;Cabecalhos;Cabecalhos de seguranca do Helmet;Helmet ativo;"X-Frame-Options SAMEORIGIN; X-Content-Type-Options nosniff; HSTS max-age=31536000 includeSubDomains; X-DNS-Prefetch-Control off; X-Download-Options noopen; X-Permitted-Cross-Domain-Policies none; Referrer-Policy no-referrer";Passou;Roteiro
+SG-08;Seguranca;Dados sensiveis;Dado de cartao visivel na tela ou no codigo-fonte;Nao deve existir;Nao existe campo de cartao em formulario nenhum nem coluna no banco;Passou;Roteiro
+SG-09;Seguranca;SSL;HTTPS ativo em todas as paginas;Certificado valido;Nao aplicavel: roda em localhost sobre HTTP. HSTS ja e enviado e o cookie recebe Secure quando NODE_ENV=production;N/A;Roteiro
+SG-10;Seguranca;Sessao;Atributos do cookie de sessao;HttpOnly e SameSite;"HttpOnly; SameSite=Lax; Max-Age=604800";Passou;Roteiro
+SG-11;Seguranca;Forca bruta;Limite de requisicoes por minuto;Bloqueio depois de um teto;429 exatamente na requisicao 200, com Retry-After 60;Passou;Roteiro
+SG-12;Seguranca;Sessao;Onde o token fica no navegador;Guardado de forma segura;O JWT fica tambem em localStorage, alem do cookie HttpOnly. Ver DEF-02;Observacao;Roteiro
+UD-01;Usabilidade;Responsividade;7 paginas em 8 larguras, de 360 a 1920 px;Nenhum estouro horizontal;55 de 56 combinacoes ok. Catalogo estoura abaixo de 420 px: +29 px em 360, +15 px em 390, +3 px em 414. Ver DEF-01;Parcial;Medicao
+UD-02;Desempenho;Velocidade das paginas;Carregar as paginas principais do build de producao;Menos de 3 segundos;Pior caso 476 ms (Home, cache frio). Catalogo 242 ms, Produto 283 ms, Carrinho 42 ms, Checkout 58 ms, Login 37 ms;Passou;Medicao
+UD-03;Desempenho;Velocidade da API;15 chamadas por rota, mediana;Menos de 500 ms;"/health 2 ms; /catalog/books 25 ms; filtro por departamento 12 ms; produto por slug 15 ms; departamentos 3 ms";Passou;Medicao
+UD-04;Desempenho;Peso do build;Tamanho do primeiro carregamento;Casco enxuto e paginas sob demanda;38 arquivos. Casco inicial de 5 arquivos, 510 KB (cerca de 150 KB com gzip). A Saga, de 119 KB, so baixa quem a abre;Passou;Medicao
+UD-05;Usabilidade;Fundamentos de pagina;lang, viewport, title e description;Todos presentes;"lang=""pt-BR"", viewport width=device-width, title e description presentes. 26 dos 54 arquivos .tsx usam breakpoints";Passou;Medicao
+UD-06;Usabilidade;Acessibilidade;Sete preferencias de leitura;Gravadas e reaplicadas na visita seguinte;Confere, e armazenamento corrompido e ignorado em vez de derrubar a loja. 11 testes automatizados;Passou;Automatizado
+
+RESUMO
+Categoria;Casos;Passou;Parcial;N/A;Nao implementado;Observacao
+Funcionais - cadastro e login;16;16;0;0;0;0
+Funcionais - busca e filtros;12;12;0;0;0;0
+Funcionais - carrinho;8;8;0;0;0;0
+Funcionais - checkout;10;10;0;0;0;0
+Funcionais - avaliacoes, suporte e painel;15;15;0;0;0;0
+Integracao;10;5;1;0;4;0
+Seguranca;12;10;0;1;0;1
+Usabilidade e desempenho;6;5;1;0;0;0
+TOTAL;89;81;2;1;4;1
+;;;;;;
+Autores;Arthur Roberto Weege Pontes, Guilherme Silveira, Lucas Alves;;;;;
+Execucao;08/09/2026;;;;;
+Ambiente;Windows 10, Node 22.15.0, PostgreSQL 17.11;;;;;
+Testes automatizados;96, todos passando (54 de API, 42 de interface);;;;;
+
+DEFEITOS
+ID;Severidade;Titulo;Onde;Situacao;Correcao proposta
+DEF-01;Medio;O catalogo estoura para o lado em telas de celular;frontend/src/components/catalog/ProductCard.tsx:166;Aberto;"A linha de preco e um flex sem quebra; com o preco de tabela longo (R$ 3.299,90 riscado), ela empurra o cartao e a pagina inteira. Adicionar flex-wrap no container e min-w-0 no preco"
+DEF-02;Baixo;O JWT tambem fica no localStorage;frontend/src/lib/api.ts:42-46;Aberto, com justificativa;Passar a usar so o cookie HttpOnly. O backend ja aceita: o @fastify/jwt esta registrado com cookie token. O risco e baixo porque o site nao renderiza HTML vindo do usuario
+
+TESTES AUTOMATIZADOS
+Suite;Arquivo;Testes;Resultado;Duracao
+Backend - autenticacao;backend/tests/auth.test.ts;10;Passou;
+Backend - catalogo;backend/tests/catalog.test.ts;18;Passou;
+Backend - carrinho e pedidos;backend/tests/cart-order.test.ts;11;Passou;
+Backend - avaliacoes, suporte e painel;backend/tests/reviews-support-admin.test.ts;15;Passou;
+Backend - TOTAL;4 suites;54;Passou;91,5 s
+Frontend - pagina de catalogo;frontend/src/test/catalog-page.test.tsx;9;Passou;
+Frontend - pagina de cadastro;frontend/src/test/register-page.test.tsx;4;Passou;
+Frontend - componentes e formatadores;frontend/src/test/components.test.tsx;12;Passou;
+Frontend - sistema de casas;frontend/src/test/house.test.tsx;6;Passou;
+Frontend - preferencias de acessibilidade;frontend/src/test/settings.test.tsx;11;Passou;
+Frontend - TOTAL;5 suites;42;Passou;70,2 s
+GERAL;9 suites;96;Passou;161,7 s
