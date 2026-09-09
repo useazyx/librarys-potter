@@ -9,9 +9,10 @@ jogos e casa e decoração), com filtros na URL, avaliações, pedidos, fila de 
 administrativo.
 
 ```
-g2/
+librarys-potter/
 ├── backend/     API em Fastify + Prisma + PostgreSQL (TypeScript)
 ├── frontend/    Interface em React + Vite + Tailwind (TypeScript)
+├── docs/        Documentação, arquitetura e plano de testes
 └── legacy/      O projeto antigo em PHP, preservado do jeito que estava
 ```
 
@@ -23,6 +24,9 @@ g2/
 | Banco de dados| PostgreSQL modelado em `backend/prisma/schema.prisma`: 11 tabelas com relações      |
 | Interface     | `frontend/src/pages/`: 18 telas em React, consumindo a API                          |
 | Arquitetura   | MVC: modelo no Prisma, controllers no backend, views no frontend (detalhado abaixo) |
+| Documentação  | [`docs/01-documentacao.md`](docs/01-documentacao.md): requisitos, modelagem e os três diagramas |
+| Arquitetura (documento) | [`docs/02-arquitetura.md`](docs/02-arquitetura.md): camadas, componentes e o mapa dos endpoints |
+| Testes        | [`docs/03-plano-de-testes.md`](docs/03-plano-de-testes.md), com a planilha em [`docs/resultados-dos-testes.xlsx`](docs/resultados-dos-testes.xlsx) |
 
 ## Como rodar
 
