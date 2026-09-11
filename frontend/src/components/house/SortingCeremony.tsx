@@ -1,37 +1,55 @@
 import { useEffect, useState } from 'react'
 import { HOUSE_INFO, useHouse } from '../../context/HouseContext'
+import { useSettings } from '../../context/SettingsContext'
+import { Embers } from '../ui/Embers'
 import { HouseCrest } from './HouseCrest'
 
-// Tempo que o véu fica na tela, em ms. Tem que bater com .sorting-veil.
-const VEIL_MS = 1600
+// Tempo que a cerimônia fica na tela, em ms. Tem que bater com .ceremony no
+// index.css.
+const CEREMONY_MS = 2400
 
-// Ao escolher uma casa, a cor toma a tela por um instante com o brasão e o nome.
+// A cerimônia de escolha de casa. Escolher a Sonserina não é só o site ficar
+// verde: uma cortina fecha, o brasão assenta com o nome e a divisa, e a
+// cortina abre com a loja já repintada. Quem segura a paleta antiga durante o
+// fechamento é o HouseProvider.
 //
-// Mesma regra da transição de página: quem tira o véu é o setTimeout, nunca o
-// fim da animação. Se a animação travar, a tela não fica coberta.
+// Mesma regra da transição de página: quem tira a cerimônia é o setTimeout,
+// nunca o fim da animação. Se a animação travar, a tela não fica coberta.
 export function SortingCeremony() {
   const { ceremony } = useHouse()
+  const { reducedMotion } = useSettings()
   const [visible, setVisible] = useState<typeof ceremony>(null)
 
   useEffect(() => {
     if (!ceremony) return
 
     setVisible(ceremony)
-    const timer = window.setTimeout(() => setVisible(null), VEIL_MS)
+    const timer = window.setTimeout(() => setVisible(null), CEREMONY_MS)
 
     return () => window.clearTimeout(timer)
   }, [ceremony])
 
-  if (!visible) return null
+  // Quem pediu menos movimento não vê cerimônia nenhuma. O CSS zera a duração
+  // de toda animação nesse caso, então o que sobraria era um lampejo preto de
+  // um quadro, pior do que a troca direta de cor.
+  if (!visible || reducedMotion) return null
 
   const info = HOUSE_INFO[visible.house]
 
   return (
-    <div key={visible.id} className="sorting-veil" aria-hidden>
-      <div className="crest-burst flex flex-col items-center">
-        <HouseCrest house={visible.house} className="h-40 w-auto drop-shadow-[0_18px_40px_rgba(0,0,0,0.6)]" />
-        <p className="mt-8 font-display text-4xl text-white sm:text-5xl">{info.name}</p>
-        <p className="mt-3 text-[0.66rem] uppercase tracking-[0.4em] text-white/70">{info.trait}</p>
+    <div key={visible.id} className="ceremony" aria-hidden>
+      {/* a cortina: preta e rápida, para a troca de cor acontecer escondida */}
+      <div className="ceremony-ink" />
+      {/* e a cor da casa tomando a tela a partir do centro */}
+      <div className="ceremony-bloom" />
+      <div className="ceremony-ring" />
+      <Embers count={22} />
+
+      <div className="ceremony-stage">
+        <HouseCrest house={visible.house} className="ceremony-crest house-crest" />
+        <p className="ceremony-name font-display">{info.name}</p>
+        <span className="ceremony-rule" />
+        <p className="ceremony-trait">{info.trait}</p>
       </div>
     </div>
   )

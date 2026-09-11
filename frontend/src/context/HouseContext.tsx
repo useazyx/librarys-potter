@@ -47,6 +47,42 @@ export const HOUSE_INFO: Record<House, HouseInfo> = {
 
 const STORAGE_KEY = 'librarys-potter:casa'
 
+// Os tokens que a casa repinta. Mesma lista do bloco [data-house] no index.css.
+const PALETTE = [
+  '--house-deep',
+  '--house-mid',
+  '--house-accent',
+  '--house-ink',
+  '--house-glow',
+  '--house-bg',
+  '--house-surface',
+] as const
+
+// Quanto tempo a paleta antiga ainda segura, em ms. É mais ou menos o que a
+// cortina da cerimônia leva para cobrir a tela.
+const HOLD_MS = 120
+
+// Copia a paleta atual para o style inline do <html>. Como o inline ganha do
+// bloco [data-house], o site continua com a cara da casa anterior por um
+// instante depois de o atributo mudar, e a cor nova entra com a tela já
+// coberta em vez de saltar debaixo do visitante.
+//
+// Quem solta é o setTimeout, nunca a cerimônia: se ela não rodar, a cor nova
+// aparece sozinha um piscar depois, e não fica um site travado na casa velha.
+function holdPalette() {
+  const root = document.documentElement
+  const current = window.getComputedStyle(root)
+  const frozen = PALETTE.map((token) => [token, current.getPropertyValue(token)] as const)
+
+  for (const [token, value] of frozen) {
+    if (value) root.style.setProperty(token, value)
+  }
+
+  window.setTimeout(() => {
+    for (const [token] of frozen) root.style.removeProperty(token)
+  }, HOLD_MS)
+}
+
 function isHouse(value: unknown): value is House {
   return typeof value === 'string' && (HOUSES as readonly string[]).includes(value)
 }
@@ -90,6 +126,10 @@ export function HouseProvider({ children }: { children: ReactNode }) {
   const [ceremony, setCeremony] = useState<{ house: House; id: number } | null>(null)
 
   const setHouse = useCallback((next: House | null) => {
+    // Antes do setState: o atributo no <html> muda no efeito logo em seguida, e
+    // a paleta precisa já estar presa quando isso acontecer.
+    if (next) holdPalette()
+
     setHouseState(next)
     // Voltar para o tema neutro não conta como escolha, então não tem cerimônia.
     if (next) setCeremony((current) => ({ house: next, id: (current?.id ?? 0) + 1 }))

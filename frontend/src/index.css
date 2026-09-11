@@ -489,56 +489,220 @@
   opacity: 1;
 }
 
-/* Cerimônia do Chapéu Seletor: a cor da casa toma a tela e some. */
-@keyframes sorting-flash {
-  0% {
-    opacity: 0;
-    transform: scale(1.15);
-  }
-  22% {
+/* ---------------------------------------------------------------------------
+   A cerimônia de escolha de casa.
+
+   Trocar de casa não é só o site trocar de cor: uma cortina preta fecha em
+   pouco mais de um décimo de segundo, a cor da casa toma a tela a partir do
+   centro, o brasão assenta com o nome e a divisa, e no fim tudo se desfaz
+   sobre a loja já repintada. A troca de paleta acontece atrás da cortina
+   porque o HouseProvider segura a paleta antiga nesse começo.
+
+   Vale a regra do resto da camada de magia: o repouso de cada peça é invisível
+   e a cerimônia inteira sai da tela por um setTimeout, então uma animação que
+   não rode deixa o site livre em vez de coberto.
+   --------------------------------------------------------------------------- */
+
+@keyframes ceremony-life {
+  0%,
+  82% {
     opacity: 1;
     transform: scale(1);
-  }
-  70% {
-    opacity: 1;
   }
   100% {
     opacity: 0;
-    transform: scale(1);
+    transform: scale(1.06);
   }
 }
 
-.sorting-veil {
+.ceremony {
   position: fixed;
   inset: 0;
   z-index: 90;
   pointer-events: none;
-  display: grid;
-  place-items: center;
-  background: radial-gradient(circle at 50% 45%, var(--house-mid), var(--house-deep) 70%);
-  /* Repouso invisível. O forwards garante que uma animação que não comece
-     deixe a tela livre em vez de segurar o quadro que a cobre. */
+  overflow: hidden;
   opacity: 0;
-  animation: sorting-flash 1.6s var(--ease-castle) forwards;
+  animation: ceremony-life 2.4s var(--ease-castle) forwards;
 }
 
-@keyframes crest-burst {
+/* A cortina. Fecha quase toda nos primeiros quadros de propósito: é embaixo
+   dela que a paleta velha solta e a nova entra. */
+@keyframes ceremony-ink {
   from {
-    transform: scale(0.7) rotate(-6deg);
     opacity: 0;
   }
-  60% {
-    transform: scale(1.04) rotate(0deg);
+  to {
+    opacity: 1;
+  }
+}
+
+.ceremony-ink {
+  position: absolute;
+  inset: 0;
+  background-color: #07070c;
+  opacity: 0;
+  animation: ceremony-ink 0.24s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+}
+
+/* A cor da casa abrindo do centro para as bordas. */
+@keyframes ceremony-bloom {
+  from {
+    opacity: 0;
+    transform: scale(0.25);
+  }
+  55% {
     opacity: 1;
   }
   to {
-    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.ceremony-bloom {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle at 50% 45%, var(--house-mid), var(--house-deep) 60%, #07070c 88%);
+  opacity: 0;
+  animation: ceremony-bloom 1.1s var(--ease-castle) 0.18s forwards;
+}
+
+/* Onda que sai junto com a cor e se apaga na borda da tela. */
+@keyframes ceremony-ring {
+  from {
+    opacity: 0;
+    transform: scale(0.12);
+  }
+  25% {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+
+.ceremony-ring {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 40vmax;
+  height: 40vmax;
+  margin: -20vmax 0 0 -20vmax;
+  border: 2px solid rgb(var(--house-glow) / 0.55);
+  border-radius: 9999px;
+  opacity: 0;
+  animation: ceremony-ring 1.3s var(--ease-castle) 0.24s forwards;
+}
+
+/* O brasão e os dizeres sobem um pouco no fim, junto com a saída. */
+@keyframes ceremony-lift {
+  0%,
+  80% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-24px);
+  }
+}
+
+.ceremony-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  animation: ceremony-lift 2.4s var(--ease-castle) forwards;
+}
+
+@keyframes ceremony-crest {
+  from {
+    opacity: 0;
+    transform: translateY(36px) scale(0.62) rotate(-9deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(0) scale(1.07) rotate(0deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+.ceremony-crest {
+  width: auto;
+  height: clamp(6.5rem, 22vmin, 11rem);
+  filter: drop-shadow(0 18px 44px rgb(0 0 0 / 0.65));
+  opacity: 0;
+  animation: ceremony-crest 0.95s var(--ease-castle) 0.3s forwards;
+}
+
+/* O nome chega com as letras abertas e vai fechando o espaçamento. */
+@keyframes ceremony-name {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    letter-spacing: 0.34em;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 0.02em;
+  }
+}
+
+.ceremony-name {
+  margin-top: 2rem;
+  font-size: clamp(2.25rem, 7vw, 3.75rem);
+  line-height: 1.1;
+  color: #ffffff;
+  opacity: 0;
+  animation: ceremony-name 0.8s var(--ease-castle) 0.62s forwards;
+}
+
+@keyframes ceremony-rule {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 8rem;
     opacity: 1;
   }
 }
 
-.crest-burst {
-  animation: crest-burst 1.1s var(--ease-castle) both;
+.ceremony-rule {
+  display: block;
+  height: 1px;
+  width: 0;
+  margin-top: 1.5rem;
+  background: linear-gradient(to right, transparent, rgb(var(--house-glow) / 0.9), transparent);
+  animation: ceremony-rule 0.7s var(--ease-castle) 0.95s forwards;
+}
+
+@keyframes ceremony-trait {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ceremony-trait {
+  margin-top: 1.5rem;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  color: rgb(255 255 255 / 0.72);
+  opacity: 0;
+  animation: ceremony-trait 0.7s var(--ease-castle) 1.05s forwards;
 }
 
 /* Com movimento reduzido, brasas e reflexos nem existem. */
