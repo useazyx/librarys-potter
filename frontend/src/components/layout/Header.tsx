@@ -9,7 +9,6 @@ import {
   ShoppingBag,
   Sparkles,
   User,
-  Wand2,
   X,
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -27,7 +26,6 @@ import { ButtonLink } from '../ui/Button'
 
 const MAGIC = [
   { to: '/chapeu-seletor', icon: Sparkles, label: 'O Chapéu Seletor', hint: 'Descubra a sua casa em sete perguntas.' },
-  { to: '/oficina-de-varinhas', icon: Wand2, label: 'Oficina de varinhas', hint: 'Molde a sua: madeira, núcleo e tamanho.' },
   { to: '/biblioteca', icon: LibraryBig, label: 'Biblioteca animada', hint: 'Estantes em profundidade, livro na mão.' },
 ]
 

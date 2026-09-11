@@ -1,4 +1,4 @@
-import { BookOpen, LibraryBig, LifeBuoy, Sparkles, Truck, Wand2 } from 'lucide-react'
+import { BookOpen, LibraryBig, LifeBuoy, Sparkles, Truck } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Hero } from '../components/home/Hero'
@@ -18,8 +18,7 @@ const PROMISES = [
   { icon: LifeBuoy, title: 'Suporte de verdade', text: 'Abra um chamado e acompanhe a resposta do começo ao fim.' },
 ]
 
-// As três páginas temáticas do site: o quiz do Chapéu, a oficina de varinhas e
-// a biblioteca em perspectiva.
+// As páginas temáticas do site: o quiz do Chapéu e a biblioteca em perspectiva.
 const DOORS = [
   {
     to: '/chapeu-seletor',
@@ -28,14 +27,6 @@ const DOORS = [
     title: 'O Chapéu Seletor',
     text: 'Responda e descubra a sua casa. A escolha veste a loja inteira, do fundo ao realce.',
     image: '/img/products/chapeu-seletor.jpg',
-  },
-  {
-    to: '/oficina-de-varinhas',
-    icon: Wand2,
-    eyebrow: 'Olivaras',
-    title: 'A oficina de varinhas',
-    text: 'Madeira, núcleo, comprimento e flexibilidade: molde a sua e veja a varinha se montar.',
-    image: '/img/products/loja-olivaras.jpg',
   },
   {
     to: '/biblioteca',
@@ -175,17 +166,17 @@ export default function Home() {
         books={featured}
       />
 
-      {/* as três páginas temáticas */}
+      {/* as páginas temáticas */}
       <section className="relative overflow-hidden border-y border-chalk-100/15 bg-house-surface py-20 lg:py-24" aria-labelledby="magia-title">
         <EnchantedSky embers={10} />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
           <p className="eyebrow mb-3">Não é só uma loja</p>
           <h2 id="magia-title" className="max-w-2xl text-balance font-display text-4xl text-chalk-50 sm:text-5xl">
-            Três coisas para fazer aqui que não dão para fazer em outra loja
+            Duas coisas para fazer aqui que não dão para fazer em outra loja
           </h2>
 
-          <ul className="mt-14 grid gap-6 lg:grid-cols-3">
+          <ul className="mt-14 grid gap-6 md:grid-cols-2">
             {DOORS.map((door) => {
               const Icon = door.icon
 

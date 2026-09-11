@@ -24,7 +24,6 @@ const SECTIONS = [
     title: 'Magia',
     links: [
       { to: '/chapeu-seletor', label: 'O Chapéu Seletor' },
-      { to: '/oficina-de-varinhas', label: 'Oficina de varinhas' },
       { to: '/biblioteca', label: 'Biblioteca animada' },
       { to: '/feiticos', label: 'Feitiços' },
       { to: '/configuracoes', label: 'Acessibilidade' },

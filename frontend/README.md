@@ -48,7 +48,6 @@ uma casa escolhida.
 | `/produto/:slug` | Detalhe do produto | público |
 | `/saga` | A saga | público |
 | `/chapeu-seletor` | Quiz que escolhe a casa | público |
-| `/oficina-de-varinhas` | Configurador de varinha | público |
 | `/biblioteca` | Estantes em perspectiva | público |
 | `/feiticos` | Lista dos feitiços do teclado | público |
 | `/configuracoes` | Acessibilidade | público |

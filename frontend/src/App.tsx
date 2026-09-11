@@ -11,7 +11,6 @@ const Catalog = lazy(() => import('./pages/Catalog'))
 const BookDetail = lazy(() => import('./pages/BookDetail'))
 const Saga = lazy(() => import('./pages/Saga'))
 const SortingHat = lazy(() => import('./pages/SortingHat'))
-const WandWorkshop = lazy(() => import('./pages/WandWorkshop'))
 const Library = lazy(() => import('./pages/Library'))
 const Spells = lazy(() => import('./pages/Spells'))
 const SettingsPage = lazy(() => import('./pages/Settings'))
@@ -51,7 +50,6 @@ export default function App() {
           <Route path="/livro/:slug" element={<BookDetail />} />
           <Route path="/saga" element={<Saga />} />
           <Route path="/chapeu-seletor" element={<SortingHat />} />
-          <Route path="/oficina-de-varinhas" element={<WandWorkshop />} />
           <Route path="/biblioteca" element={<Library />} />
           <Route path="/feiticos" element={<Spells />} />
           <Route path="/configuracoes" element={<SettingsPage />} />

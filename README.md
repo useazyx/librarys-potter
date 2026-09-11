@@ -22,7 +22,7 @@ librarys-potter/
 |---------------|------------------------------------------------------------------------------------|
 | API           | `backend/src/routes/`: 44 endpoints REST em 8 grupos, mais `/health`      |
 | Banco de dados| PostgreSQL modelado em `backend/prisma/schema.prisma`: 11 tabelas com relações      |
-| Interface     | `frontend/src/pages/`: 18 telas em React, consumindo a API                          |
+| Interface     | `frontend/src/pages/`: 17 telas em React, consumindo a API                          |
 | Arquitetura   | MVC: modelo no Prisma, controllers no backend, views no frontend (detalhado abaixo) |
 | Documentação  | [`docs/01-documentacao.md`](docs/01-documentacao.md): requisitos, modelagem e os três diagramas |
 | Arquitetura (documento) | [`docs/02-arquitetura.md`](docs/02-arquitetura.md): camadas, componentes e o mapa dos endpoints |
@@ -164,7 +164,7 @@ Os testes do frontend usam Testing Library com a API mockada.
 - Catálogo com busca e filtros por departamento, marca, casa, gênero, preço, estoque e promoção
 - Página do produto com sinopse, ficha, distribuição de notas, avaliações com selo de compra
   verificada e produtos relacionados
-- Linha do tempo da saga, quiz do Chapéu Seletor, oficina de varinhas e biblioteca em perspectiva
+- Linha do tempo da saga, quiz do Chapéu Seletor e biblioteca em perspectiva
 - Central de ajuda com abertura de chamado, que funciona sem conta como no site antigo
 - Página de acessibilidade com paletas para daltonismo, alto contraste, tema claro, tamanho de
   texto, fonte de leitura fácil e movimento reduzido
