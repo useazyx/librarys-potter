@@ -1,10 +1,10 @@
 # Créditos das imagens
 
-## Da marca (projeto original, preservado em `legacy/`)
+## Da marca (projeto original)
 
 As cinco capas em WebP de `img/books/` (Pedra Filosofal, Câmara Secreta, Prisioneiro de
-Azkaban, Cálice de Fogo e Enigma do Príncipe) vieram do material do projeto original
-(`legacy/livro1.png` a `legacy/livro5.jpg`), apenas redimensionadas e convertidas para WebP. São
+Azkaban, Cálice de Fogo e Enigma do Príncipe) vieram do material do projeto original em PHP,
+apenas redimensionadas e convertidas para WebP. São
 as capas da edição brasileira publicada pela Rocco. As demais capas da pasta, em JPG, vieram do
 Open Library, na seção mais abaixo.
 

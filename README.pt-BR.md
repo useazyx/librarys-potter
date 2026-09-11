@@ -1,8 +1,8 @@
 # Library's Potter
 
 Livraria e loja do mundo bruxo da saga Harry Potter. É a reconstrução do trabalho antigo em
-PHP/MySQL (preservado em `legacy/`) com API própria, banco relacional, autenticação e carrinho no
-servidor. Os três papéis de usuário do site original continuam aqui: leitor, fornecedor e suporte.
+PHP/MySQL com API própria, banco relacional, autenticação e carrinho no servidor. Os três papéis
+de usuário do site original continuam aqui: leitor, fornecedor e suporte.
 
 São 142 produtos em sete departamentos (livros, varinhas, colecionáveis, vestuário, papelaria,
 jogos e casa e decoração), com filtros na URL, avaliações, pedidos, fila de chamados e um painel
@@ -11,9 +11,7 @@ administrativo.
 ```
 librarys-potter/
 ├── backend/     API em Fastify + Prisma + PostgreSQL (TypeScript)
-├── frontend/    Interface em React + Vite + Tailwind (TypeScript)
-├── docs/        Documentação, arquitetura e plano de testes
-└── legacy/      O projeto antigo em PHP, preservado do jeito que estava
+└── frontend/    Interface em React + Vite + Tailwind (TypeScript)
 ```
 
 ## Requisitos do trabalho
@@ -24,9 +22,7 @@ librarys-potter/
 | Banco de dados| PostgreSQL modelado em `backend/prisma/schema.prisma`: 11 tabelas com relações      |
 | Interface     | `frontend/src/pages/`: 17 telas em React, consumindo a API                          |
 | Arquitetura   | MVC: modelo no Prisma, controllers no backend, views no frontend (detalhado abaixo) |
-| Documentação  | [`docs/01-documentacao.md`](docs/01-documentacao.md): requisitos, modelagem e os três diagramas |
-| Arquitetura (documento) | [`docs/02-arquitetura.md`](docs/02-arquitetura.md): camadas, componentes e o mapa dos endpoints |
-| Testes        | [`docs/03-plano-de-testes.md`](docs/03-plano-de-testes.md), com a planilha em [`docs/resultados-dos-testes.xlsx`](docs/resultados-dos-testes.xlsx) |
+| Testes        | `backend/tests/` e `frontend/src/test/`: 54 testes de API e 44 de interface         |
 
 ## Como rodar
 
@@ -147,7 +143,7 @@ HTTP.
 
 ```bash
 cd backend  && npm test    # 54 testes de API
-cd frontend && npm test    # 42 testes de interface
+cd frontend && npm test    # 44 testes de interface
 ```
 
 Os testes do backend sobem a aplicação com `buildApp()` e usam `app.inject()`, sem abrir porta.

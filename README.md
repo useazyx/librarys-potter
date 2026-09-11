@@ -1,15 +1,15 @@
 # Library's Potter
 
 A bookstore and shop for the Harry Potter universe. It started as a PHP/MySQL college
-assignment (kept untouched in `legacy/`) and was rebuilt as a full TypeScript application with
-its own REST API, a relational database, JWT authentication and a server-side cart.
+assignment and was rebuilt as a full TypeScript application with its own REST API, a
+relational database, JWT authentication and a server-side cart.
 
 142 products across seven departments (books, wands, collectibles, clothing, stationery, games
 and home decor), filters that live in the URL, reviews, orders, a support ticket queue and an
 admin dashboard. The three roles from the original site are still here: reader, supplier and
 support.
 
-![Home page](docs/img/desktop-home.png)
+![Home page](.github/home.png)
 
 Leia em português: [README.pt-BR.md](README.pt-BR.md)
 
@@ -22,9 +22,7 @@ Leia em português: [README.pt-BR.md](README.pt-BR.md)
 ```
 librarys-potter/
 ├── backend/     Fastify + Prisma API
-├── frontend/    React + Vite app
-├── docs/        requirements, architecture and test plan (pt-BR)
-└── legacy/      the original PHP project, as it was
+└── frontend/    React + Vite app
 ```
 
 ## Running it locally
